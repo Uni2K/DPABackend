@@ -1,0 +1,19 @@
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+
+
+const topicSchema = createSchema(
+    {
+        _id: Type.string({ required: true }),
+        name: Type.string({ required: true }),
+        parent: Type.string({ required: true }),
+        baseColor: Type.string({ required: false }),
+        iconURL: Type.string({ required: false })
+    },
+    { _id: false, timestamps: false }
+);
+
+
+
+export const Topic = typedModel('Topics', topicSchema);
+
+

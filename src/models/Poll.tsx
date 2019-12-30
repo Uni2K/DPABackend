@@ -1,0 +1,28 @@
+import {createSchema, Type, typedModel} from 'ts-mongoose';
+
+const topicModel = require('./Topic');
+
+const pollSchema = createSchema(
+    {
+        enabled: Type.boolean({default: true}),
+        user: Type.ref(Type.objectId()).to("Topics", topicModel),
+
+        header: Type.string({required: true}),
+        description: Type.string({required: true}),
+        type: Type.number({required: true, default: 0}),
+
+        answers: Type.array({required: true}).of({text: Type.string(), type: Type.number(), votes: Type.number()}),
+        expirationDate: Type.date({required: true}),
+
+        scoreOverall: Type.number({default: 0}),
+        rankOverall: Type.number({default: 0}),
+        rankCategory: Type.number({default: 0}),
+
+        flag: Type.number({default: 0}),
+
+    },
+    {_id: true, timestamps: true}
+);
+
+export const Poll = typedModel('Polls', pollSchema);
+
