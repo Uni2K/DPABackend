@@ -23,7 +23,7 @@ const feedModel = require("../models/Feed");
  */
 
 
-class FeedLoader {
+export class FeedLoader {
     private userModel;
     private pollModel;
     private topicModel;

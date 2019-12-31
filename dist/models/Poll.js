@@ -15,5 +15,5 @@ const pollSchema = ts_mongoose_1.createSchema({
     rankCategory: ts_mongoose_1.Type.number({ default: 0 }),
     flag: ts_mongoose_1.Type.number({ default: 0 }),
 }, { _id: true, timestamps: true });
-exports.Poll = ts_mongoose_1.typedModel('Polls', pollSchema);
+exports.pollModel = ts_mongoose_1.typedModel('Polls', pollSchema);
 //# sourceMappingURL=Poll.js.map

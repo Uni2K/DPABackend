@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
-const userModel = require("./models/User");
-const pollModel = require("./models/Poll");
-const topicModel = require("./models/Topic");
-const userRouter = require('./routers/userRouter')(pollModel, userModel, topicModel, express);
-const questionRouter = require('./routers/questionRouter')(pollModel, userModel, topicModel, express);
-const topicRouter = require('./routers/topicRouter')(pollModel, userModel, topicModel, express);
+const Poll_1 = require("./models/Poll");
+const Topic_1 = require("./models/Topic");
+const User_1 = require("./models/User");
+const userRouter = require('./routers/UserRouter')(Poll_1.pollModel, User_1.userModel, Topic_1.topicModel, express);
+const questionRouter = require('./routers/QuestionRouter')(Poll_1.pollModel, User_1.userModel, Topic_1.topicModel, express);
+const topicRouter = require('./routers/TopicRouter')(Poll_1.pollModel, User_1.userModel, Topic_1.topicModel, express);
+const contentlistcRouter = require('./routers/ContentlistRouter')(Poll_1.pollModel, User_1.userModel, Topic_1.topicModel, express);
 const port = 3000;
 require('./db/Database');
 const app = express();
@@ -12,6 +15,7 @@ app.use(express.json()); //FOR POST/GET/PUT/... Requests
 app.use(userRouter);
 app.use(questionRouter);
 app.use(topicRouter);
+app.use(contentlistcRouter);
 const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

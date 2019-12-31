@@ -8,5 +8,5 @@ const topicSchema = ts_mongoose_1.createSchema({
     baseColor: ts_mongoose_1.Type.string({ required: false }),
     iconURL: ts_mongoose_1.Type.string({ required: false })
 }, { _id: false, timestamps: false });
-exports.Topic = ts_mongoose_1.typedModel('Topics', topicSchema);
+exports.topicModel = ts_mongoose_1.typedModel('Topics', topicSchema);
 //# sourceMappingURL=Topic.js.map

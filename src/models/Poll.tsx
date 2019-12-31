@@ -24,5 +24,5 @@ const pollSchema = createSchema(
     {_id: true, timestamps: true}
 );
 
-export const Poll = typedModel('Polls', pollSchema);
+export const pollModel = typedModel('Polls', pollSchema);
 

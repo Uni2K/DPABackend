@@ -2,8 +2,9 @@ import {Router} from "express";
 
 const auth = require("../middleware/auth");
 const statRoutines=require("../helpers/StatisticsBase");
+import { FeedLoader } from "../content/FeedLoader";
 
-export= function(pollModel,userModel,topicModel, express):Router {
+export= function (pollModel,userModel,topicModel, express):Router {
     const router = express.Router();
     router.post("/users/signup", async (req, res) => {
         // Create a new user

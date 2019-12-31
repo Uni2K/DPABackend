@@ -1,11 +1,14 @@
 const express = require('express')
-const userModel = require("./models/User");
-const pollModel = require("./models/Poll");
-const topicModel = require("./models/Topic");
+import {pollModel} from "./models/Poll"
+import {topicModel} from "./models/Topic"
+import {userModel} from "./models/User"
 
-const userRouter = require('./routers/userRouter')(pollModel,userModel,topicModel,express)
-const questionRouter = require('./routers/questionRouter')(pollModel,userModel,topicModel,express)
-const topicRouter = require('./routers/topicRouter')(pollModel,userModel,topicModel,express)
+
+
+const userRouter = require('./routers/UserRouter')(pollModel,userModel,topicModel,express)
+const questionRouter = require('./routers/QuestionRouter')(pollModel,userModel,topicModel,express)
+const topicRouter = require('./routers/TopicRouter')(pollModel,userModel,topicModel,express)
+const contentlistcRouter = require('./routers/ContentlistRouter')(pollModel,userModel,topicModel,express)
 
 const port = 3000
 
@@ -18,7 +21,7 @@ app.use(express.json()) //FOR POST/GET/PUT/... Requests
 app.use(userRouter)
 app.use(questionRouter)
 app.use(topicRouter)
-
+app.use(contentlistcRouter)
 const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

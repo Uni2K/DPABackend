@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const ts_mongoose_1 = require("ts-mongoose");
 const validator_1 = __importDefault(require("validator"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -61,7 +62,7 @@ userSchema.methods.generateAuthToken = function () {
 };
 userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     // Search for a user by email and password.´
-    const user = yield User.findOne({ email }).exec();
+    const user = yield exports.userModel.findOne({ email }).exec();
     if (!user) {
         throw new Error("300");
     }
@@ -71,6 +72,5 @@ userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, vo
     }
     return user;
 });
-const User = ts_mongoose_1.typedModel('Users', userSchema);
-module.exports = User;
+exports.userModel = ts_mongoose_1.typedModel('Users', userSchema);
 //# sourceMappingURL=User.js.map

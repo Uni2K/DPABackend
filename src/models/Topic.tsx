@@ -14,6 +14,6 @@ const topicSchema = createSchema(
 
 
 
-export const Topic = typedModel('Topics', topicSchema);
+export const topicModel = typedModel('Topics', topicSchema);
 
 

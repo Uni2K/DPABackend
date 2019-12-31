@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const auth = require("../middleware/auth");
 const statRoutines = require("../helpers/StatisticsBase");
+const FeedLoader_1 = require("../content/FeedLoader");
 module.exports = function (pollModel, userModel, topicModel, express) {
     const router = express.Router();
     router.post("/users/signup", (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -58,7 +59,7 @@ module.exports = function (pollModel, userModel, topicModel, express) {
             const key = req.body.key;
             const older = req.body.older;
             const userid = req.body.id;
-            const feedLoader = new FeedLoader(pollModel, userModel, topicModel);
+            const feedLoader = new FeedLoader_1.FeedLoader(pollModel, userModel, topicModel);
             yield feedLoader.getFeed(res, userid, loadSize, key, older);
         }
         catch (error) {

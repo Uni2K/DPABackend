@@ -60,7 +60,7 @@ userSchema.methods.generateAuthToken = async function(this: UserDoc) {
 
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.´
-    const user:UserDoc = await User.findOne({ email }).exec();
+    const user:UserDoc = await userModel.findOne({ email }).exec();
 
     if (!user) {
         throw new Error("300");
@@ -76,5 +76,4 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 
-const User= typedModel('Users', userSchema);
-export=User
+export const userModel= typedModel('Users', userSchema);
