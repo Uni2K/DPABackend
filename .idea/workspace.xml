@@ -2,13 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Jan.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Topic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +53,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/routers" />
@@ -42,6 +63,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="D:\Dokumente\DPA\Backend\node_modules\typescript\lib" />
   </component>
@@ -87,6 +109,7 @@
       <workItem from="1577816982953" duration="7521000" />
       <workItem from="1577890411399" duration="1798000" />
       <workItem from="1577955208129" duration="4094000" />
+      <workItem from="1577980099815" duration="9878000" />
     </task>
     <servers />
   </component>
@@ -126,25 +149,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="635" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1577708491738" />
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom" timestamp="1577963599151">
+    <state width="1877" height="2" key="GridCell.Tab.0.bottom" timestamp="1577993680143">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577963599151" />
+    <state width="1877" height="2" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577993680143" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728990724" />
-    <state width="1877" height="348" key="GridCell.Tab.0.center" timestamp="1577963599151">
+    <state width="1877" height="2" key="GridCell.Tab.0.center" timestamp="1577993680142">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577963599151" />
+    <state width="1877" height="2" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577993680142" />
     <state width="1877" height="282" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728990723" />
-    <state width="1877" height="348" key="GridCell.Tab.0.left" timestamp="1577963599151">
+    <state width="1877" height="2" key="GridCell.Tab.0.left" timestamp="1577993680142">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577963599151" />
+    <state width="1877" height="2" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577993680142" />
     <state width="1877" height="282" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728990723" />
-    <state width="1877" height="348" key="GridCell.Tab.0.right" timestamp="1577963599151">
+    <state width="1877" height="2" key="GridCell.Tab.0.right" timestamp="1577993680143">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577963599151" />
+    <state width="1877" height="2" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577993680143" />
     <state width="1877" height="282" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728990723" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1577963599058">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -199,10 +222,14 @@
     </state>
     <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577962852254" />
     <state x="832" y="198" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714230830" />
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1577955219227">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1577980477175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577955219227" />
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577980477175" />
+    <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577987290060">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1577987290060" />
     <state x="521" y="257" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1577961943782">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

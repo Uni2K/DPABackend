@@ -9,6 +9,7 @@ const REPUTATION_INCREASE_VOTE = 1;
  * Increases the reputation of a user
  * -> Voting works without having an account -> UserID might be 0
  * -> Call on AnswerQuestions + createQuestion
+ * TODO: IMPLEMENT
  */
 exports.increaseReputation =  function(user, type) {
     if (user) {
@@ -19,6 +20,7 @@ exports.increaseReputation =  function(user, type) {
 
 /**
  * Takes the reputation from the correct user as an input and the threshold
+ * TODO: RETURN a value to evaluate the result in the app
  */
 exports.isReputationEnough = function(reputation, threshold) {
     if (reputation > threshold) {

@@ -1,5 +1,21 @@
 import {ExtractDoc} from "ts-mongoose";
 import {performance} from 'perf_hooks'
+import {CONTENTLIST_REFRESH_INTERVALL, CONTENTLIST_SIZE} from "../helpers/Constants";
+
+enum ContentLists {
+    Hot,
+    Recent,
+    Recommended,
+    ScoreToplist
+
+}
+enum ContentFlags {
+    Idle,
+    Recommended,
+    Hot,
+
+}
+
 export class ContentlistLoader {
 
     private userModel;
@@ -13,37 +29,19 @@ export class ContentlistLoader {
         this.pollModel = pollModel;
         this.topicModel = topicModel;
         setInterval(() => {
-            this.refreshContentlist(0).then();
-        }, 15000);
+            this.refreshContentlist(0,"0").then();
+        }, CONTENTLIST_REFRESH_INTERVALL);
 
      //   this.createSamplePolls();
-
     }
 
 
 
-
-    createSamplePolls() {
-        console.log("creating samples...")
-        const startTime:number=Date.now()
-        for (let i = 0; i < 100000; i++) {
-            new this.pollModel({
-                expirationDate: Date.now(),
-                header: "Example", description: "Just a random stupid question!"
-                , type: 0, answers: [{
-                    text: "Answer 1", type: 0,
-                    votes: 100
-                }],
-                scoreOverall: Date.now()
-            }).save();
-        }
-        console.log("finished sample creation in: "+(Date.now()-startTime))
-
-    }
 
     /**
      * Main Entry point for every contentlist, called by the client via the express router
      * @param req Input to extract request Parameters
+     * Todo: Implement client side sorting -> Requires the cached list to contain the sorting field -> currently only ids got saved
      */
     async getContent(req): Promise<string> {
 
@@ -52,31 +50,25 @@ export class ContentlistLoader {
         const index = req.body.index;
         const direction = req.body.direction; //Needed for clientsided paging
 
-        const selectedTopic = req.body.topic; //Topic selected for the list, -1 -> overall
+        let selectedTopic = req.body.topic; //Topic selected for the list, -1 -> overall
         const selectedSort = req.body.sort; //Ascending, Descending
-
+        selectedTopic="0" //debug
         let entryPoint = index;
         if (direction < 0) {
             entryPoint = index - pageSize;
         }
         const endPoint = entryPoint + pageSize;
-        const stringResult = await this.redis.get(type.toString());
+        const stringResult = await this.redis.get(this.generateCachedName(type.toString(),selectedTopic));
 
-        const v = this.userModel.schema;
-        type userType = ExtractDoc<typeof v>;
         const listResult: Array<string> = JSON.parse(stringResult);
         const rangedArray: Array<string> = listResult.slice(entryPoint, endPoint);
 
-        //Populating
+        //Populating, fast
         const questions = await this.pollModel
             .find({_id: {$in: rangedArray}})
-       //     .populate("tags", this.topicModel)
             .populate("userid", "name avatar _id")
             .lean()
             .exec();
-
-
-
 
         return JSON.stringify(questions);
 
@@ -87,64 +79,96 @@ export class ContentlistLoader {
      * 1. Calculate List
      * 2. JSON the list
      * 3. Save the list in Redis
+     * TODO: Clean this up?!
      */
-    private async refreshContentlist(type: number) {
-        //  const selectedTopic = req.body.topic
+    private async refreshContentlist(type: number, topic: string) {
 
         let sortingValue = "scoreOverall";
+        let sortingFlag = 0
         switch (type) {
-            case 0: //e.g Hot
+            case ContentLists.ScoreToplist:
                 sortingValue = "scoreOverall";
                 break;
-            case 1:
-                sortingValue = "rankOverall";
+            case ContentLists.Recent:
+                sortingValue = "createdAt";
                 break;
-            case 2:
-                sortingValue = "rankCategory";
+            case ContentLists.Recommended:
+                sortingValue = "-1"
+                sortingFlag=ContentFlags.Recommended
+                break;
+            case ContentLists.Hot:
+                sortingValue = "-1"
+                sortingFlag=ContentFlags.Hot
                 break;
 
         }
         const query = {};
-        query["enabled"] = true;
+        query["enabled"] = true
 
-        /*
-             if(selectedTopic!="-1"){
-          query["topic"]=selectedTopic
+        if(topic!="-1") {
+                 query["topic"] = topic
         }
-
-        let entryPoint = index
-        if (direction < 0) {
-            entryPoint = index - pageSize
-        }
-         */
-
-        const getTimeStart=performance.now()
-        const stringResult = await this.redis.get(type.toString());
-        const parsed=JSON.parse(stringResult)
-        const getTimeEnd=performance.now()
-
-
-
-
         const searchTimeStart=performance.now()
-        const result = await this.pollModel
-            .find(query)
-            .select("_id") //even faster
-            //.skip(entryPoint)
-            //  .limit(pageSize)
-            .sort({[sortingValue]: -1})
-            .limit(1000)  //faster
-            .lean() //Faster, no object structure
-            .exec();
+        let result
+
+        if(sortingValue!= "-1"){
+         result=await this.createSimpleSortingList(sortingValue,query)
+        }else{
+            result=await this.createFlaggedList(sortingFlag,query)
+        }
+
+
         const searchTimeEnd=performance.now()
         const resultJSON = JSON.stringify(result);
         const stringeTimeEnd=performance.now()
 
-        await this.redis.set(type.toString(), resultJSON)
-            console.log("Updated Contentlist: " + type + " Searchtime: " + (searchTimeEnd - searchTimeStart).toPrecision(4) + "ms, Stringifytime: "+(stringeTimeEnd-searchTimeEnd).toPrecision(4)+"ms, Redistime: "+(performance.now()-stringeTimeEnd).toPrecision(4)+"ms getTime: " +(getTimeEnd-getTimeStart).toPrecision(4)+"ms  SIZE: " + result.length);
+        await this.redis.set(this.generateCachedName(type.toString(),topic), resultJSON)
+            console.log("Updated Contentlist: " + type + " Searchtime: " + (searchTimeEnd - searchTimeStart).toPrecision(4) + "ms, Stringifytime: "+(stringeTimeEnd-searchTimeEnd).toPrecision(4)+"ms, Redistime: "+(performance.now()-stringeTimeEnd).toPrecision(4)+"ms  SIZE: " + result.length);
 
 
 
     }
+
+    /**
+     * Lists that can be created using only an sorting value
+     * @param sortingValue
+     * @param query
+     */
+   async createSimpleSortingList(sortingValue: string, query: {}):Promise<any>{
+       return this.pollModel
+           .find(query)
+           .select("_id") //even faster
+           .sort({[sortingValue]: -1})
+           .limit(CONTENTLIST_SIZE)  //faster
+           .lean() //Faster, no object structure
+           .exec();
+
+    }
+
+    /**
+     * Lists that can be created by using some special flag
+     */
+    private async createFlaggedList(type: number, query: {}):Promise<any> {
+        if(type==ContentFlags.Idle)return null
+        query["flag"]=type
+        return this.pollModel
+            .find(query)
+            .select("_id") //even faster
+            .sort({"createdAt": -1}) //TODO: Improve sorting -> createdAt makes no sense
+            .limit(CONTENTLIST_SIZE)  //faster
+            .lean()
+            .exec();
+
+    }
+
+
+
+    /**
+     * There have to be multiple lists for every topic, simple name schema
+     */
+    generateCachedName(type:string, topic:string):string{
+        return type.concat(topic)
+    }
+
 
 }

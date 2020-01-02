@@ -1,0 +1,3 @@
+
+export const CONTENTLIST_SIZE:number=1000
+export const CONTENTLIST_REFRESH_INTERVALL:number=15000

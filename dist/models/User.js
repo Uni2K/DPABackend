@@ -20,13 +20,15 @@ const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-val
 const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: true }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
 const userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),
-    email: ts_mongoose_1.Type.string({ required: true, unique: true, lowercase: true, validate: value => {
+    email: ts_mongoose_1.Type.string({
+        required: true, unique: true, lowercase: true, validate: value => {
             if (!validator_1.default.isEmail(value)) {
                 throw new Error("Invalid Email address");
             }
-        } }),
-    password: ts_mongoose_1.Type.number({ required: true, minlength: 4 }),
-    sessionTokens: ts_mongoose_1.Type.array().of(ts_mongoose_1.Type.string({ required: true, name: "token" })),
+        }
+    }),
+    password: ts_mongoose_1.Type.string({ required: true, minlength: 4 }),
+    sessionTokens: ts_mongoose_1.Type.array().of(ts_mongoose_1.Type.string({ name: "token" })),
     description: ts_mongoose_1.Type.string({ required: false, default: "" }),
     location: ts_mongoose_1.Type.string({ required: false, default: "" }),
     avatarURL: ts_mongoose_1.Type.string({ required: false, default: "" }),

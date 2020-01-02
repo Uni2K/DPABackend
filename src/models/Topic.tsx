@@ -7,7 +7,9 @@ const topicSchema = createSchema(
         name: Type.string({ required: true }),
         parent: Type.string({ required: true }),
         baseColor: Type.string({ required: false }),
-        iconURL: Type.string({ required: false })
+        iconURL: Type.string({ required: false , default: ""}),
+       description: Type.string({ required: false , default: ""}),
+        flag: Type.number({default: 0})
     },
     { _id: false, timestamps: false }
 );
