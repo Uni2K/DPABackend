@@ -19,7 +19,7 @@ class ContentlistLoader {
         this.topicModel = topicModel;
         setInterval(() => {
             this.refreshContentlist(0).then();
-        }, 5000);
+        }, 15000);
         //   this.createSamplePolls();
     }
     createSamplePolls() {
@@ -43,22 +43,31 @@ class ContentlistLoader {
      * @param req Input to extract request Parameters
      */
     getContent(req) {
-        const type = req.body.type;
-        const pageSize = req.body.pageSize;
-        const index = req.body.index;
-        const direction = req.body.direction; //Needed for clientsided paging
-        const selectedTopic = req.body.topic; //Topic selected for the list, -1 -> overall
-        const selectedSort = req.body.sort; //Ascending, Descending
-        let entryPoint = index;
-        if (direction < 0) {
-            entryPoint = index - pageSize;
-        }
-        const endPoint = entryPoint + pageSize;
-        const stringResult = this.redis.get(type);
-        const v = this.userModel.schema;
-        const listResult = JSON.parse(stringResult);
-        const rangedArray = listResult.slice(entryPoint, endPoint);
-        return JSON.stringify(rangedArray);
+        return __awaiter(this, void 0, void 0, function* () {
+            const type = req.body.type;
+            const pageSize = req.body.pageSize;
+            const index = req.body.index;
+            const direction = req.body.direction; //Needed for clientsided paging
+            const selectedTopic = req.body.topic; //Topic selected for the list, -1 -> overall
+            const selectedSort = req.body.sort; //Ascending, Descending
+            let entryPoint = index;
+            if (direction < 0) {
+                entryPoint = index - pageSize;
+            }
+            const endPoint = entryPoint + pageSize;
+            const stringResult = yield this.redis.get(type.toString());
+            const v = this.userModel.schema;
+            const listResult = JSON.parse(stringResult);
+            const rangedArray = listResult.slice(entryPoint, endPoint);
+            //Populating
+            const questions = yield this.pollModel
+                .find({ _id: { $in: rangedArray } })
+                //     .populate("tags", this.topicModel)
+                .populate("userid", "name avatar _id")
+                .lean()
+                .exec();
+            return JSON.stringify(questions);
+        });
     }
     /**
      * Main routine for creating the list and refreshing the cache
@@ -94,13 +103,13 @@ class ContentlistLoader {
             }
              */
             const getTimeStart = perf_hooks_1.performance.now();
-            const stringResult = yield this.redis.get("0");
+            const stringResult = yield this.redis.get(type.toString());
             const parsed = JSON.parse(stringResult);
             const getTimeEnd = perf_hooks_1.performance.now();
             const searchTimeStart = perf_hooks_1.performance.now();
             const result = yield this.pollModel
                 .find(query)
-                .select("_id scoreOverall") //even faster
+                .select("_id") //even faster
                 //.skip(entryPoint)
                 //  .limit(pageSize)
                 .sort({ [sortingValue]: -1 })
@@ -110,7 +119,7 @@ class ContentlistLoader {
             const searchTimeEnd = perf_hooks_1.performance.now();
             const resultJSON = JSON.stringify(result);
             const stringeTimeEnd = perf_hooks_1.performance.now();
-            yield this.redis.set("0", resultJSON);
+            yield this.redis.set(type.toString(), resultJSON);
             console.log("Updated Contentlist: " + type + " Searchtime: " + (searchTimeEnd - searchTimeStart).toPrecision(4) + "ms, Stringifytime: " + (stringeTimeEnd - searchTimeEnd).toPrecision(4) + "ms, Redistime: " + (perf_hooks_1.performance.now() - stringeTimeEnd).toPrecision(4) + "ms getTime: " + (getTimeEnd - getTimeStart).toPrecision(4) + "ms  SIZE: " + result.length);
         });
     }

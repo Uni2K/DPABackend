@@ -14,7 +14,7 @@ export class ContentlistLoader {
         this.topicModel = topicModel;
         setInterval(() => {
             this.refreshContentlist(0).then();
-        }, 5000);
+        }, 15000);
 
      //   this.createSamplePolls();
 
@@ -45,7 +45,8 @@ export class ContentlistLoader {
      * Main Entry point for every contentlist, called by the client via the express router
      * @param req Input to extract request Parameters
      */
-    getContent(req): string {
+    async getContent(req): Promise<string> {
+
         const type = req.body.type;
         const pageSize = req.body.pageSize;
         const index = req.body.index;
@@ -59,14 +60,25 @@ export class ContentlistLoader {
             entryPoint = index - pageSize;
         }
         const endPoint = entryPoint + pageSize;
-        const stringResult = this.redis.get(type);
+        const stringResult = await this.redis.get(type.toString());
 
         const v = this.userModel.schema;
         type userType = ExtractDoc<typeof v>;
-        const listResult: Array<userType> = JSON.parse(stringResult);
-        const rangedArray: Array<userType> = listResult.slice(entryPoint, endPoint);
+        const listResult: Array<string> = JSON.parse(stringResult);
+        const rangedArray: Array<string> = listResult.slice(entryPoint, endPoint);
 
-        return JSON.stringify(rangedArray);
+        //Populating
+        const questions = await this.pollModel
+            .find({_id: {$in: rangedArray}})
+       //     .populate("tags", this.topicModel)
+            .populate("userid", "name avatar _id")
+            .lean()
+            .exec();
+
+
+
+
+        return JSON.stringify(questions);
 
     }
 
@@ -107,7 +119,7 @@ export class ContentlistLoader {
          */
 
         const getTimeStart=performance.now()
-        const stringResult = await this.redis.get("0");
+        const stringResult = await this.redis.get(type.toString());
         const parsed=JSON.parse(stringResult)
         const getTimeEnd=performance.now()
 
@@ -117,7 +129,7 @@ export class ContentlistLoader {
         const searchTimeStart=performance.now()
         const result = await this.pollModel
             .find(query)
-            .select("_id scoreOverall") //even faster
+            .select("_id") //even faster
             //.skip(entryPoint)
             //  .limit(pageSize)
             .sort({[sortingValue]: -1})
@@ -128,7 +140,7 @@ export class ContentlistLoader {
         const resultJSON = JSON.stringify(result);
         const stringeTimeEnd=performance.now()
 
-        await this.redis.set("0", resultJSON)
+        await this.redis.set(type.toString(), resultJSON)
             console.log("Updated Contentlist: " + type + " Searchtime: " + (searchTimeEnd - searchTimeStart).toPrecision(4) + "ms, Stringifytime: "+(stringeTimeEnd-searchTimeEnd).toPrecision(4)+"ms, Redistime: "+(performance.now()-stringeTimeEnd).toPrecision(4)+"ms getTime: " +(getTimeEnd-getTimeStart).toPrecision(4)+"ms  SIZE: " + result.length);
 
 

@@ -7,8 +7,7 @@ export = function(pollModel,userModel,topicModel,express):Router {
     const contentlistLoader = new ContentlistLoader(pollModel,userModel,topicModel)
     router.post("/contentlist",  async (req, res) => {
 
-
-       const result=  contentlistLoader.getContent(req)
+       const result=  await contentlistLoader.getContent(req)
         res.status(200).send(result)
 
 

@@ -13,7 +13,7 @@ module.exports = function (pollModel, userModel, topicModel, express) {
     const router = express.Router();
     const contentlistLoader = new ContentlistLoader_1.ContentlistLoader(pollModel, userModel, topicModel);
     router.post("/contentlist", (req, res) => __awaiter(this, void 0, void 0, function* () {
-        const result = contentlistLoader.getContent(req);
+        const result = yield contentlistLoader.getContent(req);
         res.status(200).send(result);
     }));
     return router;
