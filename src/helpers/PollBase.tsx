@@ -1,30 +1,47 @@
 import {performance} from 'perf_hooks';
+import {pollModel} from "../models/Poll";
+import {topicModel} from "../models/Topic";
+import {userModel} from "../models/User";
+import {ERROR_USER_REPUTATION_NOT_ENOUGH, REPUTATION_THRESHOLD_CREATE} from "./Constants";
+import {isReputationEnough} from "./StatisticsBase";
 
 export class PollBase {
-    private userModel;
-    private pollModel;
-    private topicModel;
 
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-        // this.createSamplePolls()
+    async createPoll(req){
+
+        if(isReputationEnough(req.user.reputation,REPUTATION_THRESHOLD_CREATE)){
+            throw Error(ERROR_USER_REPUTATION_NOT_ENOUGH)
+        }
+
+
+      const promise= new pollModel({
+            expirationDate: req.body.expirationDate,
+            user:req.body.userid,
+            header: req.body.header,
+           description: req.body.description,
+           type: req.body.type,
+           answers: req.body.answers,
+        }).save();
+
+        return promise
+
+
+
+
     }
 
-    async createPoll(){
-        //TODO Implement
-    }
+
+
 
 
     async createSamplePolls() {
         console.log("Poll Creation started!");
         const startTime = performance.now();
-        await this.userModel.remove({}).exec();
-        const user=await this.userModel.findOne().exec()
+        await userModel.remove({}).exec();
+        const user=await userModel.findOne().exec()
 
         for (let i = 0; i < 1000; i++) {
-           const poll= new this.pollModel({
+           const poll= new pollModel({
                 expirationDate: Date.now(),
                 user:[user._id],
                 header: "Example", description: "Just a random stupid question!"
@@ -41,4 +58,37 @@ export class PollBase {
 
     }
 
+    async getPollsByIds(ids: any) {
+       return pollModel
+            .find({_id: {$in: ids}})
+            .populate("tags", topicModel)
+            .populate("userid", "name avatar _id")
+            .exec();
+    }
+
+    async searchPolls(req) {
+        const searchQuery=req.body.query
+        const index=req.body.index
+        const pageSize=req.body.pageSize
+        const direction=req.body.direction
+        const filterTopics=req.body.filterTopics
+        const sort=req.body.sort
+        const minimumVotes=req.body.minimumVotes
+
+        const query={}
+        query["header"]= {$regex: searchQuery}
+        query["enabled"]=true
+        let entryPoint = index;
+        if (direction < 0) {
+            entryPoint = index - pageSize;
+        }
+        if(filterTopics!== undefined)query["topic"]={$in: filterTopics}
+        return pollModel
+            .find(query)
+            .sort({"createdAt":-1})
+            .skip(entryPoint)
+            .limit(pageSize)
+            .exec();
+
+    }
 }

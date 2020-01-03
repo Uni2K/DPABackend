@@ -1,4 +1,8 @@
-const feedModel = require("../models/Feed");
+import {feedModel} from "../models/Feed";
+import {pollModel} from "../models/Poll";
+import {topicModel} from "../models/Topic";
+import {userModel} from "../models/User";
+
 /** Order:
  * 1.User logged in -> getInitialFeed for userid -> Feed is empty -> Load 50 questions in the feed to enable some backscroll
  * 2. Return feed, starting from 0 at the first of the 50 items
@@ -24,21 +28,11 @@ const feedModel = require("../models/Feed");
 
 
 export class FeedLoader {
-    private userModel;
-    private pollModel;
-    private topicModel;
-
-
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel=userModel
-       this.pollModel=pollModel
-        this.topicModel=topicModel
-    }
 
 
     async getFeed (res, userid_, loadsize, index, older) {
         // Find User to get his Subscriptions
-        const user = await this.userModel
+        const user = await userModel
             .findById({
                 _id: userid_
             })
@@ -65,18 +59,17 @@ export class FeedLoader {
 
         query["$or"] = [{userid: {$in: userContent}}, {tags: {$in: topicContent}}]
 
-        const questionsInFeed = await this.pollModel
+        const questionsInFeed = await pollModel
             .find(query)
             //.select("_id")
             .sort({timestamp: -1})
             .limit(loadsize)
-            .populate("tags", this.topicModel)
+            .populate("tags", topicModel)
             .populate("userid", "name avatar")
             .lean()
             .exec();
         console.log("GET FEED Config: " + userid_ + " " + loadsize + " " + older + "  " + index + "  " + questionsInFeed.length)
-
-        res.status(200).send(questionsInFeed)
+            return questionsInFeed
 
         //Add the direct items, User, Topics -> they got a timestamp in the subscription, if it matches -> LATER
         /* if(older){
@@ -139,12 +132,12 @@ export class FeedLoader {
                     $addToSet: {content: "Q" + questionid}
                 },
                 {
-                    returnOriginal: false,
+                    //returnOriginal: false,
                     upsert: true
                 }
             )
             .exec();
 
-        const newOrUpdatedDocument = result.value;
+       // const newOrUpdatedDocument = result.value;
     };
 }

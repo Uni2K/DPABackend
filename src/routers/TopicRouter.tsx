@@ -1,6 +1,7 @@
+import {express, topicBase} from "../app";
 import {TopicBase} from "../helpers/TopicBase";
 
-export = function(topicBase:TopicBase,pollModel,userModel,topicModel,express) {
+export = function() {
     const router = express.Router();
     router.post("/topics/all", async (req, res) => {
 

@@ -8,14 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const statRoutines = require("../helpers/StatisticsBase");
-module.exports = function (pollModel, userModel, topicModel, express) {
-    const router = express.Router();
+const app_1 = require("../app");
+const Poll_1 = require("../models/Poll");
+const Topic_1 = require("../models/Topic");
+module.exports = function () {
+    const router = app_1.express.Router();
     router.post("/questions/byIDs", (req, res) => __awaiter(this, void 0, void 0, function* () {
         const ids = req.body.ids;
-        const questions = yield pollModel
+        const questions = yield Poll_1.pollModel
             .find({ _id: { $in: ids } })
-            .populate("tags", topicModel)
+            .populate("tags", Topic_1.topicModel)
             .populate("userid", "name avatar _id")
             .exec();
         res.status(200).send(questions);
@@ -42,11 +44,11 @@ module.exports = function (pollModel, userModel, topicModel, express) {
             else
                 query["timestamp"] = { $lt: key };
         }
-        const questions = yield pollModel
+        const questions = yield Poll_1.pollModel
             .find(query)
             .sort({ timestamp: -1 })
             .limit(loadSize)
-            .populate("tags", topicModel)
+            .populate("tags", Topic_1.topicModel)
             .populate("userid", "name avatar _id")
             .exec();
         res.status(200).send(questions);

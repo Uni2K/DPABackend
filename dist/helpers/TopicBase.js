@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Enum describing the possible flags a topics can carry
  */
 const perf_hooks_1 = require("perf_hooks");
+const Topic_1 = require("../models/Topic");
 var TopicFlags;
 (function (TopicFlags) {
     TopicFlags[TopicFlags["Idle"] = 0] = "Idle";
@@ -24,18 +25,12 @@ var TopicFlags;
     TopicFlags[TopicFlags["New"] = 3] = "New";
 })(TopicFlags || (TopicFlags = {}));
 class TopicBase {
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-        // this.createTopics();
-    }
     getSpecialTopics(type) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = {};
             query["enabled"] = true;
             query["flag"] = type;
-            return this.topicModel
+            return Topic_1.topicModel
                 .find(query)
                 .select("_id")
                 .lean()
@@ -44,12 +39,22 @@ class TopicBase {
     }
     getAllTopics() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.topicModel.find({ enabled: true }).lean().exec();
+            return Topic_1.topicModel.find({ enabled: true }).lean().exec();
+        });
+    }
+    getAllTopicIDs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Topic_1.topicModel.find({ enabled: true }).select("_id").lean().exec();
+        });
+    }
+    getAllParentTopicIDs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Topic_1.topicModel.find({ enabled: true, parent: "-1" }).select("_id").lean().exec();
         });
     }
     changeTopicFlag(topicID, flag_) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.topicModel
+            Topic_1.topicModel
                 .findByIdAndUpdate(topicID, { "flag": [flag_] })
                 .exec();
         });
@@ -119,13 +124,13 @@ class TopicBase {
                 ["Countries", "Europe", "America", "Africa", "Asia", "Australia"]
             ];
             const contentSize = content.length;
-            yield this.topicModel.remove({}).exec();
+            yield Topic_1.topicModel.remove({}).exec();
             console.log("Topic Creation started!");
             const startTime = perf_hooks_1.performance.now();
             for (let i = 0; i < contentSize; i++) {
                 const subArraySize = content[i].length;
                 const tagHeader = content[i][0];
-                const cat1 = new this.topicModel({
+                const cat1 = new Topic_1.topicModel({
                     _id: "yy" + i,
                     name: tagHeader,
                     enabled: true,
@@ -134,7 +139,7 @@ class TopicBase {
                 });
                 yield cat1.save();
                 for (let j = 1; j < subArraySize; j++) {
-                    const subcat1 = new this.topicModel({
+                    const subcat1 = new Topic_1.topicModel({
                         _id: "y" + i + "y" + j,
                         name: content[i][j],
                         enabled: true,
@@ -149,7 +154,7 @@ class TopicBase {
     }
     getSingleTopic(topicID) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.topicModel.findById(topicID).lean().exec();
+            return Topic_1.topicModel.findById(topicID).lean().exec();
         });
     }
     /**
@@ -164,7 +169,7 @@ class TopicBase {
             //Get topic:
             const topic = this.getSingleTopic(topicID);
             //Get the count
-            const countResult = this.topicModel
+            const countResult = Topic_1.topicModel
                 .find(query)
                 .lean()
                 .count()

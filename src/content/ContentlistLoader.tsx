@@ -1,6 +1,9 @@
 import {ExtractDoc} from "ts-mongoose";
 import {performance} from 'perf_hooks'
+import {forEachComment} from "tslint";
+import {pollBase, topicBase} from "../app";
 import {CONTENTLIST_REFRESH_INTERVALL, CONTENTLIST_SIZE} from "../helpers/Constants";
+import {IDInterface} from "../interfaces/IDInterface";
 
 enum ContentLists {
     Hot,
@@ -29,7 +32,8 @@ export class ContentlistLoader {
         this.pollModel = pollModel;
         this.topicModel = topicModel;
         setInterval(() => {
-            this.refreshContentlist(0,"0").then();
+          this.refreshAllContentLists()
+
         }, CONTENTLIST_REFRESH_INTERVALL);
 
      //   this.createSamplePolls();
@@ -170,5 +174,16 @@ export class ContentlistLoader {
         return type.concat(topic)
     }
 
+   async refreshAllContentLists() {
+        const allParentTopicList:Array<IDInterface> = await topicBase.getAllParentTopicIDs()
 
+        for(let topic of allParentTopicList){
+          for(let index in ContentLists){
+              const type = ContentLists[index] as unknown as number
+              this.refreshContentlist(type,topic._id)
+          }
+
+        }
+
+    }
 }

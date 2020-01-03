@@ -2,4 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONTENTLIST_SIZE = 1000;
 exports.CONTENTLIST_REFRESH_INTERVALL = 15000;
+exports.REQUEST_OK = 200;
+exports.ERROR_USER_UNKNOWN = "400";
+exports.ERROR_USER_NAME = "305";
+exports.ERROR_USER_EMAIL = "306";
+exports.ERROR_USER_PW = "307";
+exports.ERROR_USER_DUPLICATE_SUB = "308";
+exports.ERROR_USER_LOGIN_FAILED = "309";
+exports.ERROR_USER_AUTH = "310";
+exports.ERROR_USER_REPUTATION_NOT_ENOUGH = "311";
+exports.REPUTATION_THRESHOLD_CREATE = 30;
+exports.REPUTATION_THRESHOLD_FLAG = 300;
+exports.REPUTATION_THRESHOLD_CREATE_FOREVER = 1000;
+exports.REPUTATION_INCREASE_CREATE = 5;
+exports.REPUTATION_INCREASE_VOTE = 1;
 //# sourceMappingURL=Constants.js.map

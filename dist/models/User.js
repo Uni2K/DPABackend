@@ -18,7 +18,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-validator"));
 const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: true }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
-const userSchema = ts_mongoose_1.createSchema({
+exports.userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),
     email: ts_mongoose_1.Type.string({
         required: true, unique: true, lowercase: true, validate: value => {
@@ -41,8 +41,8 @@ const userSchema = ts_mongoose_1.createSchema({
     flag: ts_mongoose_1.Type.number({ default: 0 }),
     creationTimestamp: ts_mongoose_1.Type.date({ default: Date.now })
 }, { _id: true, timestamps: false });
-userSchema.plugin(mongoose_unique_validator_1.default, { message: "{PATH}" });
-userSchema.pre("save", function (next) {
+exports.userSchema.plugin(mongoose_unique_validator_1.default, { message: "{PATH}" });
+exports.userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         // Hash the password before saving the user model
         const user = this;
@@ -52,7 +52,7 @@ userSchema.pre("save", function (next) {
         next();
     });
 });
-userSchema.methods.generateAuthToken = function () {
+exports.userSchema.methods.generateAuthToken = function () {
     return __awaiter(this, void 0, void 0, function* () {
         // Generate an auth token for the user
         const user = this;
@@ -62,7 +62,7 @@ userSchema.methods.generateAuthToken = function () {
         return token;
     });
 };
-userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+exports.userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     // Search for a user by email and password.´
     const user = yield exports.userModel.findOne({ email }).exec();
     if (!user) {
@@ -74,5 +74,5 @@ userSchema.statics.findByCredentials = (email, password) => __awaiter(void 0, vo
     }
     return user;
 });
-exports.userModel = ts_mongoose_1.typedModel('Users', userSchema);
+exports.userModel = ts_mongoose_1.typedModel('Users', exports.userSchema);
 //# sourceMappingURL=User.js.map

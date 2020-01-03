@@ -6,6 +6,7 @@
  * Enum describing the possible flags a topics can carry
  */
 import {performance} from 'perf_hooks';
+import {topicModel} from "../models/Topic";
 
 enum TopicFlags {
     Idle,
@@ -15,22 +16,12 @@ enum TopicFlags {
 }
 
 export class TopicBase {
-    private userModel;
-    private pollModel;
-    private topicModel;
-
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-       // this.createTopics();
-    }
 
     async getSpecialTopics(type: number): Promise<any> {
         const query = {};
         query["enabled"] = true;
         query["flag"] = type;
-        return this.topicModel
+        return topicModel
             .find(query)
             .select("_id")
             .lean()
@@ -38,11 +29,16 @@ export class TopicBase {
     }
 
     async getAllTopics() {
-        return this.topicModel.find({enabled: true}).lean().exec();
+        return topicModel.find({enabled: true}).lean().exec();
     }
-
+    async getAllTopicIDs() {
+        return topicModel.find({enabled: true}).select("_id").lean().exec();
+    }
+    async getAllParentTopicIDs() {
+        return topicModel.find({enabled: true, parent: "-1"}).select("_id").lean().exec();
+    }
     async changeTopicFlag(topicID: string, flag_: number) {
-        this.topicModel
+        topicModel
             .findByIdAndUpdate(topicID, {"flag": [flag_]})
             .exec();
     }
@@ -113,13 +109,13 @@ export class TopicBase {
         ];
 
         const contentSize = content.length;
-        await this.topicModel.remove({}).exec();
+        await topicModel.remove({}).exec();
         console.log("Topic Creation started!");
         const startTime = performance.now();
         for (let i = 0; i < contentSize; i++) {
             const subArraySize = content[i].length;
             const tagHeader = content[i][0];
-            const cat1 = new this.topicModel({
+            const cat1 = new topicModel({
                 _id: "yy" + i,
                 name: tagHeader,
                 enabled: true,
@@ -130,7 +126,7 @@ export class TopicBase {
             await cat1.save();
             for (let j = 1; j < subArraySize; j++) {
 
-                const subcat1 = new this.topicModel({
+                const subcat1 = new topicModel({
                     _id: "y" + i + "y" + j,
                     name: content[i][j],
                     enabled: true,
@@ -147,7 +143,7 @@ export class TopicBase {
     }
 
     async getSingleTopic(topicID: string) {
-        return this.topicModel.findById(topicID).lean().exec();
+        return topicModel.findById(topicID).lean().exec();
     }
 
     /**
@@ -164,7 +160,7 @@ export class TopicBase {
         const topic = this.getSingleTopic(topicID);
 
         //Get the count
-        const countResult = this.topicModel
+        const countResult = topicModel
             .find(query)
             .lean()
             .count()

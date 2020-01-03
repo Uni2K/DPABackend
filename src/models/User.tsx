@@ -1,4 +1,4 @@
-import {createSchema, ExtractDoc, Type, typedModel} from 'ts-mongoose';
+import {createSchema, ExtractDoc, ExtractProps, Type, typedModel} from 'ts-mongoose';
 import validator from 'validator';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -9,7 +9,7 @@ const feedSchema = createSchema(
     {_id: false, timestamps: true}
 );
 
-const userSchema = createSchema(
+export const userSchema = createSchema(
     {
         name: Type.string({required: true, unique: true, trim: true}),
         email: Type.string({
@@ -76,4 +76,4 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 };
 
-export const userModel = typedModel('Users', userSchema);
+export const userModel = typedModel('Users', userSchema)

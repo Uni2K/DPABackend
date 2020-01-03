@@ -6,5 +6,5 @@ const feedSchema = ts_mongoose_1.createSchema({
     index: ts_mongoose_1.Type.number({ required: true, default: 0 }),
     content: ts_mongoose_1.Type.array().of(ts_mongoose_1.Type.number())
 }, { _id: false, timestamps: false });
-exports.Feeds = ts_mongoose_1.typedModel('Feeds', feedSchema);
+exports.feedModel = ts_mongoose_1.typedModel('Feeds', feedSchema);
 //# sourceMappingURL=Feed.js.map

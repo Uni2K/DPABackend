@@ -1,22 +1,19 @@
-const express = require('express')
+export const express = require('express')
 import {PollBase} from "./helpers/PollBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {UserBase} from "./helpers/UserBase";
-import {pollModel} from "./models/Poll"
-import {topicModel} from "./models/Topic"
-import {userModel} from "./models/User"
 
 
-const statisticsBase=  require('./helpers/StatisticsBase')
-const topicBase:TopicBase=  new TopicBase(pollModel,userModel,topicModel)
-const userBase:UserBase=  new UserBase(pollModel,userModel,topicModel)
-const pollBase:PollBase=  new PollBase(pollModel,userModel,topicModel)
+export const statisticsBase=  require('./helpers/StatisticsBase')
+export const topicBase:TopicBase=  new TopicBase()
+export const userBase:UserBase=  new UserBase()
+export const pollBase:PollBase=  new PollBase()
 
 
-const userRouter = require('./routers/UserRouter')(pollModel,userModel,topicModel,express)
-const questionRouter = require('./routers/QuestionRouter')(pollModel,userModel,topicModel,express) //TODO stop this constructor injection bullshit -> how to reference to this "class/file"?
-const topicRouter = require('./routers/TopicRouter')(topicBase,pollModel,userModel,topicModel,express)
-const contentlistcRouter = require('./routers/ContentlistRouter')(pollModel,userModel,topicModel,express)
+export const userRouter = require('./routers/UserRouter')()
+export const questionRouter = require('./routers/PollRouter')()
+export const topicRouter = require('./routers/TopicRouter')()
+export const contentlistcRouter = require('./routers/ContentlistRouter')()
 
 const port = 3000
 

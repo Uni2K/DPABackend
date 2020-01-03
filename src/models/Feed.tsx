@@ -12,6 +12,6 @@ const feedSchema = createSchema(
 
 
 
-export const Feeds = typedModel('Feeds', feedSchema);
+export const feedModel = typedModel('Feeds', feedSchema);
 
 

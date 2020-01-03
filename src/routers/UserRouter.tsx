@@ -1,131 +1,76 @@
 import {Router} from "express";
+import {express, pollBase, userBase} from "../app";
+import {FeedLoader} from "../content/FeedLoader";
+import {ERROR_USER_AUTH, ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
 
 const auth = require("../middleware/auth");
-const statRoutines=require("../helpers/StatisticsBase");
-import { FeedLoader } from "../content/FeedLoader";
 
-export= function (pollModel,userModel,topicModel, express):Router {
+export = function(): Router {
     const router = express.Router();
     router.post("/users/signup", async (req, res) => {
         // Create a new user
-        try {
-            const user = new userModel(req.body);
-            try {
-                await user.save();
-            } catch (err) {
-                console.log("ERR: " + err.message.toString());
-                if (err.message.toString().includes("email")) {
-                    throw Error("304");
-                } else if (err.message.toString().includes("name")) {
-                    throw Error("305");
-                } else throw Error("400");
-            }
-            const token = await user.generateAuthToken();
+        userBase.createUser(res, req).catch((error) => {
+            console.log(error.message);
+            res.status(error.message).send(error);
+        }).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
 
-            user.password = ""; //Dont send this infos to the client
-            user.tokens = "";
-            res.status(201).send({ user, token });
-        } catch (error) {
-            console.log(error.message)
-            switch (error.message) {
-                case "305":
-                    //UserName already exists
-                    res.status(305).send(error.message);
-                    break;
-                case "304":
-                    //Email already exists
-                    res.status(304).send(error.message);
-                    break;
-                default:
-                    res.status(400).send("400");
-                    break;
-            }
-        }
     });
+    router.post("/users/createPoll", auth,async (req, res) => {
+        // Create a new user
 
+
+        pollBase.createPoll( req).catch((error) => {
+            console.log(error.message);
+            res.status(error.message).send(error);
+        }).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+
+    });
     router.post("/users/feed", async (req, res) => {
-        try {
-            const loadSize = req.body.loadSize;
-            const key = req.body.key;
-            const older = req.body.older;
-            const userid = req.body.id;
-            const feedLoader= new FeedLoader(pollModel,userModel,topicModel)
-            await feedLoader.getFeed(res,userid,loadSize,key,older)
 
-        } catch (error) {
-            console.log(error)
-            res.status(500).send(error);
-        }
+        const loadSize = req.body.loadSize;
+        const key = req.body.key;
+        const older = req.body.older;
+        const userid = req.body.id;
+        const feedLoader = new FeedLoader();
+        feedLoader.getFeed(res, userid, loadSize, key, older).catch((error) => {
+            console.log(error);
+            res.status(ERROR_USER_UNKNOWN).send(error);
+        }).then((result) => {
+            res.status(REQUEST_OK).send(result);
+
+        });
+
     });
 
     router.post("/users/me", auth, async (req, res) => {
         // View logged in user profile
         try {
             req.user.password = ""; //Dont send this infos to the client
-            req.user.tokens = "";
+            req.user.sessionTokens = [];
             const user = req.user;
             const token = req.token;
-            res.send({ user, token });
+            res.status(REQUEST_OK).send({user, token});
         } catch (error) {
-            res.status(500).send(error);
+            res.status(ERROR_USER_AUTH).send(error);
         }
     });
 
-    /**
-     * Vote not logged in
-     * Only works with finyandupdate, not manual saving and editing. reason unknown
-     * return Question to Update the adapter once
-     */
-    router.post("/questions/voteopen",  async(req, res) => {
-        try{
-            const questionID=req.body.questionid
-            const indexofanswer=req.body.indexofanswer
-            const number = "votes.".concat(indexofanswer);
-
-            const qst=await pollModel.findByIdAndUpdate(
-                questionID,
-                { $inc: { [number]: 1 }, updated: Date.now() },
-                { new: true }
-            ).populate("userid", "name avatar").populate("tags", topicModel)
-
-
-            res.status(200).send(qst)
-
-        }catch(err){
-            res.status(400).send(err.message);
-
-        }
-    });
-
-    router.post("/questions/voteclosed", auth, async(req, res) => {
-        try{
-            const questionID=req.body.questionid
-            const indexofanswer=req.body.indexofanswer
-
-            const qst = await pollModel.findById(questionID).exec();
-            if(qst){
-                if(qst.answers.size>indexofanswer){
-                    qst.answers[indexofanswer]=qst.answers[indexofanswer]+1
-                    await qst.save();
-                    statRoutines.increaseReputation(req.user, statRoutines.REPUTATION_INCREASE_VOTE)
-                    await req.user.save();
-                    res.status(200).send("")
-                }else{
-                    res.status(307).send("");
-                }
-            }else{
-                res.status(306).send("");
+    router.post("/data/vote", async (req, res) => {
+        userBase.vote(req).catch((err) => {
+                res.status(err.message).send(err.message);
             }
-        }catch(err){
-            res.status(400).send("");
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
 
-        }
     });
-
-
-
 
     router.post("/users/me/edit", auth, async (req, res) => {
+        //TODO complete this
         req.user.desc = req.body.desc;
         req.user.location = req.body.location;
         try {
@@ -134,103 +79,43 @@ export= function (pollModel,userModel,topicModel, express):Router {
             req.user.tokens = "";
             const user = req.user;
             const token = req.token;
-            res.send({ user, token });
+            res.send({user, token});
         } catch (error) {
             res.status(500).send(error);
         }
     });
 
-
     router.post("/users/me/subscribe", auth, async (req, res) => {
 
-        let token;
-        try {
-            const user= await userModel.findByIdAndUpdate(req.user._id, {
-                    "$addToSet": { "subscriptions": {content: req.body.id, type: req.body.type} }
-                },
-                { new: true }).select("-password -tokens -email")
-            let token = req.token;
-
-            res.send({ user, token });
-        }catch(error){
-            //ALREADY EXISITS -> ALREADY SUBSCRIBED
-            if(error.message.includes("duplicate")){
-                req.user.password = ""; //Dont send this infos to the client
-                req.user.tokens = "";
-                const user = req.user;
-                token = req.token;
-                res.send({ user, token });
-            }else{
-                res.status(500).send(error);
+        userBase.subscribe(req).catch((err) => {
+                res.status(err.message).send(err.message);
             }
-
-        }
-
-
-
-
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
 
     });
 
     router.post("/users/me/unsubscribe", auth, async (req, res) => {
 
-        try {
-            const user= await userModel.findByIdAndUpdate(req.user._id, {
-                    "$pull": { "subscriptions": {content: req.body.id, type: req.body.type} }
-                },
-                { new: true }).select("-password -tokens -email")
-
-            const token = req.token;
-            res.send({ user, token });
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    });
-    router.post("/users/user", async (req, res) => {
-
-
-        try {
-            const user = await userModel.findOne({ _id: req.body.id }).exec();
-            if (!user) {
-                throw new Error("300");
+        userBase.unsubscribe(req).catch((err) => {
+                res.status(err.message).send(err.message);
             }
-            user.password = ""; //Dont send this infos to the client
-            user.tokens = "";
-            console.log("getUser"+req.body.id+"   "+user)
-            res.status(201).send(user);
-        } catch (error) {
-            if (error.message === "300") {
-                res.status(300).send(error.message);
-            } else {
-                res.status(400).send("400");
-            }
-        }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+    });
+    router.post("/users/byID", async (req, res) => {
+
+        userBase.userByID(req).catch((error) => {
+            console.log(error.message);
+            res.status(error.message).send(error);
+        }).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+
     });
 
-    router.post("/users/following", async (req, res) => {
-        var loadSize = req.body.loadSize;
-        var key = req.body.key;
-        var type = req.body.type
-        var userid=req.body.id;
-        var older= req.body.older
-
-        const user = await userModel.findOne({ _id: userid }).exec();
-        const skippie = Math.max(0, key) * loadSize;
-        const followingIDs = user.following.slice(skippie, loadSize + 1);
-
-        const query = {};
-        if(userid){
-            query["_id"] = { $in:followingIDs }
-        }
-        const questions = await userModel
-            .find(query)
-            .select("-password -tokens -email")
-            .limit(loadSize)
-            .exec();
-
-        res.status(200).send(questions)
-
-    });
     router.post("/users/me/logout", auth, async (req, res) => {
         try {
             req.user.tokens = req.user.tokens.filter(token => {
@@ -253,36 +138,13 @@ export= function (pollModel,userModel,topicModel, express):Router {
         }
     });
 
-
     router.post("/users/login", async (req, res) => {
-        try {
-            const { email, password } = req.body;
-            const user = await userModel.findByCredentials(email, password);
-
-            if (!user) {
-                return res
-                    .status(401)
-                    .send({ error: "Login failed! Check authentication credentials" });
-            }
-            const token = await user.generateAuthToken();
-            user.password = ""; //Dont send this infos to the client
-            user.tokens = "";
-            res.send({ user, token });
-        } catch (error) {
-            switch (error.message) {
-                case "300":
-                    //Invalid Email
-                    res.status(300).send(error.message);
-                    break;
-                case "301":
-                    //Invalid PAssword
-                    res.status(301).send(error.message);
-                    break;
-                default:
-                    res.status(400).send("400");
-                    break;
-            }
-        }
+        userBase.login(req).catch((error) => {
+            console.log(error.message);
+            res.status(error.message).send(error);
+        }).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
     });
     return router;
 };

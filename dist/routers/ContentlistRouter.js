@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const app_1 = require("../app");
 const ContentlistLoader_1 = require("../content/ContentlistLoader");
-module.exports = function (pollModel, userModel, topicModel, express) {
-    const router = express.Router();
-    const contentlistLoader = new ContentlistLoader_1.ContentlistLoader(pollModel, userModel, topicModel);
+const Poll_1 = require("../models/Poll");
+const Topic_1 = require("../models/Topic");
+const User_1 = require("../models/User");
+module.exports = function () {
+    const router = app_1.express.Router();
+    const contentlistLoader = new ContentlistLoader_1.ContentlistLoader(Poll_1.pollModel, User_1.userModel, Topic_1.topicModel);
     router.post("/contentlist", (req, res) => __awaiter(this, void 0, void 0, function* () {
         const result = yield contentlistLoader.getContent(req);
         res.status(200).send(result);

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
+const app_1 = require("../app");
 const Constants_1 = require("../helpers/Constants");
 var ContentLists;
 (function (ContentLists) {
@@ -32,7 +33,7 @@ class ContentlistLoader {
         this.pollModel = pollModel;
         this.topicModel = topicModel;
         setInterval(() => {
-            this.refreshContentlist(0, "0").then();
+            this.refreshAllContentLists();
         }, Constants_1.CONTENTLIST_REFRESH_INTERVALL);
         //   this.createSamplePolls();
     }
@@ -152,6 +153,17 @@ class ContentlistLoader {
      */
     generateCachedName(type, topic) {
         return type.concat(topic);
+    }
+    refreshAllContentLists() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allParentTopicList = yield app_1.topicBase.getAllParentTopicIDs();
+            for (let topic of allParentTopicList) {
+                for (let index in ContentLists) {
+                    const type = ContentLists[index];
+                    this.refreshContentlist(type, topic._id);
+                }
+            }
+        });
     }
 }
 exports.ContentlistLoader = ContentlistLoader;

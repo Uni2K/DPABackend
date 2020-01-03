@@ -1,28 +1,23 @@
-
-const REPUTATION_THRESHOLD_CREATE = 30;
-const REPUTATION_THRESHOLD_FLAG = 300;
-const REPUTATION_THRESHOLD_CREATE_FOREVER = 1000;
-const REPUTATION_INCREASE_CREATE = 5;
-const REPUTATION_INCREASE_VOTE = 1;
-
 /**
  * Increases the reputation of a user
  * -> Voting works without having an account -> UserID might be 0
  * -> Call on AnswerQuestions + createQuestion
- * TODO: IMPLEMENT
  */
-exports.increaseReputation =  function(user, type) {
+import {REPUTATION_INCREASE_CREATE, REPUTATION_INCREASE_VOTE} from "./Constants";
+
+export async function increaseReputation(user, type) {
     if (user) {
         if (type == REPUTATION_INCREASE_CREATE)
             user.reputation = user.reputation + REPUTATION_INCREASE_CREATE;
         else user.reputation = user.reputation + REPUTATION_INCREASE_VOTE;
+
+        await user.save()
     }};
 
 /**
  * Takes the reputation from the correct user as an input and the threshold
- * TODO: RETURN a value to evaluate the result in the app
  */
-exports.isReputationEnough = function(reputation, threshold) {
+export function isReputationEnough(reputation, threshold):boolean {
     if (reputation > threshold) {
         return true;
     } else return false;

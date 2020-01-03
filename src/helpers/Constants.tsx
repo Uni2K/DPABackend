@@ -1,3 +1,25 @@
 
 export const CONTENTLIST_SIZE:number=1000
 export const CONTENTLIST_REFRESH_INTERVALL:number=15000
+
+
+export const REQUEST_OK=200
+
+export const ERROR_USER_UNKNOWN="400"
+export const ERROR_USER_NAME="305"
+export const ERROR_USER_EMAIL="306"
+export const ERROR_USER_PW="307"
+
+export const ERROR_USER_DUPLICATE_SUB="308"
+export const ERROR_USER_LOGIN_FAILED="309"
+export const ERROR_USER_AUTH="310"
+export const ERROR_USER_REPUTATION_NOT_ENOUGH="311"
+
+
+
+
+export const REPUTATION_THRESHOLD_CREATE = 30;
+export const REPUTATION_THRESHOLD_FLAG = 300;
+export const REPUTATION_THRESHOLD_CREATE_FOREVER = 1000;
+export const REPUTATION_INCREASE_CREATE = 5;
+export const REPUTATION_INCREASE_VOTE = 1;

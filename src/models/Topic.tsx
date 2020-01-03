@@ -9,7 +9,8 @@ const topicSchema = createSchema(
         baseColor: Type.string({ required: false }),
         iconURL: Type.string({ required: false , default: ""}),
        description: Type.string({ required: false , default: ""}),
-        flag: Type.number({default: 0})
+        flag: Type.number({default: 0}),
+        enabled:Type.boolean({default:true})
     },
     { _id: false, timestamps: false }
 );

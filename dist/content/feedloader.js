@@ -9,7 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const feedModel = require("../models/Feed");
+const Feed_1 = require("../models/Feed");
+const Poll_1 = require("../models/Poll");
+const Topic_1 = require("../models/Topic");
+const User_1 = require("../models/User");
 /** Order:
  * 1.User logged in -> getInitialFeed for userid -> Feed is empty -> Load 50 questions in the feed to enable some backscroll
  * 2. Return feed, starting from 0 at the first of the 50 items
@@ -32,15 +35,10 @@ const feedModel = require("../models/Feed");
  * Better: Store selected feed tags on the server-> load the 50 questions of the correct tags
  */
 class FeedLoader {
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-    }
     getFeed(res, userid_, loadsize, index, older) {
         return __awaiter(this, void 0, void 0, function* () {
             // Find User to get his Subscriptions
-            const user = yield this.userModel
+            const user = yield User_1.userModel
                 .findById({
                 _id: userid_
             })
@@ -64,17 +62,17 @@ class FeedLoader {
             else
                 query["timestamp"] = { $gt: index };
             query["$or"] = [{ userid: { $in: userContent } }, { tags: { $in: topicContent } }];
-            const questionsInFeed = yield this.pollModel
+            const questionsInFeed = yield Poll_1.pollModel
                 .find(query)
                 //.select("_id")
                 .sort({ timestamp: -1 })
                 .limit(loadsize)
-                .populate("tags", this.topicModel)
+                .populate("tags", Topic_1.topicModel)
                 .populate("userid", "name avatar")
                 .lean()
                 .exec();
             console.log("GET FEED Config: " + userid_ + " " + loadsize + " " + older + "  " + index + "  " + questionsInFeed.length);
-            res.status(200).send(questionsInFeed);
+            return questionsInFeed;
             //Add the direct items, User, Topics -> they got a timestamp in the subscription, if it matches -> LATER
             /* if(older){
                var indexStart=index
@@ -128,16 +126,16 @@ class FeedLoader {
     ;
     addQuestionToFeed(userid_, questionid) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield feedModel
+            const result = yield Feed_1.feedModel
                 .findOneAndUpdate({ userid: userid_ }, {
                 $setOnInsert: { userid: userid_ },
                 $addToSet: { content: "Q" + questionid }
             }, {
-                returnOriginal: false,
+                //returnOriginal: false,
                 upsert: true
             })
                 .exec();
-            const newOrUpdatedDocument = result.value;
+            // const newOrUpdatedDocument = result.value;
         });
     }
     ;
