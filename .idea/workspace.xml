@@ -2,53 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/interfaces/IDInterface.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/Comment.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/Conversation.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/ConversationParticipant.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Feed.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Feed.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Feed.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Feed.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/QuestionRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/QuestionRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/QuestionRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/QuestionRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/FeedLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/FeedLoader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/Constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/UserBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Feed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Feed.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Topic.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/QuestionRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/PollRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/UserRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/UserRouter.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +33,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/routers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/models" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
@@ -89,6 +46,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Dokumente\DPA\Backend\src\models" />
       <recent name="D:\Dokumente\DPA\Backend\src\routers" />
       <recent name="D:\Dokumente\DPABackend\src\models" />
     </key>
@@ -131,6 +89,7 @@
       <workItem from="1577955208129" duration="4094000" />
       <workItem from="1577980099815" duration="9878000" />
       <workItem from="1578042824664" duration="14393000" />
+      <workItem from="1578411462704" duration="2132000" />
     </task>
     <servers />
   </component>
@@ -243,10 +202,10 @@
     </state>
     <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577962852254" />
     <state x="832" y="198" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714230830" />
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578042849298">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578411649970">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578042849298" />
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578411649970" />
     <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577987290060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
