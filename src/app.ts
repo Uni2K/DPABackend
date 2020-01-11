@@ -1,19 +1,26 @@
 export const express = require('express')
+import {ContentlistLoader} from "./content/ContentlistLoader";
+import {PeriodicRunners} from "./helpers/PeriodicRunners";
 import {PollBase} from "./helpers/PollBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {UserBase} from "./helpers/UserBase";
 
 
-export const statisticsBase=  require('./helpers/StatisticsBase')
+
 export const topicBase:TopicBase=  new TopicBase()
 export const userBase:UserBase=  new UserBase()
 export const pollBase:PollBase=  new PollBase()
+
+
 
 
 export const userRouter = require('./routers/UserRouter')()
 export const questionRouter = require('./routers/PollRouter')()
 export const topicRouter = require('./routers/TopicRouter')()
 export const contentlistcRouter = require('./routers/ContentlistRouter')()
+
+export const contentlistLoader = new ContentlistLoader()
+export const periodicRunners = new PeriodicRunners()
 
 const port = 3000
 

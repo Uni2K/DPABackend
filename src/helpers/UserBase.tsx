@@ -2,14 +2,19 @@ import {performance} from 'perf_hooks';
 import {pollModel} from "../models/Poll";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
+import {reportModel} from "../models/Report";
+import {commentModel} from "../models/Comment";
+import {conversationModel} from "../models/Conversation";
+import {conversationParticipantModel} from "../models/ConversationParticipant";
+
 import {
     ERROR_USER_DUPLICATE_SUB,
     ERROR_USER_EMAIL,
     ERROR_USER_LOGIN_FAILED,
     ERROR_USER_NAME,
-    ERROR_USER_UNKNOWN
+    ERROR_USER_UNKNOWN, REPUTATION_VOTE
 } from "./Constants";
-import {increaseReputation, REPUTATION_INCREASE_VOTE} from "./StatisticsBase";
+import {adjustReputation} from "./StatisticsBase";
 
 export class UserBase {
 
@@ -95,9 +100,18 @@ export class UserBase {
         ).populate("userid", "name avatar").exec();
 
         if (user !== undefined) {
-            await increaseReputation(user, REPUTATION_INCREASE_VOTE);
+            await adjustReputation(user, REPUTATION_VOTE);
         }
         return result;
+    }
+
+    async report(req) {
+        return new reportModel({
+            user: req.user._id,
+            type: req.body.type,
+            target: req.body.target
+        }).save();
+
     }
 
     async subscribe(req) {
@@ -140,10 +154,68 @@ export class UserBase {
 
     }
 
+    async userByID(req) {
+        return userModel.findOne({_id: req.body.id}).select("-email -password -sessionTokens").lean().exec();
+    }
+
+    /**
+     * A Comment in a deep pool conversation
+     *  POLL
+     *  --> Conversation 1
+     *     -->Comment
+     *     -->Comment
+     *     -->Comment
+     --> Conversation 2
+     *     -->Comment
+     *     -->Comment
+     *     -->Comment
+     */
+    async addComment(req) {
+
+        let conversation = null;
+        if (req.conversationid != "-1") {
+            conversation = await conversationModel.findOne({_id: req.body.conversationid}).lean().exec();
+
+            if (conversation == null) {
+                //TODO: TEST it
+                conversation = await this.createConversation(req);
+            }
+
+        } else {
+            conversation = await this.createConversation(req);
+        }
 
 
-    async userByID(req){
-        return userModel.findOne({ _id: req.body.id }).select("-email -password -sessionTokens").lean().exec();
+        const user = new commentModel({
+            user: req.user._id,
+            conversation:conversation._id,
+            header: req.body.header,
+            content: req.body.content,
+            parentComment:req.body.parentcomment
+
+        });
+
+        return user.save();
+
+    }
+
+    async getComments(req){
+       return commentModel.findOne({conversation: req.body.conversationid}).lean().exec();
+    }
+    async getConversations(req){
+        return conversationModel.findOne({parentPoll: req.body.pollid}).lean().exec();
+    }
+
+
+    private async createConversation(req) {
+
+        const user = new conversationModel({
+            user: req.user._id,
+
+        });
+
+        return user.save();
+
     }
 
 }

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const app_1 = require("../app");
 const FeedLoader_1 = require("../content/FeedLoader");
 const Constants_1 = require("../helpers/Constants");
+const StatisticsBase_1 = require("../helpers/StatisticsBase");
 const auth = require("../middleware/auth");
 module.exports = function () {
     const router = app_1.express.Router();
@@ -25,12 +26,7 @@ module.exports = function () {
     }));
     router.post("/users/createPoll", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         // Create a new user
-        app_1.pollBase.createPoll(req).catch((error) => {
-            console.log(error.message);
-            res.status(error.message).send(error);
-        }).then((result) => {
-            res.status(Constants_1.REQUEST_OK).send(result);
-        });
+        yield app_1.pollBase.createPoll(req, res);
     }));
     router.post("/users/feed", (req, res) => __awaiter(this, void 0, void 0, function* () {
         const loadSize = req.body.loadSize;
@@ -63,6 +59,22 @@ module.exports = function () {
             res.status(err.message).send(err.message);
         }).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
+        });
+    }));
+    router.post("/data/report", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.report(req).catch((err) => {
+            res.status(err.message).send(err.message);
+        }).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+            StatisticsBase_1.adjustReputation(req.user, Constants_1.REPUTATION_REPORT);
+        });
+    }));
+    router.post("/data/comment", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.addComment(req).catch((err) => {
+            res.status(err.message).send(err.message);
+        }).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+            StatisticsBase_1.adjustReputation(req.user, Constants_1.REPUTATION_COMMENT);
         });
     }));
     router.post("/users/me/edit", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {

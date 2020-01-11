@@ -12,30 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 const app_1 = require("../app");
 const Constants_1 = require("../helpers/Constants");
-var ContentLists;
-(function (ContentLists) {
-    ContentLists[ContentLists["Hot"] = 0] = "Hot";
-    ContentLists[ContentLists["Recent"] = 1] = "Recent";
-    ContentLists[ContentLists["Recommended"] = 2] = "Recommended";
-    ContentLists[ContentLists["ScoreToplist"] = 3] = "ScoreToplist";
-})(ContentLists || (ContentLists = {}));
-var ContentFlags;
-(function (ContentFlags) {
-    ContentFlags[ContentFlags["Idle"] = 0] = "Idle";
-    ContentFlags[ContentFlags["Recommended"] = 1] = "Recommended";
-    ContentFlags[ContentFlags["Hot"] = 2] = "Hot";
-})(ContentFlags || (ContentFlags = {}));
+const Poll_1 = require("../models/Poll");
 class ContentlistLoader {
-    constructor(pollModel, userModel, topicModel) {
+    constructor() {
         this.redisClient = require('async-redis').createClient;
         this.redis = this.redisClient(6379, 'localhost');
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-        setInterval(() => {
-            this.refreshAllContentLists();
-        }, Constants_1.CONTENTLIST_REFRESH_INTERVALL);
-        //   this.createSamplePolls();
     }
     /**
      * Main Entry point for every contentlist, called by the client via the express router
@@ -60,7 +41,7 @@ class ContentlistLoader {
             const listResult = JSON.parse(stringResult);
             const rangedArray = listResult.slice(entryPoint, endPoint);
             //Populating, fast
-            const questions = yield this.pollModel
+            const questions = yield Poll_1.pollModel
                 .find({ _id: { $in: rangedArray } })
                 .populate("userid", "name avatar _id")
                 .lean()
@@ -80,19 +61,19 @@ class ContentlistLoader {
             let sortingValue = "scoreOverall";
             let sortingFlag = 0;
             switch (type) {
-                case ContentLists.ScoreToplist:
+                case Constants_1.ContentLists.ScoreToplist:
                     sortingValue = "scoreOverall";
                     break;
-                case ContentLists.Recent:
+                case Constants_1.ContentLists.Recent:
                     sortingValue = "createdAt";
                     break;
-                case ContentLists.Recommended:
+                case Constants_1.ContentLists.Recommended:
                     sortingValue = "-1";
-                    sortingFlag = ContentFlags.Recommended;
+                    sortingFlag = Constants_1.ContentFlags.Recommended;
                     break;
-                case ContentLists.Hot:
+                case Constants_1.ContentLists.Hot:
                     sortingValue = "-1";
-                    sortingFlag = ContentFlags.Hot;
+                    sortingFlag = Constants_1.ContentFlags.Hot;
                     break;
             }
             const query = {};
@@ -122,7 +103,7 @@ class ContentlistLoader {
      */
     createSimpleSortingList(sortingValue, query) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.pollModel
+            return Poll_1.pollModel
                 .find(query)
                 .select("_id") //even faster
                 .sort({ [sortingValue]: -1 })
@@ -136,10 +117,10 @@ class ContentlistLoader {
      */
     createFlaggedList(type, query) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (type == ContentFlags.Idle)
+            if (type == Constants_1.ContentFlags.Idle)
                 return null;
             query["flag"] = type;
-            return this.pollModel
+            return Poll_1.pollModel
                 .find(query)
                 .select("_id") //even faster
                 .sort({ "createdAt": -1 }) //TODO: Improve sorting -> createdAt makes no sense
@@ -158,8 +139,8 @@ class ContentlistLoader {
         return __awaiter(this, void 0, void 0, function* () {
             const allParentTopicList = yield app_1.topicBase.getAllParentTopicIDs();
             for (let topic of allParentTopicList) {
-                for (let index in ContentLists) {
-                    const type = ContentLists[index];
+                for (let index in Constants_1.ContentLists) {
+                    const type = Constants_1.ContentLists[index];
                     this.refreshContentlist(type, topic._id);
                 }
             }

@@ -1,4 +1,5 @@
 import {createSchema, Type, typedModel} from 'ts-mongoose';
+import {PollTypes} from "../helpers/Constants";
 
 const topicModel = require('./Topic');
 
@@ -9,7 +10,8 @@ const pollSchema = createSchema(
 
         header: Type.string({required: true}),
         description: Type.string({required: true}),
-        type: Type.number({ default: 0}),
+        type: Type.number({default: PollTypes.Default}),
+        typeFlags: Type.array().of({flag:Type.number({default: 0}), payload:Type.string()}),
 
         answers: Type.array({required: true}).of({text: Type.string(), type: Type.number(), votes: Type.number()}),
         expirationDate: Type.date({required: true}),

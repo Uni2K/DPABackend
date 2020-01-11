@@ -16,9 +16,10 @@ const User_1 = require("../models/User");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 class PollBase {
-    createPoll(req) {
+    createPoll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (StatisticsBase_1.isReputationEnough(req.user.reputation, Constants_1.REPUTATION_THRESHOLD_CREATE)) {
+            const tributeValue = StatisticsBase_1.calculatePollTribute(req);
+            if (StatisticsBase_1.isReputationEnough(req.user.reputation, tributeValue)) {
                 throw Error(Constants_1.ERROR_USER_REPUTATION_NOT_ENOUGH);
             }
             const promise = new Poll_1.pollModel({
@@ -26,10 +27,17 @@ class PollBase {
                 user: req.body.userid,
                 header: req.body.header,
                 description: req.body.description,
+                typeFlags: req.body.typeFlags,
                 type: req.body.type,
                 answers: req.body.answers,
-            }).save();
-            return promise;
+            }).save().catch((error) => {
+                console.log(error.message);
+                res.status(error.message).send(error);
+            }).then((result) => {
+                StatisticsBase_1.adjustReputation(req.user, tributeValue);
+                res.status(Constants_1.REQUEST_OK).send(result);
+            });
+            yield promise;
         });
     }
     createSamplePolls() {
@@ -78,8 +86,9 @@ class PollBase {
             if (direction < 0) {
                 entryPoint = index - pageSize;
             }
-            if (filterTopics !== undefined)
+            if (filterTopics !== undefined) {
                 query["topic"] = { $in: filterTopics };
+            }
             return Poll_1.pollModel
                 .find(query)
                 .sort({ "createdAt": -1 })

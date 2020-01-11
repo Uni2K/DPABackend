@@ -2,42 +2,17 @@ import {ExtractDoc} from "ts-mongoose";
 import {performance} from 'perf_hooks'
 import {forEachComment} from "tslint";
 import {pollBase, topicBase} from "../app";
-import {CONTENTLIST_REFRESH_INTERVALL, CONTENTLIST_SIZE} from "../helpers/Constants";
+import {ContentFlags, INTERVAL_CONTENTLIST_REFRESH, CONTENTLIST_SIZE, ContentLists} from "../helpers/Constants";
 import {IDInterface} from "../interfaces/IDInterface";
+import {pollModel} from "../models/Poll";
 
-enum ContentLists {
-    Hot,
-    Recent,
-    Recommended,
-    ScoreToplist
 
-}
-enum ContentFlags {
-    Idle,
-    Recommended,
-    Hot,
-
-}
 
 export class ContentlistLoader {
 
-    private userModel;
-    private pollModel;
-    private topicModel;
     private redisClient = require('async-redis').createClient;
     private redis = this.redisClient(6379, 'localhost');
 
-    constructor(pollModel, userModel, topicModel) {
-        this.userModel = userModel;
-        this.pollModel = pollModel;
-        this.topicModel = topicModel;
-        setInterval(() => {
-          this.refreshAllContentLists()
-
-        }, CONTENTLIST_REFRESH_INTERVALL);
-
-     //   this.createSamplePolls();
-    }
 
 
 
@@ -68,7 +43,7 @@ export class ContentlistLoader {
         const rangedArray: Array<string> = listResult.slice(entryPoint, endPoint);
 
         //Populating, fast
-        const questions = await this.pollModel
+        const questions = await pollModel
             .find({_id: {$in: rangedArray}})
             .populate("userid", "name avatar _id")
             .lean()
@@ -85,7 +60,7 @@ export class ContentlistLoader {
      * 3. Save the list in Redis
      * TODO: Clean this up?!
      */
-    private async refreshContentlist(type: number, topic: string) {
+    async refreshContentlist(type: number, topic: string) {
 
         let sortingValue = "scoreOverall";
         let sortingFlag = 0
@@ -139,7 +114,7 @@ export class ContentlistLoader {
      * @param query
      */
    async createSimpleSortingList(sortingValue: string, query: {}):Promise<any>{
-       return this.pollModel
+       return pollModel
            .find(query)
            .select("_id") //even faster
            .sort({[sortingValue]: -1})
@@ -155,7 +130,7 @@ export class ContentlistLoader {
     private async createFlaggedList(type: number, query: {}):Promise<any> {
         if(type==ContentFlags.Idle)return null
         query["flag"]=type
-        return this.pollModel
+        return pollModel
             .find(query)
             .select("_id") //even faster
             .sort({"createdAt": -1}) //TODO: Improve sorting -> createdAt makes no sense

@@ -9,25 +9,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Increases the reputation of a user
- * -> Voting works without having an account -> UserID might be 0
- * -> Call on AnswerQuestions + createQuestion
- */
 const Constants_1 = require("./Constants");
-function increaseReputation(user, type) {
+function adjustReputation(user, value) {
     return __awaiter(this, void 0, void 0, function* () {
         if (user) {
-            if (type == Constants_1.REPUTATION_INCREASE_CREATE)
-                user.reputation = user.reputation + Constants_1.REPUTATION_INCREASE_CREATE;
-            else
-                user.reputation = user.reputation + Constants_1.REPUTATION_INCREASE_VOTE;
+            user.reputation = user.reputation + value;
             yield user.save();
         }
     });
 }
-exports.increaseReputation = increaseReputation;
-;
+exports.adjustReputation = adjustReputation;
+function calculatePollTribute(req) {
+    let type = req.body.polltype;
+    let typeFlags = JSON.parse(req.body.polltypeflags);
+    let rep = 0;
+    switch (type) {
+        case Constants_1.PollTypes.Default:
+            rep = rep + Constants_1.TRIBUT_CREATE_DEFAULT;
+            break;
+        case Constants_1.PollTypes.Deep:
+            rep = rep + Constants_1.TRIBUT_CREATE_DEEP;
+            break;
+        case Constants_1.PollTypes.ToF:
+            rep = rep + Constants_1.TRIBUT_CREATE_TOF;
+            break;
+    }
+    for (let flag of typeFlags) {
+        switch (flag.type) {
+            case Constants_1.PollTypeFlags.Local:
+                rep = rep + Constants_1.TRIBUT_CREATE_LOCAL;
+                break;
+            case Constants_1.PollTypeFlags.PrivateStrict:
+                rep = rep + Constants_1.TRIBUT_CREATE_PRIVATESTRICT;
+                break;
+            case Constants_1.PollTypeFlags.PrivateSubs:
+                rep = rep + Constants_1.TRIBUT_CREATE_PRIVATESUB;
+                break;
+            case Constants_1.PollTypeFlags.Thread:
+                rep = rep + Constants_1.TRIBUT_CREATE_THREAD;
+                break;
+        }
+    }
+    return rep;
+}
+exports.calculatePollTribute = calculatePollTribute;
 /**
  * Takes the reputation from the correct user as an input and the threshold
  */
@@ -35,8 +60,9 @@ function isReputationEnough(reputation, threshold) {
     if (reputation > threshold) {
         return true;
     }
-    else
+    else {
         return false;
+    }
 }
 exports.isReputationEnough = isReputationEnough;
 //# sourceMappingURL=StatisticsBase.js.map

@@ -2,10 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/models/Comment.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/Conversation.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/ConversationParticipant.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfaces/PollTypeFlagInterface.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/PollVote.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/Report.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Comment.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Comment.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/Constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/StatisticsBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/UserBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Comment.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Comment.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ConversationParticipant.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PollSnapshot.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/UserRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/UserRouter.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +78,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Dokumente\DPA\Backend\src\models" />
+      <recent name="D:\Dokumente\DPA\Backend\src\interfaces" />
       <recent name="D:\Dokumente\DPA\Backend\src\routers" />
       <recent name="D:\Dokumente\DPABackend\src\models" />
     </key>
@@ -90,6 +122,8 @@
       <workItem from="1577980099815" duration="9878000" />
       <workItem from="1578042824664" duration="14393000" />
       <workItem from="1578411462704" duration="2132000" />
+      <workItem from="1578483361284" duration="43000" />
+      <workItem from="1578773281612" duration="7138000" />
     </task>
     <servers />
   </component>
@@ -105,9 +139,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577708549158" />
-    <state x="733" y="324" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577714066636">
+    <state x="733" y="324" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578779213335">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="733" y="324" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1578779213335" />
     <state x="733" y="324" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714066636" />
     <state x="740" y="226" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1577708411509">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -121,14 +156,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="590" y="210" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577708082429" />
+    <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578780613487">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578780613487" />
     <state width="401" height="466" key="DebuggerActiveHint" timestamp="1577963567394">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="401" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1577963567394" />
-    <state x="635" y="235" key="FileChooserDialogImpl" timestamp="1577708491738">
+    <state x="635" y="235" key="FileChooserDialogImpl" timestamp="1578483371981">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="635" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1577708491738" />
+    <state x="635" y="235" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1578483371981" />
     <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1578073749368">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -202,10 +241,10 @@
     </state>
     <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577962852254" />
     <state x="832" y="198" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714230830" />
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578411649970">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578483361678">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578411649970" />
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578483361678" />
     <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577987290060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -214,14 +253,15 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="521" y="257" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040@0.0.1920.1040" timestamp="1577961943782" />
-    <state x="656" y="118" width="607" height="804" key="find.popup" timestamp="1578047753416">
+    <state x="656" y="118" width="607" height="804" key="find.popup" timestamp="1578777548461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="118" width="607" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578047753416" />
+    <state x="656" y="118" width="607" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578777548461" />
     <state x="656" y="118" width="607" height="804" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728916575" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1577727283258">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1578779124548">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578779124548" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577727283258" />
   </component>
   <component name="XDebuggerManager">

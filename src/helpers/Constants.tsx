@@ -1,7 +1,8 @@
 
 export const CONTENTLIST_SIZE:number=1000
-export const CONTENTLIST_REFRESH_INTERVALL:number=15000
 
+export const INTERVAL_CONTENTLIST_REFRESH:number=15000
+export const INTERVAL_SNAPSHOT_CREATION:number=15000
 
 export const REQUEST_OK=200
 
@@ -18,8 +19,80 @@ export const ERROR_USER_REPUTATION_NOT_ENOUGH="311"
 
 
 
-export const REPUTATION_THRESHOLD_CREATE = 30;
-export const REPUTATION_THRESHOLD_FLAG = 300;
-export const REPUTATION_THRESHOLD_CREATE_FOREVER = 1000;
-export const REPUTATION_INCREASE_CREATE = 5;
-export const REPUTATION_INCREASE_VOTE = 1;
+export const TRIBUT_CREATE_DEFAULT = 5;
+export const TRIBUT_CREATE_DEFAULT_IMAGE = 10;
+export const TRIBUT_CREATE_DEEP = 100;
+export const TRIBUT_CREATE_TOF = 20;
+
+export const TRIBUT_CREATE_LOCAL = 2;
+export const TRIBUT_CREATE_PRIVATESUB = 5;
+export const TRIBUT_CREATE_PRIVATESTRICT = 5;
+export const TRIBUT_CREATE_THREAD = 15;
+
+export const TRIBUT_CREATE_DURATION_IMAGE = 10;
+
+
+export const REPUTATION_VOTE = 10;
+export const REPUTATION_REPORT = 10;
+export const REPUTATION_COMMENT = 20;
+
+export const REPUTATION_GETFLAGGED = -10;
+export const REPUTATION_DUPLICATE = -10;
+
+
+
+export enum PollTypeFlags {
+    Idle,
+    Local, //Location Added
+    PrivateSubs, // only for subs
+    PrivateStrict, //only for link users
+    Thread,
+    Limited
+}
+
+export enum ReportTypes {
+    pollUnsuitable,
+    pollDuplicate,
+    pollSpam,
+    pollHatespeech,
+    userBot,
+    userDuplicate,
+    userHacked,
+    userSpam,
+    userHatespeech
+}
+
+export enum PollTypes {
+    Default,
+    Deep,
+    ToF
+}
+
+export enum PollDurations {
+   hour,
+    day,
+    week,
+    month,
+    unlimited
+}
+
+export enum TopicFlags {
+    Idle,
+    Recommended,
+    Hot,
+    New
+}
+export enum ContentLists {
+    Hot,
+    Recent,
+    Recommended,
+    ScoreToplist
+
+}
+export enum ContentFlags {
+    Idle,
+    Recommended,
+    Hot,
+    Controverse
+
+}

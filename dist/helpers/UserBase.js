@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 const Poll_1 = require("../models/Poll");
 const User_1 = require("../models/User");
+const Report_1 = require("../models/Report");
+const Comment_1 = require("../models/Comment");
+const Conversation_1 = require("../models/Conversation");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 class UserBase {
@@ -91,9 +94,18 @@ class UserBase {
             const selection = "answers.".concat(indexofanswer).concat("votes");
             const result = yield Poll_1.pollModel.findByIdAndUpdate(questionID, { $inc: { selection: 1 } }, { new: true }).populate("userid", "name avatar").exec();
             if (user !== undefined) {
-                yield StatisticsBase_1.increaseReputation(user, StatisticsBase_1.REPUTATION_INCREASE_VOTE);
+                yield StatisticsBase_1.adjustReputation(user, Constants_1.REPUTATION_VOTE);
             }
             return result;
+        });
+    }
+    report(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Report_1.reportModel({
+                user: req.user._id,
+                type: req.body.type,
+                target: req.body.target
+            }).save();
         });
     }
     subscribe(req) {
@@ -137,6 +149,59 @@ class UserBase {
     userByID(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return User_1.userModel.findOne({ _id: req.body.id }).select("-email -password -sessionTokens").lean().exec();
+        });
+    }
+    /**
+     * A Comment in a deep pool conversation
+     *  POLL
+     *  --> Conversation 1
+     *     -->Comment
+     *     -->Comment
+     *     -->Comment
+     --> Conversation 2
+     *     -->Comment
+     *     -->Comment
+     *     -->Comment
+     */
+    addComment(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let conversation = null;
+            if (req.conversationid != "-1") {
+                conversation = yield Conversation_1.conversationModel.findOne({ _id: req.body.conversationid }).lean().exec();
+                if (conversation == null) {
+                    //TODO: TEST it
+                    conversation = yield this.createConversation(req);
+                }
+            }
+            else {
+                conversation = yield this.createConversation(req);
+            }
+            const user = new Comment_1.commentModel({
+                user: req.user._id,
+                conversation: conversation._id,
+                header: req.body.header,
+                content: req.body.content,
+                parentComment: req.body.parentcomment
+            });
+            return user.save();
+        });
+    }
+    getComments(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Comment_1.commentModel.findOne({ conversation: req.body.conversationid }).lean().exec();
+        });
+    }
+    getConversations(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Conversation_1.conversationModel.findOne({ parentPoll: req.body.pollid }).lean().exec();
+        });
+    }
+    createConversation(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = new Conversation_1.conversationModel({
+                user: req.user._id,
+            });
+            return user.save();
         });
     }
 }

@@ -1,7 +1,14 @@
 import {Router} from "express";
 import {express, pollBase, userBase} from "../app";
 import {FeedLoader} from "../content/FeedLoader";
-import {ERROR_USER_AUTH, ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
+import {
+    ERROR_USER_AUTH,
+    ERROR_USER_UNKNOWN,
+    REPUTATION_COMMENT,
+    REPUTATION_REPORT,
+    REQUEST_OK
+} from "../helpers/Constants";
+import {adjustReputation} from "../helpers/StatisticsBase";
 
 const auth = require("../middleware/auth");
 
@@ -21,12 +28,8 @@ export = function(): Router {
         // Create a new user
 
 
-        pollBase.createPoll( req).catch((error) => {
-            console.log(error.message);
-            res.status(error.message).send(error);
-        }).then((result) => {
-            res.status(REQUEST_OK).send(result);
-        });
+       await pollBase.createPoll(req,res)
+
 
     });
     router.post("/users/feed", async (req, res) => {
@@ -66,9 +69,27 @@ export = function(): Router {
         ).then((result) => {
             res.status(REQUEST_OK).send(result);
         });
-
     });
 
+    router.post("/data/report", auth,async (req, res) => {
+        userBase.report(req).catch((err) => {
+                res.status(err.message).send(err.message);
+            }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+            adjustReputation(req.user,REPUTATION_REPORT)
+        });
+    });
+
+    router.post("/data/comment", auth,async (req, res) => {
+        userBase.addComment(req).catch((err) => {
+                res.status(err.message).send(err.message);
+            }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+            adjustReputation(req.user,REPUTATION_COMMENT)
+        });
+    });
     router.post("/users/me/edit", auth, async (req, res) => {
         //TODO complete this
         req.user.desc = req.body.desc;
