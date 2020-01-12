@@ -17,6 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const perf_hooks_1 = require("perf_hooks");
 const Topic_1 = require("../models/Topic");
+const TopicSnapshot_1 = require("../models/TopicSnapshot");
 var TopicFlags;
 (function (TopicFlags) {
     TopicFlags[TopicFlags["Idle"] = 0] = "Idle";
@@ -155,6 +156,11 @@ class TopicBase {
     getSingleTopic(topicID) {
         return __awaiter(this, void 0, void 0, function* () {
             return Topic_1.topicModel.findById(topicID).lean().exec();
+        });
+    }
+    getSnapshots(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicid }).lean().exec();
         });
     }
     /**

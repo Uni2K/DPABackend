@@ -10,7 +10,11 @@ const pollSchema = ts_mongoose_1.createSchema({
     description: ts_mongoose_1.Type.string({ required: true }),
     type: ts_mongoose_1.Type.number({ default: Constants_1.PollTypes.Default }),
     typeFlags: ts_mongoose_1.Type.array().of({ flag: ts_mongoose_1.Type.number({ default: 0 }), payload: ts_mongoose_1.Type.string() }),
-    answers: ts_mongoose_1.Type.array({ required: true }).of({ text: ts_mongoose_1.Type.string(), type: ts_mongoose_1.Type.number(), votes: ts_mongoose_1.Type.number() }),
+    answers: ts_mongoose_1.Type.array({ required: true }).of({
+        text: ts_mongoose_1.Type.string(),
+        type: ts_mongoose_1.Type.number(),
+        votes: ts_mongoose_1.Type.number()
+    }),
     expirationDate: ts_mongoose_1.Type.date({ required: true }),
     scoreOverall: ts_mongoose_1.Type.number({ default: 0 }),
     rankOverall: ts_mongoose_1.Type.number({ default: 0 }),

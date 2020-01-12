@@ -23,5 +23,16 @@ export = function() {
         })
 
     });
+    router.post("/polls/snapshot", async (req, res) => {
+        pollBase.getSnapshots(req).then((result)=>{
+            res.status(REQUEST_OK).send(result)
+        }).catch((err)=>{
+            res.status(ERROR_USER_UNKNOWN).send(err)
+        })
+
+    });
+    router.post("/data/creation/metadata", async (req, res) => {
+            res.status(REQUEST_OK).send(pollBase.getCreationMetadata())
+    });
     return router;
 };

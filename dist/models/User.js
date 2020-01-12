@@ -31,7 +31,7 @@ exports.userSchema = ts_mongoose_1.createSchema({
     sessionTokens: ts_mongoose_1.Type.array().of(ts_mongoose_1.Type.string({ name: "token" })),
     description: ts_mongoose_1.Type.string({ required: false, default: "" }),
     location: ts_mongoose_1.Type.string({ required: false, default: "" }),
-    avatarURL: ts_mongoose_1.Type.string({ required: false, default: "" }),
+    avatarImage: ts_mongoose_1.Type.string({ required: false, default: "" }),
     headerURL: ts_mongoose_1.Type.string({ required: false, default: "" }),
     additionalURL: ts_mongoose_1.Type.string({ required: false, default: "" }),
     reputation: ts_mongoose_1.Type.number({ required: false, default: 0 }),

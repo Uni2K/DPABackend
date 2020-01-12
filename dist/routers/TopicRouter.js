@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const app_1 = require("../app");
+const Constants_1 = require("../helpers/Constants");
 module.exports = function () {
     const router = app_1.express.Router();
     router.post("/topics/all", (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -19,6 +20,13 @@ module.exports = function () {
         const topicID = req.body.topic;
         const result = yield app_1.topicBase.getTopicDetails(topicID);
         res.status(200).send(result);
+    }));
+    router.post("/topics/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.topicBase.getSnapshots(req).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        }).catch((err) => {
+            res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
+        });
     }));
     //createTag()
     return router;

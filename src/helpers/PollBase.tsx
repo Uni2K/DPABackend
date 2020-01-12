@@ -1,9 +1,19 @@
 import {performance} from 'perf_hooks';
+import {topicBase} from "../app";
 import {pollModel} from "../models/Poll";
+import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
-import {ERROR_USER_REPUTATION_NOT_ENOUGH, REQUEST_OK} from "./Constants";
+import {
+    ERROR_USER_REPUTATION_NOT_ENOUGH,
+    PollDurations,
+    PollTypeFlags,
+    PollTypes,
+    REQUEST_OK, TRIBUT_CREATE_DEFAULT, TRIBUT_CREATE_DEFAULT_IMAGE,TRIBUT_CREATE_PRIVATESUB,TRIBUT_CREATE_THREAD,TRIBUT_CREATE_PRIVATESTRICT,TRIBUT_CREATE_LOCAL,TRIBUT_CREATE_TOF,TRIBUT_CREATE_DEEP
+} from "./Constants";
 import {adjustReputation, calculatePollTribute, isReputationEnough} from "./StatisticsBase";
+import { userSnapshotModel } from '../models/UserSnapshot';
+import { topicSnapshotModel } from '../models/TopicSnapshot';
 
 export class PollBase {
 
@@ -90,8 +100,75 @@ export class PollBase {
             .find(query)
             .sort({"createdAt": -1})
             .skip(entryPoint)
+            .lean()
             .limit(pageSize)
             .exec();
 
+    }
+
+    async createSnapShots() {
+        pollModel.collection.find({enabled:true}).forEach(
+            (doc)=>{
+               new pollSnapshotModel(
+                   {
+                       pollid:doc._id,
+                       answers:doc.answers
+                   }
+               ).save()
+            }
+        )
+        userModel.collection.find({enabled:true}).forEach(
+            (doc)=>{
+                new userSnapshotModel(
+                    {
+                        user:doc._id,
+                        reputationCount:doc.reputation
+                    }
+                ).save()
+            }
+        )
+       const topics=await topicBase.getAllTopics()
+        for (const doc of topics ) {
+
+            const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().count().exec()
+            new topicSnapshotModel(
+                {
+                    topicid:doc._id,
+                    pollCount:numberInTopic
+                }
+            ).save()
+        }
+
+    }
+
+
+    async getSnapshots(req){
+       return pollSnapshotModel.find({enabled:true, pollid:req.body.pollid}).lean().exec()
+    }
+
+
+    /**
+     * Sends metadata to the client to make sure, the created poll contains the correct types
+     * -> Polltypes -> Polltypeflags -> Durations -> Tributes
+     */
+    getCreationMetadata():string {
+        let jsonArray = [];
+        jsonArray["pollTypes"]=PollTypes.toString()
+        jsonArray["pollTypeFlags"]=PollTypeFlags.toString()
+        jsonArray["pollDurations"]=PollDurations.toString()
+        const varToString = varObj => Object.keys(varObj)[0]
+
+        const tributes={}
+        tributes[varToString({TRIBUT_CREATE_DEFAULT})]=TRIBUT_CREATE_DEFAULT
+        tributes[varToString({TRIBUT_CREATE_DEFAULT_IMAGE})]=TRIBUT_CREATE_DEFAULT_IMAGE
+        tributes[varToString({TRIBUT_CREATE_PRIVATESUB})]=TRIBUT_CREATE_PRIVATESUB
+        tributes[varToString({TRIBUT_CREATE_PRIVATESTRICT})]=TRIBUT_CREATE_PRIVATESTRICT
+        tributes[varToString({TRIBUT_CREATE_DEEP})]=TRIBUT_CREATE_DEEP
+        tributes[varToString({TRIBUT_CREATE_THREAD})]=TRIBUT_CREATE_THREAD
+        tributes[varToString({TRIBUT_CREATE_LOCAL})]=TRIBUT_CREATE_LOCAL
+        tributes[varToString({TRIBUT_CREATE_TOF})]=TRIBUT_CREATE_TOF
+
+        jsonArray["tributes"]=tributes
+        return JSON.stringify(jsonArray)
     }
 }

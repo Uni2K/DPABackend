@@ -8,6 +8,6 @@ const PollSnapshotSchema = ts_mongoose_1.createSchema({
     pollid: ts_mongoose_1.Type.string({ required: true }),
     answers: ts_mongoose_1.Type.array({ required: true }).of({ text: ts_mongoose_1.Type.string(), type: ts_mongoose_1.Type.number(), votes: ts_mongoose_1.Type.number() }),
     enabled: ts_mongoose_1.Type.boolean({ default: true })
-}, { _id: true, timestamps: true });
+}, { _id: false, timestamps: true });
 exports.pollSnapshotModel = ts_mongoose_1.typedModel('PollSnapshots', PollSnapshotSchema);
 //# sourceMappingURL=PollSnapshot.js.map

@@ -15,6 +15,8 @@ const User_1 = require("../models/User");
 const Report_1 = require("../models/Report");
 const Comment_1 = require("../models/Comment");
 const Conversation_1 = require("../models/Conversation");
+const UserBlocked_1 = require("../models/UserBlocked");
+const UserSnapshot_1 = require("../models/UserSnapshot");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 class UserBase {
@@ -186,6 +188,11 @@ class UserBase {
             return user.save();
         });
     }
+    getSnapshots(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return UserSnapshot_1.userSnapshotModel.find({ enabled: true, user: req.body.user }).lean().exec();
+        });
+    }
     getComments(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return Comment_1.commentModel.findOne({ conversation: req.body.conversationid }).lean().exec();
@@ -202,6 +209,24 @@ class UserBase {
                 user: req.user._id,
             });
             return user.save();
+        });
+    }
+    block(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new UserBlocked_1.userBlockedModel({
+                user: req.user._id,
+                blockeduser: req.body.blockeduser
+            }).save();
+        });
+    }
+    unblock(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return UserBlocked_1.userBlockedModel.deleteMany({ user: req.user._id, blockeduser: req.body.blockeduser }).exec();
+        });
+    }
+    getBlockedUser(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return UserBlocked_1.userBlockedModel.find({ user: req.user._id }).exec();
         });
     }
 }

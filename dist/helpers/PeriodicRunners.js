@@ -4,7 +4,7 @@ const app_1 = require("../app");
 const Constants_1 = require("./Constants");
 class PeriodicRunners {
     constructor() {
-        this.init();
+        // this.init()
     }
     init() {
         let contentListUpdater = true;
@@ -18,7 +18,7 @@ class PeriodicRunners {
         setInterval(() => {
             if (snaphotCreationUpdater) {
                 snaphotCreationUpdater = false;
-                app_1.contentlistLoader.refreshAllContentLists().then(() => snaphotCreationUpdater = true);
+                app_1.pollBase.createSnapShots().then(() => snaphotCreationUpdater = true);
             }
         }, Constants_1.INTERVAL_SNAPSHOT_CREATION);
     }

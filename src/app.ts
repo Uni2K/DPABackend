@@ -1,11 +1,26 @@
 export const express = require('express')
 import {ContentlistLoader} from "./content/ContentlistLoader";
+import {avatarPath} from "./helpers/Constants";
 import {PeriodicRunners} from "./helpers/PeriodicRunners";
 import {PollBase} from "./helpers/PollBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {UserBase} from "./helpers/UserBase";
 
+const mime = require('mime-types')
+const multer = require('multer')
 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, avatarPath);
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-'+req.body.user+"-" + Date.now()+".png");
+    }
+});
+
+export const upload = multer({ storage: storage ,limits:{
+        fileSize:10000000 //10MB
+    },})
 
 export const topicBase:TopicBase=  new TopicBase()
 export const userBase:UserBase=  new UserBase()
@@ -36,6 +51,16 @@ app.use(userRouter)
 app.use(questionRouter)
 app.use(topicRouter)
 app.use(contentlistcRouter)
+
+
+
+
+
+
+
+
+
+
 const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

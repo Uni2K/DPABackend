@@ -2,10 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.express = require('express');
 const ContentlistLoader_1 = require("./content/ContentlistLoader");
+const Constants_1 = require("./helpers/Constants");
 const PeriodicRunners_1 = require("./helpers/PeriodicRunners");
 const PollBase_1 = require("./helpers/PollBase");
 const TopicBase_1 = require("./helpers/TopicBase");
 const UserBase_1 = require("./helpers/UserBase");
+const mime = require('mime-types');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, Constants_1.avatarPath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + req.body.user + "-" + Date.now() + ".png");
+    }
+});
+exports.upload = multer({ storage: storage, limits: {
+        fileSize: 10000000 //10MB
+    }, });
 exports.topicBase = new TopicBase_1.TopicBase();
 exports.userBase = new UserBase_1.UserBase();
 exports.pollBase = new PollBase_1.PollBase();

@@ -12,6 +12,7 @@ const app_1 = require("../app");
 const FeedLoader_1 = require("../content/FeedLoader");
 const Constants_1 = require("../helpers/Constants");
 const StatisticsBase_1 = require("../helpers/StatisticsBase");
+const Image_1 = require("../models/Image");
 const auth = require("../middleware/auth");
 module.exports = function () {
     const router = app_1.express.Router();
@@ -41,6 +42,13 @@ module.exports = function () {
             res.status(Constants_1.REQUEST_OK).send(result);
         });
     }));
+    router.post("/data/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.getSnapshots(req).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        }).catch((err) => {
+            res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
+        });
+    }));
     router.post("/users/me", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         // View logged in user profile
         try {
@@ -61,6 +69,76 @@ module.exports = function () {
             res.status(Constants_1.REQUEST_OK).send(result);
         });
     }));
+    router.post("/users/block", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.block(req).catch((err) => {
+            res.status(err.message).send(err.message);
+        }).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        });
+    }));
+    router.post("/users/unblock", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.unblock(req).catch((err) => {
+            res.status(err.message).send(err.message);
+        }).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        });
+    }));
+    router.post("/users/getBlockedUser", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.userBase.getBlockedUser(req).catch((err) => {
+            res.status(err.message).send(err.message);
+        }).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        });
+    }));
+    router.post('/users/getAvatar', function (req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = req.body.user;
+            const image = yield Image_1.imageModel.findOne({ enabled: true, user: user, purpose: Constants_1.ImagePurposes.Avatar });
+            if (image == null) {
+                res.status(Constants_1.ERROR_IMAGE_ACCESS).send(Constants_1.ERROR_IMAGE_ACCESS);
+                return;
+            }
+            res.download(Constants_1.avatarPath + image.fileName, (err => {
+            }));
+        });
+    });
+    router.post('/users/changeAvatar', function (req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // let userid=req.user._id
+            let userid = "5dc6e18122304238205eccba";
+            req.user = {};
+            app_1.upload.single("avatarImage")(req, res, function (err) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    //TODO TEST!!
+                    //deal with the error(s)
+                    if (err) {
+                        switch (err.code) {
+                            case "LIMIT_FILE_SIZE":
+                                res.status(Constants_1.ERROR_IMAGE_UPLOAD_SIZE).send("ERROR_IMAGE_UPLOAD_SIZE");
+                                break;
+                            case "LIMIT_PART_COUNT":
+                                res.status(Constants_1.ERROR_IMAGE_UPLOAD_PARTS).send("ERROR_IMAGE_UPLOAD_PARTS");
+                                break;
+                            default: res.status(Constants_1.ERROR_IMAGE_UPLOAD_UNKNOWN).send("ERROR_IMAGE_UPLOAD_UNKOWN");
+                        }
+                        console.log(err);
+                        return;
+                    }
+                    yield Image_1.imageModel.deleteMany({ user: userid, purpose: Constants_1.ImagePurposes.Avatar }).exec();
+                    const img = yield new Image_1.imageModel({
+                        user: userid,
+                        fileName: req.file.filename,
+                        purpose: Constants_1.ImagePurposes.Avatar
+                    }).save();
+                    req.user.avatarImage = img._id;
+                    // await req.user.save();
+                    req.user.password = "";
+                    req.user.sessionTokens = "";
+                    res.status(Constants_1.REQUEST_OK).send(req.user);
+                });
+            });
+        });
+    });
     router.post("/data/report", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         app_1.userBase.report(req).catch((err) => {
             res.status(err.message).send(err.message);
@@ -78,8 +156,10 @@ module.exports = function () {
         });
     }));
     router.post("/users/me/edit", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        //TODO complete this
-        req.user.desc = req.body.desc;
+        req.user.avatarURL = req.body.avatarURL;
+        req.user.headerURL = req.body.headerURL;
+        req.user.additionalURL = req.body.additionalURL;
+        req.user.description = req.body.description;
         req.user.location = req.body.location;
         try {
             yield req.user.save();

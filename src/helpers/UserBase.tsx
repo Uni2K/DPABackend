@@ -1,11 +1,13 @@
 import {performance} from 'perf_hooks';
 import {pollModel} from "../models/Poll";
+import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
 import {reportModel} from "../models/Report";
 import {commentModel} from "../models/Comment";
 import {conversationModel} from "../models/Conversation";
-import {conversationParticipantModel} from "../models/ConversationParticipant";
+import {userBlockedModel} from "../models/UserBlocked";
+import {userSnapshotModel} from "../models/UserSnapshot";
 
 import {
     ERROR_USER_DUPLICATE_SUB,
@@ -199,6 +201,9 @@ export class UserBase {
 
     }
 
+    async getSnapshots(req){
+        return userSnapshotModel.find({enabled:true, user:req.body.user}).lean().exec()
+    }
     async getComments(req){
        return commentModel.findOne({conversation: req.body.conversationid}).lean().exec();
     }
@@ -218,4 +223,16 @@ export class UserBase {
 
     }
 
+    async block(req) {
+        return new userBlockedModel({
+            user:req.user._id,
+            blockeduser: req.body.blockeduser
+        }).save()
+    }
+    async unblock(req) {
+        return userBlockedModel.deleteMany({user:req.user._id, blockeduser: req.body.blockeduser}).exec()
+    }
+    async getBlockedUser(req) {
+        return userBlockedModel.find({user:req.user._id}).exec()
+    }
 }

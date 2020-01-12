@@ -24,7 +24,7 @@ export const userSchema = createSchema(
 
         description: Type.string({required: false, default: ""}),
         location: Type.string({required: false, default: ""}),
-        avatarURL: Type.string({required: false, default: ""}),
+        avatarImage: Type.string({required: false, default: ""}),
         headerURL: Type.string({required: false, default: ""}),
         additionalURL: Type.string({required: false, default: ""}),
 

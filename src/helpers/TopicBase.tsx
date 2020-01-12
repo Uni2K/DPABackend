@@ -6,7 +6,9 @@
  * Enum describing the possible flags a topics can carry
  */
 import {performance} from 'perf_hooks';
+import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
+import {topicSnapshotModel} from "../models/TopicSnapshot";
 
 enum TopicFlags {
     Idle,
@@ -145,6 +147,11 @@ export class TopicBase {
     async getSingleTopic(topicID: string) {
         return topicModel.findById(topicID).lean().exec();
     }
+
+    async getSnapshots(req){
+        return topicSnapshotModel.find({enabled:true, topicid:req.body.topicid}).lean().exec()
+    }
+
 
     /**
      * Get details about this topic. For example: Number of questions in this topic, flag and description

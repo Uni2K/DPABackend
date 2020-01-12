@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CONTENTLIST_SIZE = 1000;
 exports.INTERVAL_CONTENTLIST_REFRESH = 15000;
-exports.INTERVAL_SNAPSHOT_CREATION = 15000;
+exports.INTERVAL_SNAPSHOT_CREATION = 100000;
 exports.REQUEST_OK = 200;
 exports.ERROR_USER_UNKNOWN = "400";
 exports.ERROR_USER_NAME = "305";
@@ -12,6 +12,10 @@ exports.ERROR_USER_DUPLICATE_SUB = "308";
 exports.ERROR_USER_LOGIN_FAILED = "309";
 exports.ERROR_USER_AUTH = "310";
 exports.ERROR_USER_REPUTATION_NOT_ENOUGH = "311";
+exports.ERROR_IMAGE_UPLOAD_SIZE = "358";
+exports.ERROR_IMAGE_UPLOAD_PARTS = "359";
+exports.ERROR_IMAGE_ACCESS = "360";
+exports.ERROR_IMAGE_UPLOAD_UNKNOWN = "361";
 exports.TRIBUT_CREATE_DEFAULT = 5;
 exports.TRIBUT_CREATE_DEFAULT_IMAGE = 10;
 exports.TRIBUT_CREATE_DEEP = 100;
@@ -26,6 +30,22 @@ exports.REPUTATION_REPORT = 10;
 exports.REPUTATION_COMMENT = 20;
 exports.REPUTATION_GETFLAGGED = -10;
 exports.REPUTATION_DUPLICATE = -10;
+exports.avatarPath = process.cwd() + "/uploads/avatars/";
+var ImagePurposes;
+(function (ImagePurposes) {
+    ImagePurposes[ImagePurposes["Answer"] = 0] = "Answer";
+    ImagePurposes[ImagePurposes["Poll"] = 1] = "Poll";
+    ImagePurposes[ImagePurposes["Avatar"] = 2] = "Avatar";
+    ImagePurposes[ImagePurposes["Header"] = 3] = "Header";
+})(ImagePurposes = exports.ImagePurposes || (exports.ImagePurposes = {}));
+var AnswerTypes;
+(function (AnswerTypes) {
+    AnswerTypes[AnswerTypes["Text"] = 0] = "Text";
+    AnswerTypes[AnswerTypes["Image"] = 1] = "Image";
+    AnswerTypes[AnswerTypes["Location"] = 2] = "Location";
+    AnswerTypes[AnswerTypes["ToFPositive"] = 3] = "ToFPositive";
+    AnswerTypes[AnswerTypes["ToFNegative"] = 4] = "ToFNegative";
+})(AnswerTypes = exports.AnswerTypes || (exports.AnswerTypes = {}));
 var PollTypeFlags;
 (function (PollTypeFlags) {
     PollTypeFlags[PollTypeFlags["Idle"] = 0] = "Idle";
@@ -55,11 +75,15 @@ var PollTypes;
 })(PollTypes = exports.PollTypes || (exports.PollTypes = {}));
 var PollDurations;
 (function (PollDurations) {
-    PollDurations[PollDurations["hour"] = 0] = "hour";
-    PollDurations[PollDurations["day"] = 1] = "day";
-    PollDurations[PollDurations["week"] = 2] = "week";
-    PollDurations[PollDurations["month"] = 3] = "month";
-    PollDurations[PollDurations["unlimited"] = 4] = "unlimited";
+    PollDurations["step1"] = "1h";
+    PollDurations["step2"] = "3h";
+    PollDurations["step3"] = "1d";
+    PollDurations["step4"] = "3d";
+    PollDurations["step5"] = "1w";
+    PollDurations["step6"] = "3w";
+    PollDurations["step7"] = "1m";
+    PollDurations["step8"] = "3m";
+    PollDurations["step9"] = "u";
 })(PollDurations = exports.PollDurations || (exports.PollDurations = {}));
 var TopicFlags;
 (function (TopicFlags) {

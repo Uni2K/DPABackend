@@ -1,4 +1,5 @@
-import {express, topicBase} from "../app";
+import {express, pollBase, topicBase} from "../app";
+import {ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
 import {TopicBase} from "../helpers/TopicBase";
 
 export = function() {
@@ -15,7 +16,14 @@ export = function() {
         res.status(200).send(result);
 
     });
+    router.post("/topics/snapshot", async (req, res) => {
+        topicBase.getSnapshots(req).then((result)=>{
+            res.status(REQUEST_OK).send(result)
+        }).catch((err)=>{
+            res.status(ERROR_USER_UNKNOWN).send(err)
+        })
 
+    });
 
 
     //createTag()

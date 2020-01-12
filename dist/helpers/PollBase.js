@@ -10,11 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
+const app_1 = require("../app");
 const Poll_1 = require("../models/Poll");
+const PollSnapshot_1 = require("../models/PollSnapshot");
 const Topic_1 = require("../models/Topic");
 const User_1 = require("../models/User");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
+const UserSnapshot_1 = require("../models/UserSnapshot");
+const TopicSnapshot_1 = require("../models/TopicSnapshot");
 class PollBase {
     createPoll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -93,9 +97,61 @@ class PollBase {
                 .find(query)
                 .sort({ "createdAt": -1 })
                 .skip(entryPoint)
+                .lean()
                 .limit(pageSize)
                 .exec();
         });
+    }
+    createSnapShots() {
+        return __awaiter(this, void 0, void 0, function* () {
+            Poll_1.pollModel.collection.find({ enabled: true }).forEach((doc) => {
+                new PollSnapshot_1.pollSnapshotModel({
+                    pollid: doc._id,
+                    answers: doc.answers
+                }).save();
+            });
+            User_1.userModel.collection.find({ enabled: true }).forEach((doc) => {
+                new UserSnapshot_1.userSnapshotModel({
+                    user: doc._id,
+                    reputationCount: doc.reputation
+                }).save();
+            });
+            const topics = yield app_1.topicBase.getAllTopics();
+            for (const doc of topics) {
+                const numberInTopic = yield Poll_1.pollModel.find({ enabled: true, topic: doc._id }).lean().count().exec();
+                new TopicSnapshot_1.topicSnapshotModel({
+                    topicid: doc._id,
+                    pollCount: numberInTopic
+                }).save();
+            }
+        });
+    }
+    getSnapshots(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return PollSnapshot_1.pollSnapshotModel.find({ enabled: true, pollid: req.body.pollid }).lean().exec();
+        });
+    }
+    /**
+     * Sends metadata to the client to make sure, the created poll contains the correct types
+     * -> Polltypes -> Polltypeflags -> Durations -> Tributes
+     */
+    getCreationMetadata() {
+        let jsonArray = [];
+        jsonArray["pollTypes"] = Constants_1.PollTypes.toString();
+        jsonArray["pollTypeFlags"] = Constants_1.PollTypeFlags.toString();
+        jsonArray["pollDurations"] = Constants_1.PollDurations.toString();
+        const varToString = varObj => Object.keys(varObj)[0];
+        const tributes = {};
+        tributes[varToString({ TRIBUT_CREATE_DEFAULT: Constants_1.TRIBUT_CREATE_DEFAULT })] = Constants_1.TRIBUT_CREATE_DEFAULT;
+        tributes[varToString({ TRIBUT_CREATE_DEFAULT_IMAGE: Constants_1.TRIBUT_CREATE_DEFAULT_IMAGE })] = Constants_1.TRIBUT_CREATE_DEFAULT_IMAGE;
+        tributes[varToString({ TRIBUT_CREATE_PRIVATESUB: Constants_1.TRIBUT_CREATE_PRIVATESUB })] = Constants_1.TRIBUT_CREATE_PRIVATESUB;
+        tributes[varToString({ TRIBUT_CREATE_PRIVATESTRICT: Constants_1.TRIBUT_CREATE_PRIVATESTRICT })] = Constants_1.TRIBUT_CREATE_PRIVATESTRICT;
+        tributes[varToString({ TRIBUT_CREATE_DEEP: Constants_1.TRIBUT_CREATE_DEEP })] = Constants_1.TRIBUT_CREATE_DEEP;
+        tributes[varToString({ TRIBUT_CREATE_THREAD: Constants_1.TRIBUT_CREATE_THREAD })] = Constants_1.TRIBUT_CREATE_THREAD;
+        tributes[varToString({ TRIBUT_CREATE_LOCAL: Constants_1.TRIBUT_CREATE_LOCAL })] = Constants_1.TRIBUT_CREATE_LOCAL;
+        tributes[varToString({ TRIBUT_CREATE_TOF: Constants_1.TRIBUT_CREATE_TOF })] = Constants_1.TRIBUT_CREATE_TOF;
+        jsonArray["tributes"] = tributes;
+        return JSON.stringify(jsonArray);
     }
 }
 exports.PollBase = PollBase;

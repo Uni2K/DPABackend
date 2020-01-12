@@ -27,6 +27,16 @@ module.exports = function () {
             res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
         });
     }));
+    router.post("/polls/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        app_1.pollBase.getSnapshots(req).then((result) => {
+            res.status(Constants_1.REQUEST_OK).send(result);
+        }).catch((err) => {
+            res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
+        });
+    }));
+    router.post("/data/creation/metadata", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        res.status(Constants_1.REQUEST_OK).send(app_1.pollBase.getCreationMetadata());
+    }));
     return router;
 };
 //# sourceMappingURL=PollRouter.js.map

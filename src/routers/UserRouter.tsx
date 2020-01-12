@@ -1,14 +1,20 @@
 import {Router} from "express";
-import {express, pollBase, userBase} from "../app";
+import {Type} from "ts-mongoose";
+import {express, pollBase, upload, userBase} from "../app";
 import {FeedLoader} from "../content/FeedLoader";
 import {
+    avatarPath, ERROR_IMAGE_ACCESS,
+    ERROR_IMAGE_UPLOAD_PARTS,
+    ERROR_IMAGE_UPLOAD_SIZE, ERROR_IMAGE_UPLOAD_UNKNOWN,
     ERROR_USER_AUTH,
-    ERROR_USER_UNKNOWN,
+    ERROR_USER_UNKNOWN, ImagePurposes,
     REPUTATION_COMMENT,
     REPUTATION_REPORT,
     REQUEST_OK
 } from "../helpers/Constants";
 import {adjustReputation} from "../helpers/StatisticsBase";
+import {imageModel} from "../models/Image";
+import {userModel} from "../models/User";
 
 const auth = require("../middleware/auth");
 
@@ -24,12 +30,9 @@ export = function(): Router {
         });
 
     });
-    router.post("/users/createPoll", auth,async (req, res) => {
+    router.post("/users/createPoll", auth, async (req, res) => {
         // Create a new user
-
-
-       await pollBase.createPoll(req,res)
-
+        await pollBase.createPoll(req, res);
 
     });
     router.post("/users/feed", async (req, res) => {
@@ -48,7 +51,14 @@ export = function(): Router {
         });
 
     });
+    router.post("/data/snapshot", async (req, res) => {
+        userBase.getSnapshots(req).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        }).catch((err) => {
+            res.status(ERROR_USER_UNKNOWN).send(err);
+        });
 
+    });
     router.post("/users/me", auth, async (req, res) => {
         // View logged in user profile
         try {
@@ -71,28 +81,112 @@ export = function(): Router {
         });
     });
 
-    router.post("/data/report", auth,async (req, res) => {
+    router.post("/users/block", auth, async (req, res) => {
+        userBase.block(req).catch((err) => {
+                res.status(err.message).send(err.message);
+            }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+    });
+    router.post("/users/unblock", auth, async (req, res) => {
+        userBase.unblock(req).catch((err) => {
+                res.status(err.message).send(err.message);
+            }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+    });
+    router.post("/users/getBlockedUser", auth, async (req, res) => {
+        userBase.getBlockedUser(req).catch((err) => {
+                res.status(err.message).send(err.message);
+            }
+        ).then((result) => {
+            res.status(REQUEST_OK).send(result);
+        });
+    });
+
+    router.post('/users/getAvatar', async function(req, res) {
+        const user=req.body.user
+        const image=await imageModel.findOne({enabled:true,user:user, purpose: ImagePurposes.Avatar})
+
+        if(image==null){
+            res.status(ERROR_IMAGE_ACCESS).send(ERROR_IMAGE_ACCESS)
+            return
+        }
+        res.download(avatarPath+image.fileName, (err => {
+
+        }))
+    })
+
+
+    router.post('/users/changeAvatar', async function(req, res) {
+       // let userid=req.user._id
+        let userid="5dc6e18122304238205eccba"
+        req.user={}
+
+        upload.single("avatarImage")(req, res, async function(err) {
+            //TODO TEST!!
+            //deal with the error(s)
+            if (err) {
+                switch (err.code) {
+                        case "LIMIT_FILE_SIZE":
+                            res.status(ERROR_IMAGE_UPLOAD_SIZE).send("ERROR_IMAGE_UPLOAD_SIZE");
+
+                            break;
+                        case "LIMIT_PART_COUNT":
+                            res.status(ERROR_IMAGE_UPLOAD_PARTS).send("ERROR_IMAGE_UPLOAD_PARTS");
+
+                            break;
+                    default : res.status(ERROR_IMAGE_UPLOAD_UNKNOWN).send("ERROR_IMAGE_UPLOAD_UNKOWN");
+                }
+                console.log(err)
+                return;
+            }
+
+
+            await imageModel.deleteMany({user: userid, purpose: ImagePurposes.Avatar}).exec();
+            const img = await new imageModel({
+                user: userid,
+                fileName: req.file.filename,
+                purpose: ImagePurposes.Avatar
+            }).save();
+            req.user.avatarImage = img._id;
+           // await req.user.save();
+            req.user.password = "";
+            req.user.sessionTokens = "";
+            res.status(REQUEST_OK).send(req.user);
+
+        });
+
+    });
+
+    router.post("/data/report", auth, async (req, res) => {
         userBase.report(req).catch((err) => {
                 res.status(err.message).send(err.message);
             }
         ).then((result) => {
             res.status(REQUEST_OK).send(result);
-            adjustReputation(req.user,REPUTATION_REPORT)
+            adjustReputation(req.user, REPUTATION_REPORT);
         });
     });
 
-    router.post("/data/comment", auth,async (req, res) => {
+    router.post("/data/comment", auth, async (req, res) => {
         userBase.addComment(req).catch((err) => {
                 res.status(err.message).send(err.message);
             }
         ).then((result) => {
             res.status(REQUEST_OK).send(result);
-            adjustReputation(req.user,REPUTATION_COMMENT)
+            adjustReputation(req.user, REPUTATION_COMMENT);
         });
     });
     router.post("/users/me/edit", auth, async (req, res) => {
-        //TODO complete this
-        req.user.desc = req.body.desc;
+
+        req.user.avatarURL = req.body.avatarURL;
+        req.user.headerURL = req.body.headerURL;
+        req.user.additionalURL = req.body.additionalURL;
+
+        req.user.description = req.body.description;
         req.user.location = req.body.location;
         try {
             await req.user.save();
@@ -168,4 +262,7 @@ export = function(): Router {
         });
     });
     return router;
+
 };
+
+

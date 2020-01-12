@@ -1,4 +1,4 @@
-import {contentlistLoader} from "../app";
+import {contentlistLoader, pollBase} from "../app";
 import {ContentlistLoader} from "../content/ContentlistLoader";
 import {INTERVAL_CONTENTLIST_REFRESH, INTERVAL_SNAPSHOT_CREATION} from "./Constants";
 
@@ -6,7 +6,7 @@ export class PeriodicRunners{
 
 
     constructor() {
-        this.init()
+       // this.init()
     }
 
     private init() {
@@ -24,10 +24,11 @@ export class PeriodicRunners{
         setInterval(() => {
             if(snaphotCreationUpdater) {
                 snaphotCreationUpdater=false
-                contentlistLoader.refreshAllContentLists().then(()=>
+                pollBase.createSnapShots().then(()=>
                     snaphotCreationUpdater=true
                 )
             }
+
         }, INTERVAL_SNAPSHOT_CREATION);
 
 
