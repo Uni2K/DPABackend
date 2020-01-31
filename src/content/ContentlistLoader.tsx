@@ -11,7 +11,8 @@ import {pollModel} from "../models/Poll";
 export class ContentlistLoader {
 
     private redisClient = require('async-redis').createClient;
-    private redis = this.redisClient(6379, 'localhost');
+    //private redis = this.redisClient(6379, 'localhost');
+    private redis = this.redisClient(6379, '192.168.64.6');
 
 
 
