@@ -1,6 +1,6 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 
-const feedPoolSchema = createSchema(
+const feedSchema = createSchema(
     {
         user: Type.objectId({ required: true }),
         content: Type.objectId({ required: true }),
@@ -14,4 +14,4 @@ const feedPoolSchema = createSchema(
 
 
 
-export const feedPoolModel = typedModel('FeedPool', feedPoolSchema);
+export const feedModel = typedModel('FeedPool', feedSchema);
