@@ -11,6 +11,7 @@ import {
     PollTypes,
     REQUEST_OK, TRIBUT_CREATE_DEFAULT, TRIBUT_CREATE_DEFAULT_IMAGE,TRIBUT_CREATE_PRIVATESUB,TRIBUT_CREATE_THREAD,TRIBUT_CREATE_PRIVATESTRICT,TRIBUT_CREATE_LOCAL,TRIBUT_CREATE_TOF,TRIBUT_CREATE_DEEP
 } from "./Constants";
+import {PoolBase} from "./PoolBase";
 import {adjustReputation, calculatePollTribute, isReputationEnough} from "./StatisticsBase";
 import { userSnapshotModel } from '../models/UserSnapshot';
 import { topicSnapshotModel } from '../models/TopicSnapshot';
@@ -24,6 +25,8 @@ export class PollBase {
             throw Error(ERROR_USER_REPUTATION_NOT_ENOUGH);
         }
 
+        let pollID;
+
         const promise = new pollModel({
             expirationDate: req.body.expirationDate,
             user: req.body.userid,
@@ -32,6 +35,7 @@ export class PollBase {
             typeFlags: req.body.typeFlags,
             type: req.body.type,
             answers: req.body.answers,
+            topics: req.body.topics,
         }).save().catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);
@@ -39,9 +43,13 @@ export class PollBase {
         }).then((result) => {
             adjustReputation(req.user, tributeValue);
             res.status(REQUEST_OK).send(result);
-
+            if(result){
+                pollID = result.id;
+            }
         });
 
+        const feedCreation = new PoolBase();
+        feedCreation.pollToPool(req.body.userid, pollID, req.body.topics).then();
         await promise;
 
     }
