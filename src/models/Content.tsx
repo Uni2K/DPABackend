@@ -1,6 +1,6 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 
-const contentPoolSchema = createSchema(
+const contentSchema = createSchema(
     {
         user: Type.objectId({ required: true }),
         content: Type.objectId({ required: true }),
@@ -11,4 +11,4 @@ const contentPoolSchema = createSchema(
     { _id: true, timestamps: true }
 );
 
-export const contentPoolModel = typedModel('ContentPool', contentPoolSchema);
+export const contentModel = typedModel('ContentPool', contentSchema);
