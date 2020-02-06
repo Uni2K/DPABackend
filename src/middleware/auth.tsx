@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const userModel = require('../models/User')
+const {userModel} = require('../models/User')
 
 export = async(req, res, next) => {
     const token = req.header('Authorization').replace('Bearer ', '')
@@ -9,7 +9,7 @@ export = async(req, res, next) => {
     }else{
         const data = jwt.verify(token, "DPAJWTKEY")
         try {
-            const user = await userModel.findOne({ _id: data._id, 'tokens.token': token }).exec()
+            const user = await userModel.findOne({ _id: data._id/*, 'tokens.token': token*/ }).exec()
             if (!user) {
                 throw new Error()
             }
@@ -17,6 +17,7 @@ export = async(req, res, next) => {
             req.token = token
             next()
         } catch (error) {
+            console.log(error)
             res.status(401).send({ error: 'Not authorized to access this resource' })
         }}
 

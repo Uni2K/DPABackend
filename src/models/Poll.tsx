@@ -20,7 +20,7 @@ const pollSchema = createSchema(
             votes: Type.number()
         }),
         expirationDate: Type.date({required: true}),
-        topics: Type.array().of({topic: String({required: true})}),
+        topics: Type.array().of({topic: Type.string({required: true})}),
         scoreOverall: Type.number({default: 0}),
         rankOverall: Type.number({default: 0}),
         rankCategory: Type.number({default: 0}),

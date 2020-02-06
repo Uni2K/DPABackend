@@ -29,13 +29,14 @@ export class PollBase {
 
         const promise = new pollModel({
             expirationDate: req.body.expirationDate,
-            user: req.body.userid,
+            user: req.body.user,
             header: req.body.header,
             description: req.body.description,
             typeFlags: req.body.typeFlags,
             type: req.body.type,
             answers: req.body.answers,
             topics: req.body.topics,
+
         }).save().catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);
