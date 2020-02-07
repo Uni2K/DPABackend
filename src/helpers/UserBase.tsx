@@ -119,9 +119,10 @@ export class UserBase {
     async subscribe(req) {
         try {
             const user = await userModel.findByIdAndUpdate(req.user._id, {
-                    "$addToSet": {"subscriptions": {content: req.body.id, type: req.body.type}}
+                    $addToSet: {"subscriptions": {content: req.body.id, type: req.body.type}}
                 },
                 {new: true}).select("-password -sessionTokens -email");
+
             let token = req.token;
             return {user, token};
 

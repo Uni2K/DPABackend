@@ -3,6 +3,7 @@ import {ContentlistLoader} from "./content/ContentlistLoader";
 import {avatarPath} from "./helpers/Constants";
 import {PeriodicRunners} from "./helpers/PeriodicRunners";
 import {PollBase} from "./helpers/PollBase";
+import {PoolBase} from "./helpers/PoolBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {UserBase} from "./helpers/UserBase";
 

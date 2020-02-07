@@ -12,6 +12,7 @@ import {
     REPUTATION_REPORT,
     REQUEST_OK
 } from "../helpers/Constants";
+import {PoolBase} from "../helpers/PoolBase";
 import {adjustReputation} from "../helpers/StatisticsBase";
 import {imageModel} from "../models/Image";
 import {userModel} from "../models/User";
@@ -35,22 +36,30 @@ export = function(): Router {
         await pollBase.createPoll(req, res);
 
     });
-    router.post("/users/feed", async (req, res) => {
+    router.get("/users/feed", auth, async (req, res) => {
 
-        const loadSize = req.body.loadSize;
-        const key = req.body.key;
-        const older = req.body.older;
-        const userid = req.body.id;
-        const feedLoader = new FeedLoader();
-        feedLoader.getFeed(res, userid, loadSize, key, older).catch((error) => {
-            console.log(error);
-            res.status(ERROR_USER_UNKNOWN).send(error);
-        }).then((result) => {
-            res.status(REQUEST_OK).send(result);
+        const feedCreation = new PoolBase();
+        const data = await feedCreation.getItemsForFeed(req.user, parseInt(req.query.amount));
 
-        });
+        if(data.length > 0){
+            res.status(200).json(data)
+        }
+        else{
+            res.status(204).json();
+        }
 
     });
+
+    router.get("/users/restoreFeed", auth, async (req, res) => {
+
+
+
+        const feedCreation = new PoolBase();
+        const data = await feedCreation.restoreFeed(req.user,parseInt(req.query.index),parseInt(req.query.count),req.query.asc)
+        res.status(200).json(data);
+
+    });
+
     router.post("/data/snapshot", async (req, res) => {
         userBase.getSnapshots(req).then((result) => {
             res.status(REQUEST_OK).send(result);
@@ -200,7 +209,7 @@ export = function(): Router {
         }
     });
 
-    router.post("/users/me/subscribe", auth, async (req, res) => {
+    router.post("/users/me/", auth, async (req, res) => {
 
         userBase.subscribe(req).catch((err) => {
                 res.status(err.message).send(err.message);

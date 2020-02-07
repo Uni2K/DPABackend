@@ -4,7 +4,7 @@ import {userModel} from "../models/User";
 
 export class PoolBase{
 
-    async createPoolItem(userID:Object, contentID:Object, contentType:String, priority:Number){
+    async createPoolItem(userID, contentID, contentType:String, priority:Number){
 
         const content = new contentModel({
             user : userID,
@@ -25,16 +25,46 @@ export class PoolBase{
             priority: poolItem.priority,
             index: index
         });
-
-        await content.save().then();
+        let data = []
+        await content.save().then((result) => {data.push(result)});
         await poolItem.remove();
+        return data;
     }
 
     async pollToPool(userID, pollID, topics){
-        let users = await userModel
-            .find({user: userID})
-            .sort({index:-1})
-            .select("_id");
+        let users = [];
+        let user = await userModel
+            .find({subscriptions: {$elemMatch: {content: userID}}})
+        if(user) {
+            users = [...user];
+        }
+
+        for(let i = 0; i < topics.length; i++){
+            let topic = topics[i].topic;
+            let user = await userModel
+                .find({subscriptions: {$elemMatch: {content: topic}}})
+                .select("_id");
+            if(user){
+                users = [...users, ...user];
+            }
+        }
+        let result = [];
+
+        for(let i = 0; i < users.length; i++){
+
+            let value = users[i]._id.toString();
+            let index = result.indexOf(value);
+
+            if(index < 0){
+                result.push(value);
+                let user = await userModel.findOne({_id: value});
+                this.createPoolItem(user, pollID, "poll", 0);
+            }
+            else{
+                this.incrementPoolItemPriority(pollID, 2, user)
+            }
+        }
+
     }
 
     async changePoolItemPriority(contentID, priority:number, userID?){
@@ -44,7 +74,15 @@ export class PoolBase{
         else{
             contentModel.updateMany({content: contentID}, {priority: priority}).exec();
         }
+    }
 
+    async incrementPoolItemPriority(contentID, increment:number, userID?){
+        if(userID){
+            contentModel.findOneAndUpdate({content: contentID, user: userID}, {$inc: {priority: increment}}).exec();
+        }
+        else{
+            contentModel.updateMany({content: contentID}, {$inc: {priority: 2}}).exec();
+        }
     }
 
     async getItemsForFeed(userID, amount:number){
@@ -66,9 +104,33 @@ export class PoolBase{
         if (index){
             resultIndex = index.index + 1;
         }
-
+        let data = []
         for(let i = 0; i < feedItems.length; i++){
-            this.createFeedItem(feedItems[i], resultIndex + i)
+            data.push(await this.createFeedItem(feedItems[i], resultIndex + i));
+            console.log("running")
+        }
+        return data;
+    }
+
+    async restoreFeed(userID, index, count, asc){
+        let border;
+
+        if(asc=="true"){
+            border = index + count;
+        }
+        else{
+            border = index - count;
+        }
+        let counter = await feedModel.find({user: userID, index: {$lt: border + 1, $gt: index - 1}}).sort({index: 1}).countDocuments();
+
+        if(counter < count){
+            await this.getItemsForFeed(userID,count-counter)
+        }
+        if(asc=="true"){
+            return feedModel.find({user: userID, index: {$lt: border , $gt: index - 1}}).sort({index: 1});
+        }
+        else{
+            return feedModel.find({user: userID, index: {$lt: index+1 , $gt: border }}).sort({index: -1});
         }
 
     }
