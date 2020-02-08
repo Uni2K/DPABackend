@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/User');
+const { userModel } = require('../models/User');
 module.exports = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.header('Authorization').replace('Bearer ', '');
     if (token.length == 0) {
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     else {
         const data = jwt.verify(token, "DPAJWTKEY");
         try {
-            const user = yield userModel.findOne({ _id: data._id, 'tokens.token': token }).exec();
+            const user = yield userModel.findOne({ _id: data._id /*, 'tokens.token': token*/ }).exec();
             if (!user) {
                 throw new Error();
             }
@@ -27,6 +27,7 @@ module.exports = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             next();
         }
         catch (error) {
+            console.log(error);
             res.status(401).send({ error: 'Not authorized to access this resource' });
         }
     }

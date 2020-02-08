@@ -114,7 +114,7 @@ class UserBase {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User_1.userModel.findByIdAndUpdate(req.user._id, {
-                    "$addToSet": { "subscriptions": { content: req.body.id, type: req.body.type } }
+                    $addToSet: { "subscriptions": { content: req.body.id, type: req.body.type } }
                 }, { new: true }).select("-password -sessionTokens -email");
                 let token = req.token;
                 return { user, token };
