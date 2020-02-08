@@ -16,6 +16,7 @@ const pollSchema = ts_mongoose_1.createSchema({
         votes: ts_mongoose_1.Type.number()
     }),
     expirationDate: ts_mongoose_1.Type.date({ required: true }),
+    topics: ts_mongoose_1.Type.array().of({ topic: ts_mongoose_1.Type.string({ required: true }) }),
     scoreOverall: ts_mongoose_1.Type.number({ default: 0 }),
     rankOverall: ts_mongoose_1.Type.number({ default: 0 }),
     rankCategory: ts_mongoose_1.Type.number({ default: 0 }),

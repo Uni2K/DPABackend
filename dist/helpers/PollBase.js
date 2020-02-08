@@ -16,6 +16,7 @@ const PollSnapshot_1 = require("../models/PollSnapshot");
 const Topic_1 = require("../models/Topic");
 const User_1 = require("../models/User");
 const Constants_1 = require("./Constants");
+const PoolBase_1 = require("./PoolBase");
 const StatisticsBase_1 = require("./StatisticsBase");
 const UserSnapshot_1 = require("../models/UserSnapshot");
 const TopicSnapshot_1 = require("../models/TopicSnapshot");
@@ -26,20 +27,27 @@ class PollBase {
             if (StatisticsBase_1.isReputationEnough(req.user.reputation, tributeValue)) {
                 throw Error(Constants_1.ERROR_USER_REPUTATION_NOT_ENOUGH);
             }
+            let pollID;
             const promise = new Poll_1.pollModel({
                 expirationDate: req.body.expirationDate,
-                user: req.body.userid,
+                user: req.user,
                 header: req.body.header,
                 description: req.body.description,
                 typeFlags: req.body.typeFlags,
                 type: req.body.type,
                 answers: req.body.answers,
+                topics: req.body.topics,
             }).save().catch((error) => {
                 console.log(error.message);
                 res.status(error.message).send(error);
             }).then((result) => {
                 StatisticsBase_1.adjustReputation(req.user, tributeValue);
                 res.status(Constants_1.REQUEST_OK).send(result);
+                if (result) {
+                    pollID = result;
+                    const feedCreation = new PoolBase_1.PoolBase();
+                    feedCreation.pollToPool(req.user._id, pollID, req.body.topics).then();
+                }
             });
             yield promise;
         });

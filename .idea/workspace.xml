@@ -2,58 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/helpers/ParsingBase.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interfaces/AnswerInterface.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/Image.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/Thread.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/ThreadEntry.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/TopicSnapshot.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/UserBlocked.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/UserSnapshot.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/db/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/db/Database.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Feed.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Feed.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/PollSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/PollSnapshot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/PollSnapshot.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/PollSnapshot.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/mime-db/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-db/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/mime-types/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-types/HISTORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/mime-types/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mime-types/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/Constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/UserBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/PollSnapshot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PollSnapshot.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/PollRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/PollRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/UserRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/UserRouter.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +35,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1VhZr4rWtwyVGYWqnsOQWT0ocBy" />
@@ -90,7 +62,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="D:\Dokumente\DPA\Backend\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -144,11 +116,25 @@
       <workItem from="1578818932568" duration="3620000" />
       <workItem from="1578827497403" duration="4530000" />
       <workItem from="1578832434819" duration="11197000" />
+      <workItem from="1581065278846" duration="3482000" />
+      <workItem from="1581069235106" duration="16997000" />
     </task>
+    <task id="LOCAL-00001" summary="finish feed">
+      <created>1581087741988</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581087741988</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finish feed" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish feed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#TSLint" timestamp="1577713762598">
@@ -180,6 +166,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578780613487" />
+    <state x="-1720" y="206" key="CommitChangelistDialog2" timestamp="1581087741548">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state x="-1720" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087741548" />
     <state width="401" height="466" key="DebuggerActiveHint" timestamp="1577963567394">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -261,6 +251,11 @@
     </state>
     <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1578832421455" />
     <state x="832" y="198" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714230830" />
+    <state x="467" y="264" key="Vcs.Push.Dialog.v2" timestamp="1581158964985">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="467" y="264" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1581158964985" />
+    <state x="-1729" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087743797" />
     <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578832450244">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -278,6 +273,10 @@
     </state>
     <state x="656" y="118" width="607" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578851155500" />
     <state x="656" y="118" width="607" height="804" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728916575" />
+    <state x="-1574" y="500" key="git4idea.merge.GitPullDialog" timestamp="1581063263348">
+      <screen x="-2560" y="0" width="2560" height="1440" />
+    </state>
+    <state x="-1574" y="500" key="git4idea.merge.GitPullDialog/0.0.1440.900/-2560.0.2560.1440@-2560.0.2560.1440" timestamp="1581063263348" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1578831730854">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -287,12 +286,5 @@
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578820632563" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577727283258" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <default-breakpoints>
-        <breakpoint enabled="true" type="java-exception" />
-      </default-breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

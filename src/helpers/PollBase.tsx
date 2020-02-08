@@ -26,10 +26,9 @@ export class PollBase {
         }
 
         let pollID;
-
         const promise = new pollModel({
             expirationDate: req.body.expirationDate,
-            user: req.body.user,
+            user: req.user,
             header: req.body.header,
             description: req.body.description,
             typeFlags: req.body.typeFlags,
@@ -45,12 +44,13 @@ export class PollBase {
             adjustReputation(req.user, tributeValue);
             res.status(REQUEST_OK).send(result);
             if(result){
-                pollID = result.id;
+                pollID = result;
+
+                const feedCreation = new PoolBase();
+                feedCreation.pollToPool(req.user._id, pollID, req.body.topics).then();
             }
         });
 
-        const feedCreation = new PoolBase();
-        feedCreation.pollToPool(req.body.userid, pollID, req.body.topics).then();
         await promise;
 
     }

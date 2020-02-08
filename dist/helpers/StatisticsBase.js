@@ -21,7 +21,8 @@ function adjustReputation(user, value) {
 exports.adjustReputation = adjustReputation;
 function calculatePollTribute(req) {
     let type = req.body.polltype;
-    let typeFlags = JSON.parse(req.body.polltypeflags);
+    let typeFlags = req.body.typeflags;
+    console.log(req);
     let rep = 0;
     switch (type) {
         case Constants_1.PollTypes.Default:

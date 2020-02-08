@@ -16,7 +16,8 @@ const Poll_1 = require("../models/Poll");
 class ContentlistLoader {
     constructor() {
         this.redisClient = require('async-redis').createClient;
-        this.redis = this.redisClient(6379, 'localhost');
+        //private redis = this.redisClient(6379, 'localhost');
+        this.redis = this.redisClient(6379, '192.168.64.6');
     }
     /**
      * Main Entry point for every contentlist, called by the client via the express router

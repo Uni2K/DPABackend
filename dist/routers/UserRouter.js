@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const app_1 = require("../app");
-const FeedLoader_1 = require("../content/FeedLoader");
 const Constants_1 = require("../helpers/Constants");
+const PoolBase_1 = require("../helpers/PoolBase");
 const StatisticsBase_1 = require("../helpers/StatisticsBase");
 const Image_1 = require("../models/Image");
 const auth = require("../middleware/auth");
@@ -29,18 +29,20 @@ module.exports = function () {
         // Create a new user
         yield app_1.pollBase.createPoll(req, res);
     }));
-    router.post("/users/feed", (req, res) => __awaiter(this, void 0, void 0, function* () {
-        const loadSize = req.body.loadSize;
-        const key = req.body.key;
-        const older = req.body.older;
-        const userid = req.body.id;
-        const feedLoader = new FeedLoader_1.FeedLoader();
-        feedLoader.getFeed(res, userid, loadSize, key, older).catch((error) => {
-            console.log(error);
-            res.status(Constants_1.ERROR_USER_UNKNOWN).send(error);
-        }).then((result) => {
-            res.status(Constants_1.REQUEST_OK).send(result);
-        });
+    router.get("/users/feed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const feedCreation = new PoolBase_1.PoolBase();
+        const data = yield feedCreation.getItemsForFeed(req.user, parseInt(req.query.amount));
+        if (data.length > 0) {
+            res.status(200).json(data);
+        }
+        else {
+            res.status(204).json();
+        }
+    }));
+    router.get("/users/restoreFeed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const feedCreation = new PoolBase_1.PoolBase();
+        const data = yield feedCreation.restoreFeed(req.user, parseInt(req.query.index), parseInt(req.query.count), req.query.asc);
+        res.status(200).json(data);
     }));
     router.post("/data/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
         app_1.userBase.getSnapshots(req).then((result) => {
@@ -173,7 +175,7 @@ module.exports = function () {
             res.status(500).send(error);
         }
     }));
-    router.post("/users/me/subscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+    router.post("/users/me/", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         app_1.userBase.subscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
