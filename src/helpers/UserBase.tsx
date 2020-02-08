@@ -20,6 +20,7 @@ import {adjustReputation} from "./StatisticsBase";
 
 export class UserBase {
 
+    //Only for debugging
     async createSampleUsers() {
         const number = 50;
         console.log("User Creation started!");
@@ -39,13 +40,14 @@ export class UserBase {
 
     }
 
+    //Creates the user
     async createUser(res, req: Request) {
 
         const user = new userModel(req.body);
         try {
             await user.save();
         } catch (err) {
-            if (err.message.toString().includes("email")) {
+            if (err.message.toString().includes("email")) { //This kind of message threw by the validation tool
                 throw Error(ERROR_USER_EMAIL);
             } else if (err.message.toString().includes("name")) {
                 throw Error(ERROR_USER_NAME);
@@ -90,6 +92,9 @@ export class UserBase {
 
     }
 
+    /**
+     * Vote on a poll
+     */
     async vote(req) {
         const questionID = req.body.pollid;
         const indexofanswer = req.body.indexofanswer;
@@ -107,6 +112,9 @@ export class UserBase {
         return result;
     }
 
+    /**
+     * Report a User
+     */
     async report(req) {
         return new reportModel({
             user: req.user._id,
@@ -116,6 +124,9 @@ export class UserBase {
 
     }
 
+    /**
+     * OUTDATED
+     */
     async subscribe(req) {
         try {
             const user = await userModel.findByIdAndUpdate(req.user._id, {
@@ -136,6 +147,9 @@ export class UserBase {
         }
 
     }
+    /**
+     * OUTDATED
+     */
 
     async unsubscribe(req) {
         try {

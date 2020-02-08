@@ -13,6 +13,11 @@ import {
     TRIBUT_CREATE_TOF
 } from "./Constants";
 
+/**
+ * Simple Settings
+ * @param user User Object
+ * @param value Value of the reputation
+ */
 export async function adjustReputation(user, value) {
     if (user) {
         user.reputation = user.reputation + value;
@@ -20,6 +25,10 @@ export async function adjustReputation(user, value) {
     }
 }
 
+
+/**
+ * Using the Parameters in constant to calculate how much reputation a user has to pay to do the desired action
+ */
 export function calculatePollTribute(req): number {
     let type: number = req.body.polltype;
     let typeFlags: Array<PollTypeFlagInterface> = req.body.typeflags;
@@ -37,6 +46,7 @@ export function calculatePollTribute(req): number {
             rep = rep + TRIBUT_CREATE_TOF;
             break;
     }
+
 
     for (let flag of typeFlags) {
         switch (flag.type) {

@@ -1,5 +1,8 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 
+/**
+ * Entry in the feed
+ */
 const feedSchema = createSchema(
     {
         user: Type.objectId({ required: true }),

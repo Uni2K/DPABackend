@@ -2,6 +2,11 @@ import {contentlistLoader, pollBase} from "../app";
 import {ContentlistLoader} from "../content/ContentlistLoader";
 import {INTERVAL_CONTENTLIST_REFRESH, INTERVAL_SNAPSHOT_CREATION} from "./Constants";
 
+
+
+/**
+ * Important class, runs all the periodic tasks and functions, like updating content lists, feed algorithms, snapshot creation
+ */
 export class PeriodicRunners{
 
 
@@ -10,7 +15,7 @@ export class PeriodicRunners{
     }
 
     private init() {
-        let contentListUpdater=true
+        let contentListUpdater=true //Dont update, if its not finished yet
         setInterval(() => {
             if(contentListUpdater) {
                 contentListUpdater=false

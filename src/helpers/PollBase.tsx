@@ -16,11 +16,16 @@ import {adjustReputation, calculatePollTribute, isReputationEnough} from "./Stat
 import { userSnapshotModel } from '../models/UserSnapshot';
 import { topicSnapshotModel } from '../models/TopicSnapshot';
 
+
+/**
+ * All specific poll based functions 
+ */
 export class PollBase {
 
     async createPoll(req, res) {
 
         const tributeValue = calculatePollTribute(req);
+        //Dont do it, when there is not enough tribute -> give the client a correct response to handle it
         if (isReputationEnough(req.user.reputation, tributeValue)) {
             throw Error(ERROR_USER_REPUTATION_NOT_ENOUGH);
         }
@@ -38,14 +43,13 @@ export class PollBase {
 
         }).save().catch((error) => {
             console.log(error.message);
-            res.status(error.message).send(error);
+            res.status(error.message).send(error); //Not saved -> just tell the client, no reputation adjustment
 
         }).then((result) => {
-            adjustReputation(req.user, tributeValue);
-            res.status(REQUEST_OK).send(result);
+            adjustReputation(req.user, tributeValue); //Saved finally -> adjust the reputation now
+            res.status(REQUEST_OK).send(result); //send the created poll to the user
             if(result){
                 pollID = result;
-
                 const feedCreation = new PoolBase();
                 feedCreation.pollToPool(req.user._id, pollID, req.body.topics).then();
             }
@@ -78,6 +82,10 @@ export class PollBase {
 
     }
 
+    /**
+     * Used for the client to fetch updates for a specific ID Array
+     * @param ids List of poll Ids
+     */
     async getPollsByIds(ids: any) {
         return pollModel
             .find({_id: {$in: ids}})
@@ -86,6 +94,10 @@ export class PollBase {
             .exec();
     }
 
+    /**
+     *  Search polls, used by search features inside the app
+     * @param req Request
+     */
     async searchPolls(req) {
         const searchQuery = req.body.query;
         const index = req.body.index;
@@ -115,13 +127,20 @@ export class PollBase {
 
     }
 
+    /**
+     * Creates a poll snapshot for this moment and saves it inside the collection, used for statistics
+     * each snapshot should contain the field, the client is interested in. If i want the change in the of the score,
+     * the snapshot should contain the score. If there is no such statistics planned, then we would not need any score inside t
+     * snapshot
+     */
     async createSnapShots() {
         pollModel.collection.find({enabled:true}).forEach(
             (doc)=>{
                new pollSnapshotModel(
                    {
-                       pollid:doc._id,
-                       answers:doc.answers
+                       pollid:doc._id, 
+                       scoreOverall: doc.scoreOverall, //Save score
+                       answers:doc.answers //save answers in the snapshot cause they contain the number of votes
                    }
                ).save()
             }
@@ -131,7 +150,7 @@ export class PollBase {
                 new userSnapshotModel(
                     {
                         user:doc._id,
-                        reputationCount:doc.reputation
+                        reputationCount:doc.reputation //User snapshot containts ofc the reputation
                     }
                 ).save()
             }
@@ -143,21 +162,22 @@ export class PollBase {
             new topicSnapshotModel(
                 {
                     topicid:doc._id,
-                    pollCount:numberInTopic
+                    pollCount:numberInTopic //For topics its interesting how many questions there are
                 }
             ).save()
         }
 
     }
 
-
+    //get Snapshots, not right here
     async getSnapshots(req){
        return pollSnapshotModel.find({enabled:true, pollid:req.body.pollid}).lean().exec()
     }
 
 
     /**
-     * Sends metadata to the client to make sure, the created poll contains the correct types
+     * Sends metadata to the client to make sure, the created poll contains the correct types,
+     * used for the poll creator
      * -> Polltypes -> Polltypeflags -> Durations -> Tributes
      */
     getCreationMetadata():string {

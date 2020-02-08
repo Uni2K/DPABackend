@@ -8,6 +8,10 @@ import {pollModel} from "../models/Poll";
 
 
 
+
+/**
+ * A class to create/manage and load contentlists like Hot,Newcomer, Topics, Located, etc.
+ */
 export class ContentlistLoader {
 
     private redisClient = require('async-redis').createClient;

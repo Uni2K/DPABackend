@@ -5,6 +5,9 @@ import {pollModel} from "../models/Poll";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
 
+/**
+ * Express router for handling anything related to content lists
+ */
 export = function():Router {
     const router:Router = express.Router();
 

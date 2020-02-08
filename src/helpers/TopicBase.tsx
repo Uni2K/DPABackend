@@ -10,19 +10,17 @@ import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {topicSnapshotModel} from "../models/TopicSnapshot";
 
-enum TopicFlags {
-    Idle,
-    Recommended,
-    Hot,
-    New
-}
+
 
 export class TopicBase {
 
+    /**
+     * Special Topics -> Containers for multiple single topics, managed with flags
+     */
     async getSpecialTopics(type: number): Promise<any> {
         const query = {};
         query["enabled"] = true;
-        query["flag"] = type;
+        query["flag"] = type; //Special Topic Identifier
         return topicModel
             .find(query)
             .select("_id")
@@ -148,6 +146,7 @@ export class TopicBase {
         return topicModel.findById(topicID).lean().exec();
     }
 
+    //Topic Snapshots
     async getSnapshots(req){
         return topicSnapshotModel.find({enabled:true, topicid:req.body.topicid}).lean().exec()
     }

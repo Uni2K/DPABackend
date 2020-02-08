@@ -1,5 +1,8 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 
+/**
+ * Content Pool item -> Rename to FeedPoolItem
+ */
 const contentSchema = createSchema(
     {
         user: Type.objectId({ required: true }),

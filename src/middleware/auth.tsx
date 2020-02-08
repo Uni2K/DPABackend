@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken')
 const {userModel} = require('../models/User')
 
+/**
+ * Checks JWT Token and passes the user if successfull, fails if not
+ */
 export = async(req, res, next) => {
     const token = req.header('Authorization').replace('Bearer ', '')
     if(token.length==0){

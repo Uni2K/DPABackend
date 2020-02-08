@@ -23,6 +23,7 @@ export = function() {
         })
 
     });
+    //For statistics reason
     router.post("/polls/snapshot", async (req, res) => {
         pollBase.getSnapshots(req).then((result)=>{
             res.status(REQUEST_OK).send(result)
@@ -31,6 +32,7 @@ export = function() {
         })
 
     });
+    //For the creator
     router.post("/data/creation/metadata", async (req, res) => {
             res.status(REQUEST_OK).send(pollBase.getCreationMetadata())
     });
