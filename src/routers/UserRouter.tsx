@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { Type } from "ts-mongoose";
-import { express, pollBase, upload, userBase } from "../app";
-import { FeedLoader } from "../content/FeedLoader";
+import { express, pollBase, upload, userBase, feedLoader } from "../app";
 import {
     avatarPath, ERROR_IMAGE_ACCESS,
     ERROR_IMAGE_UPLOAD_PARTS,
@@ -12,11 +10,8 @@ import {
     REPUTATION_REPORT,
     REQUEST_OK
 } from "../helpers/Constants";
-import { PoolBase } from "../helpers/PoolBase";
 import { adjustReputation } from "../helpers/StatisticsBase";
 import { imageModel } from "../models/Image";
-import { userModel } from "../models/User";
-
 const auth = require("../middleware/auth");
 
 /**
@@ -41,8 +36,7 @@ export = function (): Router {
     });
     router.get("/users/feed", auth, async (req, res) => {
 
-        const feedCreation = new PoolBase();
-        const data = await feedCreation.getItemsForFeed(req.user, parseInt(req.query.amount));
+        const data = await feedLoader.getFeed(req.user, parseInt(req.query.index), parseInt(req.query.pageSize), req.query.direction);
 
         if (data.length > 0) {
             res.status(200).json(data)
@@ -53,13 +47,6 @@ export = function (): Router {
 
     });
 
-    router.get("/users/restoreFeed", auth, async (req, res) => {
-
-        const feedCreation = new PoolBase();
-        const data = await feedCreation.restoreFeed(req.user, parseInt(req.query.index), parseInt(req.query.count), req.query.asc)
-        res.status(200).json(data);
-
-    });
 
     router.post("/data/snapshot", async (req, res) => {
         //User snapshot -> Statistics again

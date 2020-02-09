@@ -1,7 +1,6 @@
 import {express, pollBase, userBase} from "../app";
 import {ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
-import {pollModel} from "../models/Poll";
-import {topicModel} from "../models/Topic";
+import {snapshotBase} from "../app";
 
 export = function() {
     const router = express.Router();
@@ -25,7 +24,7 @@ export = function() {
     });
     //For statistics reason
     router.post("/polls/snapshot", async (req, res) => {
-        pollBase.getSnapshots(req).then((result)=>{
+        snapshotBase.getPollSnapshots(req).then((result)=>{
             res.status(REQUEST_OK).send(result)
         }).catch((err)=>{
             res.status(ERROR_USER_UNKNOWN).send(err)

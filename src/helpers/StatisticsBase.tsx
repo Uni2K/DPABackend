@@ -31,8 +31,7 @@ export async function adjustReputation(user, value) {
  */
 export function calculatePollTribute(req): number {
     let type: number = req.body.polltype;
-    let typeFlags: Array<PollTypeFlagInterface> = req.body.typeflags;
-    console.log(req)
+    let typeFlags: Array<PollTypeFlagInterface> = req.body.typeFlags;
     let rep: number = 0;
 
     switch (type) {

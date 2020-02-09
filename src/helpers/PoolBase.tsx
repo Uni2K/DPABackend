@@ -32,7 +32,7 @@ export class PoolBase{
     }
 
     /**
-     * 
+     *
      * @param userID The userID of the poll
      * @param pollID The ID of the poll
      * @param topics -> SINGLE Topic of the poll
@@ -77,7 +77,7 @@ export class PoolBase{
     /**
      * changing priority of pool items
      */
-    async changePoolItemPriority(contentID, priority:number, userID?){
+    async incrementSinglePoolItemPriority(contentID, priority:number, userID?){
         if(userID){
             contentModel.findOneAndUpdate({content: contentID, user: userID}, {priority: priority}).exec();
         }
@@ -94,65 +94,8 @@ export class PoolBase{
             contentModel.findOneAndUpdate({content: contentID, user: userID}, {$inc: {priority: increment}}).exec();
         }
         else{
-            contentModel.updateMany({content: contentID}, {$inc: {priority: 2}}).exec();
+            contentModel.updateMany({content: contentID}, {$inc: {priority: increment}}).exec();
         }
-    }
-
-
-    /**
-     * Get Items for the feed
-     */
-    async getItemsForFeed(userID, amount:number){
-
-        // Items with the highest priority and the latest creation date are sent first. Priority > Creation Date
-        let feedItems = await contentModel
-            .find({user: userID})
-            .sort({priority:-1})
-            .sort({"created_at": -1})
-            .limit(amount)
-            .exec();
-
-        let index = await feedModel
-            .findOne({user: userID})
-            .sort({index:-1})
-            .select("index -_id");
-
-        let resultIndex = 0;
-        if (index){
-            resultIndex = index.index + 1;
-        }
-        let data = []
-        for(let i = 0; i < feedItems.length; i++){
-            data.push(await this.createFeedItem(feedItems[i], resultIndex + i));
-            console.log("running")
-        }
-        return data;
-    }
-
-    /**
-     * Merge with getItemsForFeed -> Also implement standard naming scheme!
-     */
-    async restoreFeed(userID, index, count, asc){
-        let border;
-
-        if(asc=="true"){
-            border = index + count;
-        }
-        else{
-            border = index - count;
-        }
-        let counter = await feedModel.find({user: userID, index: {$lt: border + 1, $gt: index - 1}}).sort({index: 1}).countDocuments();
-
-        if(counter < count){
-            await this.getItemsForFeed(userID,count-counter)
-        }
-        if(asc=="true"){
-            return feedModel.find({user: userID, index: {$lt: border , $gt: index - 1}}).sort({index: 1});
-        }
-        else{
-            return feedModel.find({user: userID, index: {$lt: index+1 , $gt: border }}).sort({index: -1});
-        }
-
     }
 
     async generateTestData(){
