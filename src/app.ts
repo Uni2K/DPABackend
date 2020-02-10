@@ -1,9 +1,11 @@
 export const express = require('express')
 import {ContentlistLoader} from "./content/ContentlistLoader";
+import {FeedLoader} from "./content/FeedLoader";
 import {avatarPath} from "./helpers/Constants";
 import {PeriodicRunners} from "./helpers/PeriodicRunners";
 import {PollBase} from "./helpers/PollBase";
 import {PoolBase} from "./helpers/PoolBase";
+import {SnapshotsBase} from "./helpers/SnapshotsBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {UserBase} from "./helpers/UserBase";
 
@@ -12,7 +14,9 @@ import {UserBase} from "./helpers/UserBase";
 export const topicBase:TopicBase=  new TopicBase()
 export const userBase:UserBase=  new UserBase()
 export const pollBase:PollBase=  new PollBase()
-
+export const poolBase:PoolBase=  new PoolBase()
+export const feedLoader:FeedLoader=  new FeedLoader()
+export const snapshotBase:SnapshotsBase=  new SnapshotsBase()
 
 //Routers
 export const userRouter = require('./routers/UserRouter')()

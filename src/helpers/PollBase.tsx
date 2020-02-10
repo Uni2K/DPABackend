@@ -4,6 +4,7 @@ import {pollModel} from "../models/Poll";
 import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
+import {poolBase} from "../app";
 import {
     ERROR_USER_REPUTATION_NOT_ENOUGH,
     PollDurations,
@@ -13,12 +14,11 @@ import {
 } from "./Constants";
 import {PoolBase} from "./PoolBase";
 import {adjustReputation, calculatePollTribute, isReputationEnough} from "./StatisticsBase";
-import { userSnapshotModel } from '../models/UserSnapshot';
-import { topicSnapshotModel } from '../models/TopicSnapshot';
+
 
 
 /**
- * All specific poll based functions 
+ * All specific poll based functions
  */
 export class PollBase {
 
@@ -26,14 +26,14 @@ export class PollBase {
 
         const tributeValue = calculatePollTribute(req);
         //Dont do it, when there is not enough tribute -> give the client a correct response to handle it
-        if (isReputationEnough(req.user.reputation, tributeValue)) {
+        if (isReputationEnough(req.body.user.reputation, tributeValue)) {
             throw Error(ERROR_USER_REPUTATION_NOT_ENOUGH);
         }
 
         let pollID;
         const promise = new pollModel({
             expirationDate: req.body.expirationDate,
-            user: req.user,
+            user: req.body.user,
             header: req.body.header,
             description: req.body.description,
             typeFlags: req.body.typeFlags,
@@ -46,12 +46,11 @@ export class PollBase {
             res.status(error.message).send(error); //Not saved -> just tell the client, no reputation adjustment
 
         }).then((result) => {
-            adjustReputation(req.user, tributeValue); //Saved finally -> adjust the reputation now
+            adjustReputation(req.body.user, tributeValue); //Saved finally -> adjust the reputation now
             res.status(REQUEST_OK).send(result); //send the created poll to the user
             if(result){
                 pollID = result;
-                const feedCreation = new PoolBase();
-                feedCreation.pollToPool(req.user._id, pollID, req.body.topics).then();
+                poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
             }
         });
 
@@ -126,54 +125,6 @@ export class PollBase {
             .exec();
 
     }
-
-    /**
-     * Creates a poll snapshot for this moment and saves it inside the collection, used for statistics
-     * each snapshot should contain the field, the client is interested in. If i want the change in the of the score,
-     * the snapshot should contain the score. If there is no such statistics planned, then we would not need any score inside t
-     * snapshot
-     */
-    async createSnapShots() {
-        pollModel.collection.find({enabled:true}).forEach(
-            (doc)=>{
-               new pollSnapshotModel(
-                   {
-                       pollid:doc._id, 
-                       scoreOverall: doc.scoreOverall, //Save score
-                       answers:doc.answers //save answers in the snapshot cause they contain the number of votes
-                   }
-               ).save()
-            }
-        )
-        userModel.collection.find({enabled:true}).forEach(
-            (doc)=>{
-                new userSnapshotModel(
-                    {
-                        user:doc._id,
-                        reputationCount:doc.reputation //User snapshot containts ofc the reputation
-                    }
-                ).save()
-            }
-        )
-       const topics=await topicBase.getAllTopics()
-        for (const doc of topics ) {
-
-            const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().count().exec()
-            new topicSnapshotModel(
-                {
-                    topicid:doc._id,
-                    pollCount:numberInTopic //For topics its interesting how many questions there are
-                }
-            ).save()
-        }
-
-    }
-
-    //get Snapshots, not right here
-    async getSnapshots(req){
-       return pollSnapshotModel.find({enabled:true, pollid:req.body.pollid}).lean().exec()
-    }
-
 
     /**
      * Sends metadata to the client to make sure, the created poll contains the correct types,

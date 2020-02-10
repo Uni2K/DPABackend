@@ -5,7 +5,7 @@ import {createSchema, Type, typedModel} from 'ts-mongoose';
  */
 const TopicSnapshotSchema = createSchema(
     {
-        topicid: Type.string({required: true}),
+        topicID: Type.string({required: true}),
         pollCount: Type.number({required: true}),
         enabled: Type.boolean({default: true})
     },

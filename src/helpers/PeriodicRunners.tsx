@@ -1,8 +1,7 @@
 import {contentlistLoader, pollBase} from "../app";
 import {ContentlistLoader} from "../content/ContentlistLoader";
 import {INTERVAL_CONTENTLIST_REFRESH, INTERVAL_SNAPSHOT_CREATION} from "./Constants";
-
-
+import {snapshotBase} from "../app";
 
 /**
  * Important class, runs all the periodic tasks and functions, like updating content lists, feed algorithms, snapshot creation
@@ -29,16 +28,12 @@ export class PeriodicRunners{
         setInterval(() => {
             if(snaphotCreationUpdater) {
                 snaphotCreationUpdater=false
-                pollBase.createSnapShots().then(()=>
+                snapshotBase.createPollSnapshots().then(()=>
                     snaphotCreationUpdater=true
                 )
             }
 
         }, INTERVAL_SNAPSHOT_CREATION);
-
-
-
-
 
     }
 

@@ -5,7 +5,7 @@ import {createSchema, Type, typedModel} from 'ts-mongoose';
  */
 const PollSnapshotSchema = createSchema(
     {
-        pollid: Type.string({required: true}),
+        pollID: Type.string({required: true}),
         answers: Type.array({required: true}).of({text: Type.string(), type: Type.number(), votes: Type.number()}),
         enabled: Type.boolean({default: true})
     },

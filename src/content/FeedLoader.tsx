@@ -1,4 +1,6 @@
-import {feedModel} from "../models/Feed";
+//import {feedModel} from "../models/Feed";
+import {contentModel} from "../models/Content";
+import {feedModel} from "../models/FeedPool";
 import {pollModel} from "../models/Poll";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
@@ -26,118 +28,62 @@ import {userModel} from "../models/User";
  * Better: Store selected feed tags on the server-> load the 50 questions of the correct tags
  */
 
-
+import {poolBase} from "../app";
 export class FeedLoader {
 
+    /**
+     * Create Items for the feed
+     */
+    async createFeed(userID, amount:number){
 
-    async getFeed (res, userid_, loadsize, index, older) {
-        // Find User to get his Subscriptions
-        const user = await userModel
-            .findById({
-                _id: userid_
-            })
-            .lean()
-            .select("subscriptions")
-            .exec()
-
-        const userSubscriptions = user["subscriptions"];
-
-        //Filter the user subscriptions by their types: T-> Question from Topic Subscription, U-> Question From User Subscription
-        const topicContent = userSubscriptions.filter(function(item) {
-            return item.type == "T";
-        }).map(item => item.content);
-        const userContent = userSubscriptions.filter(function(item) {
-            return item.type == "U";
-        }).map(item => item.content);
-
-        //Fetch Content
-        const query = {};
-        query["enabled"] = true;
-        if (older) {
-            query["timestamp"] = {$lt: index};
-        } else query["timestamp"] = {$gt: index};
-
-        query["$or"] = [{userid: {$in: userContent}}, {tags: {$in: topicContent}}]
-
-        const questionsInFeed = await pollModel
-            .find(query)
-            //.select("_id")
-            .sort({timestamp: -1})
-            .limit(loadsize)
-            .populate("tags", topicModel)
-            .populate("userid", "name avatar")
-            .lean()
-            .exec();
-        console.log("GET FEED Config: " + userid_ + " " + loadsize + " " + older + "  " + index + "  " + questionsInFeed.length)
-            return questionsInFeed
-
-        //Add the direct items, User, Topics -> they got a timestamp in the subscription, if it matches -> LATER
-        /* if(older){
-           var indexStart=index
-           var indexEnd=questionsInFeed[questionsInFeed.length-1].timestamp
-         }
-
-
-
-         var directUserContent=userSubscriptions.filter(function(item) {
-
-
-           var isInTimeStamp=item.timetstamp<
-
-            return item.type == "DU" && ;
-
-
-          }).map(item => item.content)
-        */
-
-        //Save result in table for faster queries -> future
-        /*
-          //Find Feed that belongs to user or create a new one
-          var feed = await feedModel.findOne({ userid: userid_ }).exec();
-          if (feed === undefined || feed === null) {
-           feed = new feedModel({ userid: userid_ });
-           await feed.save();
-         }
-
-         //Open FeedContent and insert
-         var feedContent=feed["content"]
-
-         //Get Raw String without object characteristics
-           var stringIDs=questionsInFeed.map(function(entry) {
-           return entry["_id"]
-             })
-
-             //Add the question IDs etc.
-         feed = await feedModel
-             .findOneAndUpdate(
-               { userid: userid_ },
-               {
-                 $addToSet: { content: stringIDs }
-               },
-               {
-                 returnOriginal: false,
-                 upsert: true
-               }
-             )
-             .exec();*/
-
-    };
-
-    async addQuestionToFeed(userid_, questionid) {
-        const result = await feedModel
-            .findOneAndUpdate(
-                {userid: userid_},
-                {
-                    $setOnInsert: {userid: userid_},
-                    $addToSet: {content: "Q" + questionid}
-                },
-                {
-                    //returnOriginal: false,
-                    upsert: true
-                }
-            )
+        // Items with the highest priority and the latest creation date are sent first. Priority > Creation Date
+        let feedItems = await contentModel
+            .find({user: userID})
+            .sort({priority:-1})
+            .sort({"created_at": -1})
+            .limit(amount)
             .exec();
 
-       // const newOrUpdatedDocument = result.value;
-    };
+        let index = await feedModel
+            .findOne({user: userID})
+            .sort({index:-1})
+            .select("index -_id");
+
+        let resultIndex = 0;
+        if (index){
+            resultIndex = index.index + 1;
+        }
+        let data = []
+        for(let i = 0; i < feedItems.length; i++){
+            data.push(await poolBase.createFeedItem(feedItems[i], resultIndex + i));
+        }
+        return data;
+    }
+
+    /**
+     * Returns Feed from a certain index
+     */
+    async getFeed(userID, index, pageSize, direction){
+        let border;
+
+        if(direction=="asc"){
+            border = index + pageSize;
+        }
+        else{
+            border = index - pageSize;
+        }
+        let counter = await feedModel.find({user: userID, index: {$lt: border + 1, $gt: index - 1}}).sort({index: 1}).countDocuments();
+
+        if(counter < pageSize){
+            await this.createFeed(userID,pageSize-counter)
+        }
+        if(direction=="asc"){
+            return feedModel.find({user: userID, index: {$lt: border , $gt: index - 1}}).sort({index: 1});
+        }
+        else{
+            return feedModel.find({user: userID, index: {$lt: index+1 , $gt: border }}).sort({index: -1});
+        }
+
+    }
+
 }
