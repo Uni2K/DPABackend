@@ -26,14 +26,14 @@ export class PollBase {
 
         const tributeValue = calculatePollTribute(req);
         //Dont do it, when there is not enough tribute -> give the client a correct response to handle it
-        if (isReputationEnough(req.user.reputation, tributeValue)) {
+        if (isReputationEnough(req.body.user.reputation, tributeValue)) {
             throw Error(ERROR_USER_REPUTATION_NOT_ENOUGH);
         }
 
         let pollID;
         const promise = new pollModel({
             expirationDate: req.body.expirationDate,
-            user: req.user,
+            user: req.body.user,
             header: req.body.header,
             description: req.body.description,
             typeFlags: req.body.typeFlags,
@@ -46,11 +46,11 @@ export class PollBase {
             res.status(error.message).send(error); //Not saved -> just tell the client, no reputation adjustment
 
         }).then((result) => {
-            adjustReputation(req.user, tributeValue); //Saved finally -> adjust the reputation now
+            adjustReputation(req.body.user, tributeValue); //Saved finally -> adjust the reputation now
             res.status(REQUEST_OK).send(result); //send the created poll to the user
             if(result){
                 pollID = result;
-                poolBase.pollToPool(req.user._id, pollID, req.body.topics).then();
+                poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
             }
         });
 

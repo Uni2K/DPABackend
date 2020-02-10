@@ -13,14 +13,23 @@ import {
 import { adjustReputation } from "../helpers/StatisticsBase";
 import { imageModel } from "../models/Image";
 const auth = require("../middleware/auth");
+const {validatePoll} = require("../models/Poll");
+const {validateUser} = require("../models/User")
 
 /**
  * USER Express Router
  */
 export = function (): Router {
     const router = express.Router();
+
     router.post("/users/signup", async (req, res) => {
         // Create a new user
+        const error = await validateUser(req.body);
+        if (error.error) {
+            console.log(error.error)
+            return res.status(422).json(error.error.details[0].message);
+        }
+
         userBase.createUser(res, req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);
@@ -31,8 +40,13 @@ export = function (): Router {
     });
     router.post("/users/createPoll", auth, async (req, res) => {
         // Create a new Poll
-        await pollBase.createPoll(req, res);
+        const error = await validatePoll(req.body);
+        if (error.error) {
+            console.log(error.error)
+            return res.status(422).json(error.error.details[0].message);
+        }
 
+        await pollBase.createPoll(req, res);
     });
     router.get("/users/feed", auth, async (req, res) => {
 

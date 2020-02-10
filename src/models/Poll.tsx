@@ -2,6 +2,8 @@ import {createSchema, Type, typedModel} from 'ts-mongoose';
 import {PollTypes} from "../helpers/Constants";
 import {AnswerInterface} from "../interfaces/AnswerInterface";
 
+const Joi = require('@hapi/joi');
+
 const topicModel = require('./Topic');
 
 const pollSchema = createSchema(
@@ -20,8 +22,8 @@ const pollSchema = createSchema(
             votes: Type.number() //How many votes this specific answer got
         }),
         expirationDate: Type.date({required: true}), //When is the poll not votable anymore
-        topics: Type.array().of({topic: Type.string({required: true})}), 
-        scoreOverall: Type.number({default: 0}), 
+        topics: Type.array().of({topic: Type.string({required: true})}),
+        scoreOverall: Type.number({default: 0}),
         rankOverall: Type.number({default: 0}),
         rankCategory: Type.number({default: 0}),
 
@@ -31,5 +33,20 @@ const pollSchema = createSchema(
     {_id: true, timestamps: true}
 );
 
-export const pollModel = typedModel('Polls', pollSchema);
+const schema = Joi.object({
+    user: Joi.object().required(),
+    header: Joi.string().required(),
+    description: Joi.string().required(),
+    type: Joi.number(),
+    typeFlags: Joi.array(),
+    answers: Joi.array().required(),
+    expirationDate: Joi.date().required(),
+    topics: Joi.array().required(),
+});
 
+async function validate(enabled, header, description, answers, expirationDate, topics){
+    return await schema.validate(enabled, header, description, answers, expirationDate, topics);
+}
+
+export const pollModel = typedModel('Polls', pollSchema);
+export { validate as validatePoll }

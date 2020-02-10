@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import uniqueValidator from "mongoose-unique-validator";
 
+const Joi = require('@hapi/joi');
+
 /**
  * REMOVE THIS
  */
@@ -79,4 +81,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 };
 
+const schema = Joi.object({
+    name: Joi.string().required().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required()
+});
+
+async function validate(name, email, password){
+    return await schema.validate(name, email, password);
+}
+
 export const userModel = typedModel('Users', userSchema)
+export { validate as validateUser }
