@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ts_mongoose_1 = require("ts-mongoose");
+/**
+ * Conversation is the main part of a deep poll. Child: Comment, Parent: any deep poll.
+ *
+ */
 const conversationSchema = ts_mongoose_1.createSchema({
     user: ts_mongoose_1.Type.string({ required: true }),
     parentPoll: ts_mongoose_1.Type.string({ required: true }),

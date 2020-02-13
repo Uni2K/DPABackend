@@ -15,6 +15,8 @@ import { imageModel } from "../models/Image";
 const auth = require("../middleware/auth");
 const {validatePoll} = require("../models/Poll");
 const {validateUser} = require("../models/User")
+const {validate} = require("../helpers/Validate")
+const Joi = require('@hapi/joi');
 
 /**
  * USER Express Router
@@ -50,7 +52,21 @@ export = function (): Router {
     });
     router.get("/users/feed", auth, async (req, res) => {
 
-        const data = await feedLoader.getFeed(req.user, parseInt(req.query.index), parseInt(req.query.pageSize), req.query.direction);
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            index: Joi.number().required(),
+            pageSize: Joi.number().required(),
+            direction: Joi.string().valid("asc", "desc")
+        });
+        const input = {
+            user: req.body.user,
+            index: parseInt(req.query.index),
+            pageSize: parseInt(req.query.pageSize),
+            direction: req.query.direction
+        }
+        await validate(schema, input, res);
+
+        const data = await feedLoader.getFeed(req.body.user, parseInt(req.query.index), parseInt(req.query.pageSize), req.query.direction);
 
         if (data.length > 0) {
             res.status(200).json(data)
@@ -63,6 +79,10 @@ export = function (): Router {
 
 
     router.post("/data/snapshot", async (req, res) => {
+        const schema = Joi.object({
+            user: Joi.object().required()
+        });
+        await validate(schema, req.body, res);
         //User snapshot -> Statistics again
         userBase.getSnapshots(req).then((result) => {
             res.status(REQUEST_OK).send(result);
@@ -74,9 +94,9 @@ export = function (): Router {
     router.post("/users/me", auth, async (req, res) => {
         // View logged in user profile
         try {
-            req.user.password = ""; //Dont send this infos to the client
-            req.user.sessionTokens = [];
-            const user = req.user;
+            req.body.user.password = ""; //Dont send this infos to the client
+            req.body.user.sessionTokens = [];
+            const user = req.body.user;
             const token = req.token;
             res.status(REQUEST_OK).send({ user, token });
         } catch (error) {
@@ -85,6 +105,13 @@ export = function (): Router {
     });
 
     router.post("/data/vote", async (req, res) => {
+        const schema = Joi.object({
+            poll: Joi.object().required(),
+            indexOfAnswer: Joi.number().required(),
+            user: Joi.object().required(),
+        });
+
+        await validate(schema, req, res);
         userBase.vote(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
@@ -94,6 +121,14 @@ export = function (): Router {
     });
 
     router.post("/users/block", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            blockedUser: Joi.object().required()
+        });
+
+        await validate(schema, req, res);
+
         userBase.block(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
@@ -102,6 +137,14 @@ export = function (): Router {
         });
     });
     router.post("/users/unblock", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            blockedUser: Joi.object().required()
+        });
+
+        await validate(schema, req, res);
+
         userBase.unblock(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
@@ -110,6 +153,12 @@ export = function (): Router {
         });
     });
     router.post("/users/getBlockedUser", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+        });
+
+        await validate(schema, req, res);
         userBase.getBlockedUser(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
@@ -119,6 +168,12 @@ export = function (): Router {
     });
 
     router.post('/users/getAvatar', async function (req, res) {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+        });
+
+        await validate(schema, req, res);
+
         const user = req.body.user
         const image = await imageModel.findOne({ enabled: true, user: user, purpose: ImagePurposes.Avatar })
 
@@ -133,9 +188,16 @@ export = function (): Router {
 
 
     router.post('/users/changeAvatar', async function (req, res) {
-        // let userid=req.user._id
-        let userid = "5dc6e18122304238205eccba" //Example, for debuggin
-        req.user = {}
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+        });
+
+        await validate(schema, req, res);
+
+        // let userID=req.body.user._id
+        let userID = "5dc6e18122304238205eccba" //Example, for debuggin
+        req.body.user = {}
 
         upload.single("avatarImage")(req, res, async function (err) {
             //TODO TEST!!
@@ -157,54 +219,86 @@ export = function (): Router {
             }
 
 
-            await imageModel.deleteMany({ user: userid, purpose: ImagePurposes.Avatar }).exec();
+            await imageModel.deleteMany({ user: userID, purpose: ImagePurposes.Avatar }).exec();
             const img = await new imageModel({
-                user: userid,
+                user: userID,
                 fileName: req.file.filename,
                 purpose: ImagePurposes.Avatar
             }).save();
-            req.user.avatarImage = img._id;
-            // await req.user.save();
-            req.user.password = "";
-            req.user.sessionTokens = "";
-            res.status(REQUEST_OK).send(req.user);
+            req.body.user.avatarImage = img._id;
+            // await req.body.user.save();
+            req.body.user.password = "";
+            req.body.user.sessionTokens = "";
+            res.status(REQUEST_OK).send(req.body.user);
 
         });
 
     });
 
     router.post("/data/report", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            type: Joi.number().required(),
+            target: Joi.number().target
+        });
+
+        await validate(schema, req, res);
+
         userBase.report(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
         ).then((result) => {
             res.status(REQUEST_OK).send(result);
-            adjustReputation(req.user, REPUTATION_REPORT);
+            adjustReputation(req.body.user, REPUTATION_REPORT);
         });
     });
 
     router.post("/data/comment", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            conversationID: Joi.string().required(),
+            header: Joi.string().required(),
+            content: Joi.string().required(),
+            parentComment: Joi.object().required(),
+
+        });
+
+        await validate(schema, req, res);
+
         userBase.addComment(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
         ).then((result) => {
             res.status(REQUEST_OK).send(result);
-            adjustReputation(req.user, REPUTATION_COMMENT);
+            adjustReputation(req.body.user, REPUTATION_COMMENT);
         });
     });
     router.post("/users/me/edit", auth, async (req, res) => {
 
-        req.user.avatarURL = req.body.avatarURL;
-        req.user.headerURL = req.body.headerURL;
-        req.user.additionalURL = req.body.additionalURL;
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            avatarURL: Joi.string().required(),
+            headerURL: Joi.string().required(),
+            additionalURL: Joi.string().required(),
+            description: Joi.string().required(),
+            location: Joi.string().required()
+        });
 
-        req.user.description = req.body.description;
-        req.user.location = req.body.location;
+        await validate(schema, req, res);
+
+        req.body.user.avatarURL = req.body.avatarURL;
+        req.body.user.headerURL = req.body.headerURL;
+        req.body.user.additionalURL = req.body.additionalURL;
+
+        req.body.user.description = req.body.description;
+        req.body.user.location = req.body.location;
         try {
-            await req.user.save();
-            req.user.password = ""; //Dont send this infos to the client
-            req.user.tokens = "";
-            const user = req.user;
+            await req.body.user.save();
+            req.body.user.password = ""; //Dont send this infos to the client
+            req.body.user.tokens = "";
+            const user = req.body.user;
             const token = req.token;
             res.send({ user, token });
         } catch (error) {
@@ -212,7 +306,15 @@ export = function (): Router {
         }
     });
 
-    router.post("/users/me/", auth, async (req, res) => {
+    router.post("/users/me/subscribe", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            content: Joi.object().required(),
+            type: Joi.string().required()
+        });
+
+        await validate(schema, req, res);
 
         userBase.subscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
@@ -225,6 +327,14 @@ export = function (): Router {
 
     router.post("/users/me/unsubscribe", auth, async (req, res) => {
 
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            content: Joi.object().required(),
+            type: Joi.string().required()
+        });
+
+        await validate(schema, req, res);
+
         userBase.unsubscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
         }
@@ -233,6 +343,12 @@ export = function (): Router {
         });
     });
     router.post("/users/byID", async (req, res) => {
+
+        const schema = Joi.object({
+            userID: Joi.string().required()
+        });
+
+        await validate(schema, req, res);
 
         userBase.userByID(req).catch((error) => {
             console.log(error.message);
@@ -244,11 +360,14 @@ export = function (): Router {
     });
 
     router.post("/users/me/logout", auth, async (req, res) => {
+
+        //no validation, function will removed soon
+
         try {
-            req.user.tokens = req.user.tokens.filter(token => {
+            req.body.user.tokens = req.body.user.tokens.filter(token => {
                 return token.token != req.token;
             });
-            await req.user.save();
+            await req.body.user.save();
             res.send();
         } catch (error) {
             res.status(500).send(error);
@@ -256,9 +375,12 @@ export = function (): Router {
     });
 
     router.post("/users/me/logoutall", auth, async (req, res) => {
+
+        //no validation, function will removed soon
+
         try {
-            req.user.tokens.splice(0, req.user.tokens.length);
-            await req.user.save();
+            req.body.user.tokens.splice(0, req.body.user.tokens.length);
+            await req.body.user.save();
             res.send();
         } catch (error) {
             res.status(500).send(error);
@@ -266,6 +388,14 @@ export = function (): Router {
     });
 
     router.post("/users/login", async (req, res) => {
+
+        const schema = Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        });
+
+        await validate(schema, req, res);
+
         userBase.login(req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);

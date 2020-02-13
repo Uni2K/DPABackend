@@ -82,7 +82,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 const schema = Joi.object({
-    name: Joi.string().required().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required()
 });

@@ -3,24 +3,47 @@
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/db/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/db/Database.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/ParsingBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/ParsingBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/ParsingBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/ParsingBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Feed.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Feed.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Comment.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Comment.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Conversation.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Conversation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Conversation.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Conversation.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/PollSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/PollSnapshot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/FeedLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/FeedLoader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/UserBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/UserRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/UserRouter.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +141,7 @@
       <workItem from="1578832434819" duration="11197000" />
       <workItem from="1581065278846" duration="3482000" />
       <workItem from="1581069235106" duration="16997000" />
+      <workItem from="1581623350124" duration="2071000" />
     </task>
     <task id="LOCAL-00001" summary="finish feed">
       <created>1581087741988</created>
@@ -126,11 +150,29 @@
       <option name="project" value="LOCAL" />
       <updated>1581087741988</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="finish feed">
+      <created>1581623122370</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1581623122370</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="finish feed" />
@@ -166,9 +208,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578780613487" />
-    <state x="-1720" y="206" key="CommitChangelistDialog2" timestamp="1581087741548">
-      <screen x="-2560" y="23" width="2560" height="1337" />
+    <state x="-1720" y="217" key="CommitChangelistDialog2" timestamp="1581625488031">
+      <screen x="-2560" y="23" width="2560" height="1417" />
     </state>
+    <state x="-1720" y="217" key="CommitChangelistDialog2/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581625488031" />
     <state x="-1720" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087741548" />
     <state width="401" height="466" key="DebuggerActiveHint" timestamp="1577963567394">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -273,10 +316,11 @@
     </state>
     <state x="656" y="118" width="607" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578851155500" />
     <state x="656" y="118" width="607" height="804" key="find.popup/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577728916575" />
-    <state x="-1574" y="500" key="git4idea.merge.GitPullDialog" timestamp="1581063263348">
-      <screen x="-2560" y="0" width="2560" height="1440" />
+    <state x="-1574" y="515" key="git4idea.merge.GitPullDialog" timestamp="1581580532871">
+      <screen x="-2560" y="23" width="2560" height="1417" />
     </state>
     <state x="-1574" y="500" key="git4idea.merge.GitPullDialog/0.0.1440.900/-2560.0.2560.1440@-2560.0.2560.1440" timestamp="1581063263348" />
+    <state x="-1574" y="515" key="git4idea.merge.GitPullDialog/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581580532871" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1578831730854">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

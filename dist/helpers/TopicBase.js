@@ -18,19 +18,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 const Topic_1 = require("../models/Topic");
 const TopicSnapshot_1 = require("../models/TopicSnapshot");
-var TopicFlags;
-(function (TopicFlags) {
-    TopicFlags[TopicFlags["Idle"] = 0] = "Idle";
-    TopicFlags[TopicFlags["Recommended"] = 1] = "Recommended";
-    TopicFlags[TopicFlags["Hot"] = 2] = "Hot";
-    TopicFlags[TopicFlags["New"] = 3] = "New";
-})(TopicFlags || (TopicFlags = {}));
 class TopicBase {
+    /**
+     * Special Topics -> Containers for multiple single topics, managed with flags
+     */
     getSpecialTopics(type) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = {};
             query["enabled"] = true;
-            query["flag"] = type;
+            query["flag"] = type; //Special Topic Identifier
             return Topic_1.topicModel
                 .find(query)
                 .select("_id")
@@ -158,6 +154,7 @@ class TopicBase {
             return Topic_1.topicModel.findById(topicID).lean().exec();
         });
     }
+    //Topic Snapshots
     getSnapshots(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicid }).lean().exec();

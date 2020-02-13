@@ -20,6 +20,7 @@ const UserSnapshot_1 = require("../models/UserSnapshot");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 class UserBase {
+    //Only for debugging
     createSampleUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             const number = 50;
@@ -37,6 +38,7 @@ class UserBase {
             }
         });
     }
+    //Creates the user
     createUser(res, req) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = new User_1.userModel(req.body);
@@ -44,7 +46,7 @@ class UserBase {
                 yield user.save();
             }
             catch (err) {
-                if (err.message.toString().includes("email")) {
+                if (err.message.toString().includes("email")) { //This kind of message threw by the validation tool
                     throw Error(Constants_1.ERROR_USER_EMAIL);
                 }
                 else if (err.message.toString().includes("name")) {
@@ -88,12 +90,15 @@ class UserBase {
             return { token, user };
         });
     }
+    /**
+     * Vote on a poll
+     */
     vote(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            const questionID = req.body.pollid;
-            const indexofanswer = req.body.indexofanswer;
-            const user = req.user;
-            const selection = "answers.".concat(indexofanswer).concat("votes");
+            const questionID = req.body.poll;
+            const indexOfAnswer = req.body.indexofanswer;
+            const user = req.body.user;
+            const selection = "answers.".concat(indexOfAnswer).concat("votes");
             const result = yield Poll_1.pollModel.findByIdAndUpdate(questionID, { $inc: { selection: 1 } }, { new: true }).populate("userid", "name avatar").exec();
             if (user !== undefined) {
                 yield StatisticsBase_1.adjustReputation(user, Constants_1.REPUTATION_VOTE);
@@ -101,20 +106,26 @@ class UserBase {
             return result;
         });
     }
+    /**
+     * Report a User
+     */
     report(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Report_1.reportModel({
-                user: req.user._id,
+                user: req.body.user._id,
                 type: req.body.type,
                 target: req.body.target
             }).save();
         });
     }
+    /**
+     * OUTDATED
+     */
     subscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield User_1.userModel.findByIdAndUpdate(req.user._id, {
-                    $addToSet: { "subscriptions": { content: req.body.id, type: req.body.type } }
+                const user = yield User_1.userModel.findByIdAndUpdate(req.body.user._id, {
+                    $addToSet: { "subscriptions": { content: req.body.content, type: req.body.type } }
                 }, { new: true }).select("-password -sessionTokens -email");
                 let token = req.token;
                 return { user, token };
@@ -129,10 +140,13 @@ class UserBase {
             }
         });
     }
+    /**
+     * OUTDATED
+     */
     unsubscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield User_1.userModel.findByIdAndUpdate(req.user._id, {
+                const user = yield User_1.userModel.findByIdAndUpdate(req.body.user._id, {
                     "$pull": { "subscriptions": { content: req.body.id, type: req.body.type } }
                 }, { new: true }).select("-password -sessionTokens -email");
                 let token = req.token;
@@ -150,7 +164,7 @@ class UserBase {
     }
     userByID(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return User_1.userModel.findOne({ _id: req.body.id }).select("-email -password -sessionTokens").lean().exec();
+            return User_1.userModel.findOne({ _id: req.body.userID }).select("-email -password -sessionTokens").lean().exec();
         });
     }
     /**
@@ -169,7 +183,7 @@ class UserBase {
         return __awaiter(this, void 0, void 0, function* () {
             let conversation = null;
             if (req.conversationid != "-1") {
-                conversation = yield Conversation_1.conversationModel.findOne({ _id: req.body.conversationid }).lean().exec();
+                conversation = yield Conversation_1.conversationModel.findOne({ _id: req.body.conversationID }).lean().exec();
                 if (conversation == null) {
                     //TODO: TEST it
                     conversation = yield this.createConversation(req);
@@ -179,7 +193,7 @@ class UserBase {
                 conversation = yield this.createConversation(req);
             }
             const user = new Comment_1.commentModel({
-                user: req.user._id,
+                user: req.body.user._id,
                 conversation: conversation._id,
                 header: req.body.header,
                 content: req.body.content,
@@ -206,7 +220,7 @@ class UserBase {
     createConversation(req) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = new Conversation_1.conversationModel({
-                user: req.user._id,
+                user: req.body.user._id,
             });
             return user.save();
         });
@@ -214,19 +228,19 @@ class UserBase {
     block(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return new UserBlocked_1.userBlockedModel({
-                user: req.user._id,
-                blockeduser: req.body.blockeduser
+                user: req.body.user._id,
+                blockedUser: req.body.blockedUser
             }).save();
         });
     }
     unblock(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return UserBlocked_1.userBlockedModel.deleteMany({ user: req.user._id, blockeduser: req.body.blockeduser }).exec();
+            return UserBlocked_1.userBlockedModel.deleteMany({ user: req.body.user._id, blockedUser: req.body.blockeduser }).exec();
         });
     }
     getBlockedUser(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return UserBlocked_1.userBlockedModel.find({ user: req.user._id }).exec();
+            return UserBlocked_1.userBlockedModel.find({ user: req.body.user._id }).exec();
         });
     }
 }

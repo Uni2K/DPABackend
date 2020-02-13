@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const app_1 = require("../app");
 const Constants_1 = require("../helpers/Constants");
+const app_2 = require("../app");
 module.exports = function () {
     const router = app_1.express.Router();
     router.post("/polls/byIDs", (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -27,13 +28,15 @@ module.exports = function () {
             res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
         });
     }));
+    //For statistics reason
     router.post("/polls/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
-        app_1.pollBase.getSnapshots(req).then((result) => {
+        app_2.snapshotBase.getPollSnapshots(req).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
         }).catch((err) => {
             res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
         });
     }));
+    //For the creator
     router.post("/data/creation/metadata", (req, res) => __awaiter(this, void 0, void 0, function* () {
         res.status(Constants_1.REQUEST_OK).send(app_1.pollBase.getCreationMetadata());
     }));

@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ts_mongoose_1 = require("ts-mongoose");
+/**
+ * Comment is the child of a conversation, displays a message inside a e.g deep poll conversation
+ */
 const commentSchema = ts_mongoose_1.createSchema({
     user: ts_mongoose_1.Type.string({ required: true }),
     parentComment: ts_mongoose_1.Type.string({ required: true }),

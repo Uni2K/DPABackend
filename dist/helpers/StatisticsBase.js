@@ -10,6 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = require("./Constants");
+/**
+ * Simple Settings
+ * @param user User Object
+ * @param value Value of the reputation
+ */
 function adjustReputation(user, value) {
     return __awaiter(this, void 0, void 0, function* () {
         if (user) {
@@ -19,10 +24,12 @@ function adjustReputation(user, value) {
     });
 }
 exports.adjustReputation = adjustReputation;
+/**
+ * Using the Parameters in constant to calculate how much reputation a user has to pay to do the desired action
+ */
 function calculatePollTribute(req) {
     let type = req.body.polltype;
-    let typeFlags = req.body.typeflags;
-    console.log(req);
+    let typeFlags = req.body.typeFlags;
     let rep = 0;
     switch (type) {
         case Constants_1.PollTypes.Default:

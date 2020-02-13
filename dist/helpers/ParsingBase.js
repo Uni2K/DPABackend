@@ -9,6 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ *  Simple Helperclass to parse String content into objects
+ *  String could be either jsons or custom schemas like  string='content1 //// content2', where //// is an delimiter
+ * Json is clearly prefered
+ */
 function parseAnswers(input) {
     return __awaiter(this, void 0, void 0, function* () {
         let arr = [];

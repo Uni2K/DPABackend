@@ -9,10 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Feed_1 = require("../models/Feed");
-const Poll_1 = require("../models/Poll");
-const Topic_1 = require("../models/Topic");
-const User_1 = require("../models/User");
+//import {feedModel} from "../models/Feed";
+const Content_1 = require("../models/Content");
+const FeedPool_1 = require("../models/FeedPool");
 /** Order:
  * 1.User logged in -> getInitialFeed for userid -> Feed is empty -> Load 50 questions in the feed to enable some backscroll
  * 2. Return feed, starting from 0 at the first of the 50 items
@@ -34,111 +33,60 @@ const User_1 = require("../models/User");
 /**
  * Better: Store selected feed tags on the server-> load the 50 questions of the correct tags
  */
+const app_1 = require("../app");
 class FeedLoader {
-    getFeed(res, userid_, loadsize, index, older) {
+    /**
+     * Create Items for the feed
+     */
+    createFeed(userID, amount) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Find User to get his Subscriptions
-            const user = yield User_1.userModel
-                .findById({
-                _id: userid_
-            })
-                .lean()
-                .select("subscriptions")
+            // Items with the highest priority and the latest creation date are sent first. Priority > Creation Date
+            let feedItems = yield Content_1.contentModel
+                .find({ user: userID })
+                .sort({ priority: -1 })
+                .sort({ "created_at": -1 })
+                .limit(amount)
                 .exec();
-            const userSubscriptions = user["subscriptions"];
-            //Filter the user subscriptions by their types: T-> Question from Topic Subscription, U-> Question From User Subscription
-            const topicContent = userSubscriptions.filter(function (item) {
-                return item.type == "T";
-            }).map(item => item.content);
-            const userContent = userSubscriptions.filter(function (item) {
-                return item.type == "U";
-            }).map(item => item.content);
-            //Fetch Content
-            const query = {};
-            query["enabled"] = true;
-            if (older) {
-                query["timestamp"] = { $lt: index };
+            let index = yield FeedPool_1.feedModel
+                .findOne({ user: userID })
+                .sort({ index: -1 })
+                .select("index -_id");
+            let resultIndex = 0;
+            if (index) {
+                resultIndex = index.index + 1;
             }
-            else
-                query["timestamp"] = { $gt: index };
-            query["$or"] = [{ userid: { $in: userContent } }, { tags: { $in: topicContent } }];
-            const questionsInFeed = yield Poll_1.pollModel
-                .find(query)
-                //.select("_id")
-                .sort({ timestamp: -1 })
-                .limit(loadsize)
-                .populate("tags", Topic_1.topicModel)
-                .populate("userid", "name avatar")
-                .lean()
-                .exec();
-            console.log("GET FEED Config: " + userid_ + " " + loadsize + " " + older + "  " + index + "  " + questionsInFeed.length);
-            return questionsInFeed;
-            //Add the direct items, User, Topics -> they got a timestamp in the subscription, if it matches -> LATER
-            /* if(older){
-               var indexStart=index
-               var indexEnd=questionsInFeed[questionsInFeed.length-1].timestamp
-             }
-    
-    
-    
-             var directUserContent=userSubscriptions.filter(function(item) {
-    
-    
-               var isInTimeStamp=item.timetstamp<
-    
-                return item.type == "DU" && ;
-    
-    
-              }).map(item => item.content)
-            */
-            //Save result in table for faster queries -> future
-            /*
-              //Find Feed that belongs to user or create a new one
-              var feed = await feedModel.findOne({ userid: userid_ }).exec();
-              if (feed === undefined || feed === null) {
-               feed = new feedModel({ userid: userid_ });
-               await feed.save();
-             }
-    
-             //Open FeedContent and insert
-             var feedContent=feed["content"]
-    
-             //Get Raw String without object characteristics
-               var stringIDs=questionsInFeed.map(function(entry) {
-               return entry["_id"]
-                 })
-    
-                 //Add the question IDs etc.
-             feed = await feedModel
-                 .findOneAndUpdate(
-                   { userid: userid_ },
-                   {
-                     $addToSet: { content: stringIDs }
-                   },
-                   {
-                     returnOriginal: false,
-                     upsert: true
-                   }
-                 )
-                 .exec();*/
+            let data = [];
+            for (let i = 0; i < feedItems.length; i++) {
+                data.push(yield app_1.poolBase.createFeedItem(feedItems[i], resultIndex + i));
+            }
+            return data;
         });
     }
-    ;
-    addQuestionToFeed(userid_, questionid) {
+    /**
+     * Returns Feed from a certain index
+     */
+    getFeed(userID, index, pageSize, direction) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield Feed_1.feedModel
-                .findOneAndUpdate({ userid: userid_ }, {
-                $setOnInsert: { userid: userid_ },
-                $addToSet: { content: "Q" + questionid }
-            }, {
-                //returnOriginal: false,
-                upsert: true
-            })
-                .exec();
-            // const newOrUpdatedDocument = result.value;
+            let border;
+            console.log(userID);
+            if (direction == "asc") {
+                border = index + pageSize;
+            }
+            else {
+                border = index - pageSize;
+            }
+            let counter = yield FeedPool_1.feedModel.find({ user: userID, index: { $lt: border + 1, $gt: index - 1 } }).sort({ index: 1 }).countDocuments();
+            if (counter < pageSize) {
+                yield this.createFeed(userID, pageSize - counter);
+            }
+            if (direction == "asc") {
+                return FeedPool_1.feedModel.find({ user: userID, index: { $lt: border, $gt: index - 1 } }).sort({ index: 1 });
+            }
+            else {
+                return FeedPool_1.feedModel.find({ user: userID, index: { $lt: index + 1, $gt: border } }).sort({ index: -1 });
+            }
         });
     }
-    ;
 }
 exports.FeedLoader = FeedLoader;
 //# sourceMappingURL=FeedLoader.js.map
