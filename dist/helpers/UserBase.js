@@ -20,6 +20,7 @@ const UserSnapshot_1 = require("../models/UserSnapshot");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 class UserBase {
+    //Only for debugging
     createSampleUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             const number = 50;
@@ -37,6 +38,7 @@ class UserBase {
             }
         });
     }
+    //Creates the user
     createUser(res, req) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = new User_1.userModel(req.body);
@@ -44,7 +46,7 @@ class UserBase {
                 yield user.save();
             }
             catch (err) {
-                if (err.message.toString().includes("email")) {
+                if (err.message.toString().includes("email")) { //This kind of message threw by the validation tool
                     throw Error(Constants_1.ERROR_USER_EMAIL);
                 }
                 else if (err.message.toString().includes("name")) {
@@ -88,6 +90,9 @@ class UserBase {
             return { token, user };
         });
     }
+    /**
+     * Vote on a poll
+     */
     vote(req) {
         return __awaiter(this, void 0, void 0, function* () {
             const questionID = req.body.pollid;
@@ -101,6 +106,9 @@ class UserBase {
             return result;
         });
     }
+    /**
+     * Report a User
+     */
     report(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Report_1.reportModel({
@@ -110,6 +118,9 @@ class UserBase {
             }).save();
         });
     }
+    /**
+     * OUTDATED
+     */
     subscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -129,6 +140,9 @@ class UserBase {
             }
         });
     }
+    /**
+     * OUTDATED
+     */
     unsubscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

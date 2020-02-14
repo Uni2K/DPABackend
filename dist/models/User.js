@@ -17,6 +17,9 @@ const validator_1 = __importDefault(require("validator"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-validator"));
+/**
+ * REMOVE THIS
+ */
 const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: true }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
 exports.userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),

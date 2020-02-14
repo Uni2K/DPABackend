@@ -13,7 +13,7 @@ const pollSchema = ts_mongoose_1.createSchema({
     answers: ts_mongoose_1.Type.array({ required: true }).of({
         text: ts_mongoose_1.Type.string(),
         type: ts_mongoose_1.Type.number(),
-        votes: ts_mongoose_1.Type.number()
+        votes: ts_mongoose_1.Type.number() //How many votes this specific answer got
     }),
     expirationDate: ts_mongoose_1.Type.date({ required: true }),
     topics: ts_mongoose_1.Type.array().of({ topic: ts_mongoose_1.Type.string({ required: true }) }),

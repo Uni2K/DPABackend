@@ -26,7 +26,7 @@ module.exports = function () {
         });
     }));
     router.post("/users/createPoll", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        // Create a new user
+        // Create a new Poll
         yield app_1.pollBase.createPoll(req, res);
     }));
     router.get("/users/feed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -45,6 +45,7 @@ module.exports = function () {
         res.status(200).json(data);
     }));
     router.post("/data/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        //User snapshot -> Statistics again
         app_1.userBase.getSnapshots(req).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
         }).catch((err) => {
@@ -107,7 +108,7 @@ module.exports = function () {
     router.post('/users/changeAvatar', function (req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             // let userid=req.user._id
-            let userid = "5dc6e18122304238205eccba";
+            let userid = "5dc6e18122304238205eccba"; //Example, for debuggin
             req.user = {};
             app_1.upload.single("avatarImage")(req, res, function (err) {
                 return __awaiter(this, void 0, void 0, function* () {

@@ -13,6 +13,9 @@ const perf_hooks_1 = require("perf_hooks");
 const app_1 = require("../app");
 const Constants_1 = require("../helpers/Constants");
 const Poll_1 = require("../models/Poll");
+/**
+ * A class to create/manage and load contentlists like Hot,Newcomer, Topics, Located, etc.
+ */
 class ContentlistLoader {
     constructor() {
         this.redisClient = require('async-redis').createClient;

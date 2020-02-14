@@ -2,23 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/db/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/db/Database.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/db/Database.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/ParsingBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/ParsingBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/ParsingBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/ParsingBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/StatisticsBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Feed.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Feed.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Comment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Comment.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Comment.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Conversation.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Conversation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Conversation.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Conversation.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
     </list>
@@ -118,6 +131,7 @@
       <workItem from="1578832434819" duration="11197000" />
       <workItem from="1581065278846" duration="3482000" />
       <workItem from="1581069235106" duration="16997000" />
+      <workItem from="1581360022227" duration="116000" />
     </task>
     <task id="LOCAL-00001" summary="finish feed">
       <created>1581087741988</created>
@@ -256,10 +270,10 @@
     </state>
     <state x="467" y="264" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1581158964985" />
     <state x="-1729" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087743797" />
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578832450244">
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1581360132114">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578832450244" />
+    <state x="656" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1581360132114" />
     <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1577987290060">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
