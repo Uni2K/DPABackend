@@ -76,10 +76,10 @@ class PollBase {
      * Used for the client to fetch updates for a specific ID Array
      * @param ids List of poll Ids
      */
-    getPollsByIds(ids) {
+    getPollsByIds(pollIDs) {
         return __awaiter(this, void 0, void 0, function* () {
             return Poll_1.pollModel
-                .find({ _id: { $in: ids } })
+                .find({ _id: { $in: pollIDs } })
                 .populate("tags", Topic_1.topicModel)
                 .populate("userid", "name avatar _id")
                 .exec();

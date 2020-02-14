@@ -42,6 +42,7 @@ const schema = Joi.object({
     answers: Joi.array().required(),
     expirationDate: Joi.date().required(),
     topics: Joi.array().required(),
+    polltype: Joi.number().required()
 });
 
 async function validate(enabled, header, description, answers, expirationDate, topics){

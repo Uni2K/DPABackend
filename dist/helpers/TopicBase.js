@@ -157,7 +157,7 @@ class TopicBase {
     //Topic Snapshots
     getSnapshots(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicid }).lean().exec();
+            return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicID }).lean().exec();
         });
     }
     /**

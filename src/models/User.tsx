@@ -10,7 +10,7 @@ const Joi = require('@hapi/joi');
  * REMOVE THIS
  */
 const feedSchema = createSchema(
-    {content: Type.string({required: true}), type: Type.string()},
+    {content: Type.string({required: false}), type: Type.string()},
     {_id: false, timestamps: true}
 );
 

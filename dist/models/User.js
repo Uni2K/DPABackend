@@ -21,7 +21,7 @@ const Joi = require('@hapi/joi');
 /**
  * REMOVE THIS
  */
-const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: true }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
+const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: false }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
 exports.userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),
     email: ts_mongoose_1.Type.string({

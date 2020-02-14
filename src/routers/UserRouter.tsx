@@ -41,13 +41,11 @@ export = function (): Router {
 
     });
     router.post("/users/createPoll", auth, async (req, res) => {
-        // Create a new Poll
         const error = await validatePoll(req.body);
         if (error.error) {
             console.log(error.error)
             return res.status(422).json(error.error.details[0].message);
         }
-
         await pollBase.createPoll(req, res);
     });
     router.get("/users/feed", auth, async (req, res) => {
@@ -76,8 +74,6 @@ export = function (): Router {
         }
 
     });
-
-
     router.post("/data/snapshot", async (req, res) => {
         const schema = Joi.object({
             user: Joi.object().required()
@@ -103,7 +99,6 @@ export = function (): Router {
             res.status(ERROR_USER_AUTH).send(error);
         }
     });
-
     router.post("/data/vote", async (req, res) => {
         const schema = Joi.object({
             poll: Joi.object().required(),
@@ -119,7 +114,6 @@ export = function (): Router {
             res.status(REQUEST_OK).send(result);
         });
     });
-
     router.post("/users/block", auth, async (req, res) => {
 
         const schema = Joi.object({
@@ -166,7 +160,6 @@ export = function (): Router {
             res.status(REQUEST_OK).send(result);
         });
     });
-
     router.post('/users/getAvatar', async function (req, res) {
         const schema = Joi.object({
             user: Joi.object().required(),
@@ -185,8 +178,6 @@ export = function (): Router {
 
         }))
     })
-
-
     router.post('/users/changeAvatar', async function (req, res) {
 
         const schema = Joi.object({
@@ -234,7 +225,6 @@ export = function (): Router {
         });
 
     });
-
     router.post("/data/report", auth, async (req, res) => {
 
         const schema = Joi.object({
@@ -253,7 +243,6 @@ export = function (): Router {
             adjustReputation(req.body.user, REPUTATION_REPORT);
         });
     });
-
     router.post("/data/comment", auth, async (req, res) => {
 
         const schema = Joi.object({
@@ -305,16 +294,17 @@ export = function (): Router {
             res.status(500).send(error);
         }
     });
-
     router.post("/users/me/subscribe", auth, async (req, res) => {
-
+        console.log(req.body.user._id)
         const schema = Joi.object({
             user: Joi.object().required(),
             content: Joi.object().required(),
             type: Joi.string().required()
         });
 
-        await validate(schema, req, res);
+        await validate(schema, req.body, res);
+
+
 
         userBase.subscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
@@ -324,7 +314,6 @@ export = function (): Router {
         });
 
     });
-
     router.post("/users/me/unsubscribe", auth, async (req, res) => {
 
         const schema = Joi.object({
@@ -358,7 +347,6 @@ export = function (): Router {
         });
 
     });
-
     router.post("/users/me/logout", auth, async (req, res) => {
 
         //no validation, function will removed soon
@@ -373,7 +361,6 @@ export = function (): Router {
             res.status(500).send(error);
         }
     });
-
     router.post("/users/me/logoutall", auth, async (req, res) => {
 
         //no validation, function will removed soon
@@ -386,7 +373,6 @@ export = function (): Router {
             res.status(500).send(error);
         }
     });
-
     router.post("/users/login", async (req, res) => {
 
         const schema = Joi.object({
@@ -394,7 +380,7 @@ export = function (): Router {
             password: Joi.string().required()
         });
 
-        await validate(schema, req, res);
+        await validate(schema, req.body, res);
 
         userBase.login(req).catch((error) => {
             console.log(error.message);

@@ -34,7 +34,6 @@ module.exports = function () {
         });
     }));
     router.post("/users/createPoll", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        // Create a new Poll
         const error = yield validatePoll(req.body);
         if (error.error) {
             console.log(error.error);
@@ -252,12 +251,13 @@ module.exports = function () {
         }
     }));
     router.post("/users/me/subscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        console.log(req.body.user._id);
         const schema = Joi.object({
             user: Joi.object().required(),
             content: Joi.object().required(),
             type: Joi.string().required()
         });
-        yield validate(schema, req, res);
+        yield validate(schema, req.body, res);
         app_1.userBase.subscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -318,7 +318,7 @@ module.exports = function () {
             email: Joi.string().email().required(),
             password: Joi.string().required()
         });
-        yield validate(schema, req, res);
+        yield validate(schema, req.body, res);
         app_1.userBase.login(req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);

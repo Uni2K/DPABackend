@@ -1,9 +1,7 @@
 import {Router} from "express";
 import {contentlistLoader, express} from "../app";
-import { ContentlistLoader } from "../content/ContentlistLoader";
-import {pollModel} from "../models/Poll";
-import {topicModel} from "../models/Topic";
-import {userModel} from "../models/User";
+const {validate} = require("../helpers/Validate")
+const Joi = require('@hapi/joi');
 
 /**
  * Express router for handling anything related to content lists
@@ -13,6 +11,16 @@ export = function():Router {
 
 
     router.post("/contentlist",  async (req, res) => {
+
+        const schema = Joi.object({
+            type: Joi.string().required(),
+            index: Joi.number().required(),
+            pageSize: Joi.number().required(),
+            direction: Joi.string().valid("asc", "desc").required(),
+            selectedSort: Joi.string().required()
+        });
+
+        await validate(schema, req, res);
 
        const result=  await contentlistLoader.getContent(req)
         res.status(200).send(result)

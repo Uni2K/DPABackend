@@ -38,12 +38,16 @@ export class PoolBase{
      * @param topics -> SINGLE Topic of the poll
      */
     async pollToPool(userID, pollID, topics){
+        console.log(topics)
         let users = [];
+
         let user = await userModel
             .find({subscriptions: {$elemMatch: {content: userID}}}) //Selects the users with the specific userID inside the subs
         if(user) {
             users = [...user];
         }
+
+
 
         for(let i = 0; i < topics.length; i++){
             let topic = topics[i].topic;
@@ -55,7 +59,6 @@ export class PoolBase{
             }
         }
         let result = [];
-
         //Iterate through subscribed users and topics
         for(let i = 0; i < users.length; i++){
 
@@ -71,6 +74,7 @@ export class PoolBase{
                 this.incrementPoolItemPriority(pollID, 2, user) //Item already in pool, so increment priority
             }
         }
+        console.log(topics)
 
     }
 
