@@ -96,10 +96,10 @@ export class UserBase {
      * Vote on a poll
      */
     async vote(req) {
-        const questionID = req.body.pollid;
-        const indexofanswer = req.body.indexofanswer;
-        const user = req.user;
-        const selection = "answers.".concat(indexofanswer).concat("votes");
+        const questionID = req.body.poll;
+        const indexOfAnswer = req.body.indexofanswer;
+        const user = req.body.user;
+        const selection = "answers.".concat(indexOfAnswer).concat("votes");
         const result = await pollModel.findByIdAndUpdate(
             questionID,
             {$inc: {selection: 1}},
@@ -117,7 +117,7 @@ export class UserBase {
      */
     async report(req) {
         return new reportModel({
-            user: req.user._id,
+            user: req.body.user._id,
             type: req.body.type,
             target: req.body.target
         }).save();
@@ -129,8 +129,8 @@ export class UserBase {
      */
     async subscribe(req) {
         try {
-            const user = await userModel.findByIdAndUpdate(req.user._id, {
-                    $addToSet: {"subscriptions": {content: req.body.id, type: req.body.type}}
+            const user = await userModel.findByIdAndUpdate(req.body.user._id, {
+                    $addToSet: {"subscriptions": {content: req.body.content, type: req.body.type}}
                 },
                 {new: true}).select("-password -sessionTokens -email");
 
@@ -153,7 +153,7 @@ export class UserBase {
 
     async unsubscribe(req) {
         try {
-            const user = await userModel.findByIdAndUpdate(req.user._id, {
+            const user = await userModel.findByIdAndUpdate(req.body.user._id, {
                     "$pull": {"subscriptions": {content: req.body.id, type: req.body.type}}
                 },
                 {new: true}).select("-password -sessionTokens -email");
@@ -172,7 +172,7 @@ export class UserBase {
     }
 
     async userByID(req) {
-        return userModel.findOne({_id: req.body.id}).select("-email -password -sessionTokens").lean().exec();
+        return userModel.findOne({_id: req.body.userID}).select("-email -password -sessionTokens").lean().exec();
     }
 
     /**
@@ -191,7 +191,7 @@ export class UserBase {
 
         let conversation = null;
         if (req.conversationid != "-1") {
-            conversation = await conversationModel.findOne({_id: req.body.conversationid}).lean().exec();
+            conversation = await conversationModel.findOne({_id: req.body.conversationID}).lean().exec();
 
             if (conversation == null) {
                 //TODO: TEST it
@@ -204,7 +204,7 @@ export class UserBase {
 
 
         const user = new commentModel({
-            user: req.user._id,
+            user: req.body.user._id,
             conversation:conversation._id,
             header: req.body.header,
             content: req.body.content,
@@ -230,7 +230,7 @@ export class UserBase {
     private async createConversation(req) {
 
         const user = new conversationModel({
-            user: req.user._id,
+            user: req.body.user._id,
 
         });
 
@@ -240,14 +240,14 @@ export class UserBase {
 
     async block(req) {
         return new userBlockedModel({
-            user:req.user._id,
-            blockeduser: req.body.blockeduser
+            user:req.body.user._id,
+            blockedUser: req.body.blockedUser
         }).save()
     }
     async unblock(req) {
-        return userBlockedModel.deleteMany({user:req.user._id, blockeduser: req.body.blockeduser}).exec()
+        return userBlockedModel.deleteMany({user:req.body.user._id, blockedUser: req.body.blockeduser}).exec()
     }
     async getBlockedUser(req) {
-        return userBlockedModel.find({user:req.user._id}).exec()
+        return userBlockedModel.find({user:req.body.user._id}).exec()
     }
 }

@@ -17,10 +17,18 @@ const validator_1 = __importDefault(require("validator"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-validator"));
+<<<<<<< HEAD
 /**
  * REMOVE THIS
  */
 const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: true }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
+=======
+const Joi = require('@hapi/joi');
+/**
+ * REMOVE THIS
+ */
+const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: false }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
 exports.userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),
     email: ts_mongoose_1.Type.string({
@@ -77,5 +85,16 @@ exports.userSchema.statics.findByCredentials = (email, password) => __awaiter(vo
     }
     return user;
 });
+const schema = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required()
+});
+function validate(name, email, password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield schema.validate(name, email, password);
+    });
+}
+exports.validateUser = validate;
 exports.userModel = ts_mongoose_1.typedModel('Users', exports.userSchema);
 //# sourceMappingURL=User.js.map

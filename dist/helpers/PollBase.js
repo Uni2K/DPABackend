@@ -10,16 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
-const app_1 = require("../app");
 const Poll_1 = require("../models/Poll");
-const PollSnapshot_1 = require("../models/PollSnapshot");
 const Topic_1 = require("../models/Topic");
 const User_1 = require("../models/User");
+const app_1 = require("../app");
 const Constants_1 = require("./Constants");
-const PoolBase_1 = require("./PoolBase");
 const StatisticsBase_1 = require("./StatisticsBase");
+<<<<<<< HEAD
 const UserSnapshot_1 = require("../models/UserSnapshot");
 const TopicSnapshot_1 = require("../models/TopicSnapshot");
+=======
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
 /**
  * All specific poll based functions
  */
@@ -28,13 +29,17 @@ class PollBase {
         return __awaiter(this, void 0, void 0, function* () {
             const tributeValue = StatisticsBase_1.calculatePollTribute(req);
             //Dont do it, when there is not enough tribute -> give the client a correct response to handle it
+<<<<<<< HEAD
             if (StatisticsBase_1.isReputationEnough(req.user.reputation, tributeValue)) {
+=======
+            if (StatisticsBase_1.isReputationEnough(req.body.user.reputation, tributeValue)) {
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
                 throw Error(Constants_1.ERROR_USER_REPUTATION_NOT_ENOUGH);
             }
             let pollID;
             const promise = new Poll_1.pollModel({
                 expirationDate: req.body.expirationDate,
-                user: req.user,
+                user: req.body.user,
                 header: req.body.header,
                 description: req.body.description,
                 typeFlags: req.body.typeFlags,
@@ -45,12 +50,15 @@ class PollBase {
                 console.log(error.message);
                 res.status(error.message).send(error); //Not saved -> just tell the client, no reputation adjustment
             }).then((result) => {
+<<<<<<< HEAD
                 StatisticsBase_1.adjustReputation(req.user, tributeValue); //Saved finally -> adjust the reputation now
+=======
+                StatisticsBase_1.adjustReputation(req.body.user, tributeValue); //Saved finally -> adjust the reputation now
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
                 res.status(Constants_1.REQUEST_OK).send(result); //send the created poll to the user
                 if (result) {
                     pollID = result;
-                    const feedCreation = new PoolBase_1.PoolBase();
-                    feedCreation.pollToPool(req.user._id, pollID, req.body.topics).then();
+                    app_1.poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
                 }
             });
             yield promise;
@@ -81,10 +89,14 @@ class PollBase {
      * Used for the client to fetch updates for a specific ID Array
      * @param ids List of poll Ids
      */
+<<<<<<< HEAD
     getPollsByIds(ids) {
+=======
+    getPollsByIds(pollIDs) {
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         return __awaiter(this, void 0, void 0, function* () {
             return Poll_1.pollModel
-                .find({ _id: { $in: ids } })
+                .find({ _id: { $in: pollIDs } })
                 .populate("tags", Topic_1.topicModel)
                 .populate("userid", "name avatar _id")
                 .exec();
@@ -122,6 +134,7 @@ class PollBase {
                 .exec();
         });
     }
+<<<<<<< HEAD
     /**
      * Creates a poll snapshot for this moment and saves it inside the collection, used for statistics
      * each snapshot should contain the field, the client is interested in. If i want the change in the of the score,
@@ -159,6 +172,8 @@ class PollBase {
             return PollSnapshot_1.pollSnapshotModel.find({ enabled: true, pollid: req.body.pollid }).lean().exec();
         });
     }
+=======
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
     /**
      * Sends metadata to the client to make sure, the created poll contains the correct types,
      * used for the poll creator

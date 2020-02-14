@@ -10,7 +10,7 @@ const Joi = require('@hapi/joi');
  * REMOVE THIS
  */
 const feedSchema = createSchema(
-    {content: Type.string({required: true}), type: Type.string()},
+    {content: Type.string({required: false}), type: Type.string()},
     {_id: false, timestamps: true}
 );
 
@@ -82,7 +82,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 const schema = Joi.object({
-    name: Joi.string().required().required(),
+    name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required()
 });

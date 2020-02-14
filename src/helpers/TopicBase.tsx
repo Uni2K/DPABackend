@@ -148,7 +148,7 @@ export class TopicBase {
 
     //Topic Snapshots
     async getSnapshots(req){
-        return topicSnapshotModel.find({enabled:true, topicid:req.body.topicid}).lean().exec()
+        return topicSnapshotModel.find({enabled:true, topicid:req.body.topicID}).lean().exec()
     }
 
 

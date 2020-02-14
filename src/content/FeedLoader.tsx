@@ -65,6 +65,7 @@ export class FeedLoader {
      */
     async getFeed(userID, index, pageSize, direction){
         let border;
+        console.log(userID)
 
         if(direction=="asc"){
             border = index + pageSize;

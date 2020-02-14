@@ -10,14 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const app_1 = require("../app");
 const Constants_1 = require("../helpers/Constants");
-const PoolBase_1 = require("../helpers/PoolBase");
 const StatisticsBase_1 = require("../helpers/StatisticsBase");
 const Image_1 = require("../models/Image");
 const auth = require("../middleware/auth");
+const { validatePoll } = require("../models/Poll");
+const { validateUser } = require("../models/User");
+const { validate } = require("../helpers/Validate");
+const Joi = require('@hapi/joi');
 module.exports = function () {
     const router = app_1.express.Router();
     router.post("/users/signup", (req, res) => __awaiter(this, void 0, void 0, function* () {
         // Create a new user
+        const error = yield validateUser(req.body);
+        if (error.error) {
+            console.log(error.error);
+            return res.status(422).json(error.error.details[0].message);
+        }
         app_1.userBase.createUser(res, req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);
@@ -26,12 +34,32 @@ module.exports = function () {
         });
     }));
     router.post("/users/createPoll", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+<<<<<<< HEAD
         // Create a new Poll
+=======
+        const error = yield validatePoll(req.body);
+        if (error.error) {
+            console.log(error.error);
+            return res.status(422).json(error.error.details[0].message);
+        }
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         yield app_1.pollBase.createPoll(req, res);
     }));
     router.get("/users/feed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        const feedCreation = new PoolBase_1.PoolBase();
-        const data = yield feedCreation.getItemsForFeed(req.user, parseInt(req.query.amount));
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            index: Joi.number().required(),
+            pageSize: Joi.number().required(),
+            direction: Joi.string().valid("asc", "desc")
+        });
+        const input = {
+            user: req.body.user,
+            index: parseInt(req.query.index),
+            pageSize: parseInt(req.query.pageSize),
+            direction: req.query.direction
+        };
+        yield validate(schema, input, res);
+        const data = yield app_1.feedLoader.getFeed(req.body.user, parseInt(req.query.index), parseInt(req.query.pageSize), req.query.direction);
         if (data.length > 0) {
             res.status(200).json(data);
         }
@@ -39,12 +67,14 @@ module.exports = function () {
             res.status(204).json();
         }
     }));
-    router.get("/users/restoreFeed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        const feedCreation = new PoolBase_1.PoolBase();
-        const data = yield feedCreation.restoreFeed(req.user, parseInt(req.query.index), parseInt(req.query.count), req.query.asc);
-        res.status(200).json(data);
-    }));
     router.post("/data/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
+<<<<<<< HEAD
+=======
+        const schema = Joi.object({
+            user: Joi.object().required()
+        });
+        yield validate(schema, req.body, res);
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         //User snapshot -> Statistics again
         app_1.userBase.getSnapshots(req).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
@@ -55,9 +85,9 @@ module.exports = function () {
     router.post("/users/me", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         // View logged in user profile
         try {
-            req.user.password = ""; //Dont send this infos to the client
-            req.user.sessionTokens = [];
-            const user = req.user;
+            req.body.user.password = ""; //Dont send this infos to the client
+            req.body.user.sessionTokens = [];
+            const user = req.body.user;
             const token = req.token;
             res.status(Constants_1.REQUEST_OK).send({ user, token });
         }
@@ -66,6 +96,12 @@ module.exports = function () {
         }
     }));
     router.post("/data/vote", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            poll: Joi.object().required(),
+            indexOfAnswer: Joi.number().required(),
+            user: Joi.object().required(),
+        });
+        yield validate(schema, req, res);
         app_1.userBase.vote(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -73,6 +109,11 @@ module.exports = function () {
         });
     }));
     router.post("/users/block", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            blockedUser: Joi.object().required()
+        });
+        yield validate(schema, req, res);
         app_1.userBase.block(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -80,6 +121,11 @@ module.exports = function () {
         });
     }));
     router.post("/users/unblock", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            blockedUser: Joi.object().required()
+        });
+        yield validate(schema, req, res);
         app_1.userBase.unblock(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -87,6 +133,10 @@ module.exports = function () {
         });
     }));
     router.post("/users/getBlockedUser", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+        });
+        yield validate(schema, req, res);
         app_1.userBase.getBlockedUser(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -95,6 +145,10 @@ module.exports = function () {
     }));
     router.post('/users/getAvatar', function (req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const schema = Joi.object({
+                user: Joi.object().required(),
+            });
+            yield validate(schema, req, res);
             const user = req.body.user;
             const image = yield Image_1.imageModel.findOne({ enabled: true, user: user, purpose: Constants_1.ImagePurposes.Avatar });
             if (image == null) {
@@ -107,9 +161,19 @@ module.exports = function () {
     });
     router.post('/users/changeAvatar', function (req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+<<<<<<< HEAD
             // let userid=req.user._id
             let userid = "5dc6e18122304238205eccba"; //Example, for debuggin
             req.user = {};
+=======
+            const schema = Joi.object({
+                user: Joi.object().required(),
+            });
+            yield validate(schema, req, res);
+            // let userID=req.body.user._id
+            let userID = "5dc6e18122304238205eccba"; //Example, for debuggin
+            req.body.user = {};
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
             app_1.upload.single("avatarImage")(req, res, function (err) {
                 return __awaiter(this, void 0, void 0, function* () {
                     //TODO TEST!!
@@ -127,48 +191,71 @@ module.exports = function () {
                         console.log(err);
                         return;
                     }
-                    yield Image_1.imageModel.deleteMany({ user: userid, purpose: Constants_1.ImagePurposes.Avatar }).exec();
+                    yield Image_1.imageModel.deleteMany({ user: userID, purpose: Constants_1.ImagePurposes.Avatar }).exec();
                     const img = yield new Image_1.imageModel({
-                        user: userid,
+                        user: userID,
                         fileName: req.file.filename,
                         purpose: Constants_1.ImagePurposes.Avatar
                     }).save();
-                    req.user.avatarImage = img._id;
-                    // await req.user.save();
-                    req.user.password = "";
-                    req.user.sessionTokens = "";
-                    res.status(Constants_1.REQUEST_OK).send(req.user);
+                    req.body.user.avatarImage = img._id;
+                    // await req.body.user.save();
+                    req.body.user.password = "";
+                    req.body.user.sessionTokens = "";
+                    res.status(Constants_1.REQUEST_OK).send(req.body.user);
                 });
             });
         });
     });
     router.post("/data/report", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            type: Joi.number().required(),
+            target: Joi.number().target
+        });
+        yield validate(schema, req, res);
         app_1.userBase.report(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
-            StatisticsBase_1.adjustReputation(req.user, Constants_1.REPUTATION_REPORT);
+            StatisticsBase_1.adjustReputation(req.body.user, Constants_1.REPUTATION_REPORT);
         });
     }));
     router.post("/data/comment", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            conversationID: Joi.string().required(),
+            header: Joi.string().required(),
+            content: Joi.string().required(),
+            parentComment: Joi.object().required(),
+        });
+        yield validate(schema, req, res);
         app_1.userBase.addComment(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
-            StatisticsBase_1.adjustReputation(req.user, Constants_1.REPUTATION_COMMENT);
+            StatisticsBase_1.adjustReputation(req.body.user, Constants_1.REPUTATION_COMMENT);
         });
     }));
     router.post("/users/me/edit", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        req.user.avatarURL = req.body.avatarURL;
-        req.user.headerURL = req.body.headerURL;
-        req.user.additionalURL = req.body.additionalURL;
-        req.user.description = req.body.description;
-        req.user.location = req.body.location;
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            avatarURL: Joi.string().required(),
+            headerURL: Joi.string().required(),
+            additionalURL: Joi.string().required(),
+            description: Joi.string().required(),
+            location: Joi.string().required()
+        });
+        yield validate(schema, req, res);
+        req.body.user.avatarURL = req.body.avatarURL;
+        req.body.user.headerURL = req.body.headerURL;
+        req.body.user.additionalURL = req.body.additionalURL;
+        req.body.user.description = req.body.description;
+        req.body.user.location = req.body.location;
         try {
-            yield req.user.save();
-            req.user.password = ""; //Dont send this infos to the client
-            req.user.tokens = "";
-            const user = req.user;
+            yield req.body.user.save();
+            req.body.user.password = ""; //Dont send this infos to the client
+            req.body.user.tokens = "";
+            const user = req.body.user;
             const token = req.token;
             res.send({ user, token });
         }
@@ -176,7 +263,14 @@ module.exports = function () {
             res.status(500).send(error);
         }
     }));
-    router.post("/users/me/", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+    router.post("/users/me/subscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        console.log(req.body.user._id);
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            content: Joi.object().required(),
+            type: Joi.string().required()
+        });
+        yield validate(schema, req.body, res);
         app_1.userBase.subscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -184,6 +278,12 @@ module.exports = function () {
         });
     }));
     router.post("/users/me/unsubscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            content: Joi.object().required(),
+            type: Joi.string().required()
+        });
+        yield validate(schema, req, res);
         app_1.userBase.unsubscribe(req).catch((err) => {
             res.status(err.message).send(err.message);
         }).then((result) => {
@@ -191,6 +291,10 @@ module.exports = function () {
         });
     }));
     router.post("/users/byID", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            userID: Joi.string().required()
+        });
+        yield validate(schema, req, res);
         app_1.userBase.userByID(req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);
@@ -199,11 +303,12 @@ module.exports = function () {
         });
     }));
     router.post("/users/me/logout", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        //no validation, function will removed soon
         try {
-            req.user.tokens = req.user.tokens.filter(token => {
+            req.body.user.tokens = req.body.user.tokens.filter(token => {
                 return token.token != req.token;
             });
-            yield req.user.save();
+            yield req.body.user.save();
             res.send();
         }
         catch (error) {
@@ -211,9 +316,10 @@ module.exports = function () {
         }
     }));
     router.post("/users/me/logoutall", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        //no validation, function will removed soon
         try {
-            req.user.tokens.splice(0, req.user.tokens.length);
-            yield req.user.save();
+            req.body.user.tokens.splice(0, req.body.user.tokens.length);
+            yield req.body.user.save();
             res.send();
         }
         catch (error) {
@@ -221,6 +327,11 @@ module.exports = function () {
         }
     }));
     router.post("/users/login", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        });
+        yield validate(schema, req.body, res);
         app_1.userBase.login(req).catch((error) => {
             console.log(error.message);
             res.status(error.message).send(error);

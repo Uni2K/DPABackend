@@ -85,9 +85,9 @@ export class PollBase {
      * Used for the client to fetch updates for a specific ID Array
      * @param ids List of poll Ids
      */
-    async getPollsByIds(ids: any) {
+    async getPollsByIds(pollIDs: any) {
         return pollModel
-            .find({_id: {$in: ids}})
+            .find({_id: {$in: pollIDs}})
             .populate("tags", topicModel)
             .populate("userid", "name avatar _id")
             .exec();

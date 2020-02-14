@@ -2,15 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.express = require('express');
 const ContentlistLoader_1 = require("./content/ContentlistLoader");
+const FeedLoader_1 = require("./content/FeedLoader");
 const Constants_1 = require("./helpers/Constants");
 const PeriodicRunners_1 = require("./helpers/PeriodicRunners");
 const PollBase_1 = require("./helpers/PollBase");
+const PoolBase_1 = require("./helpers/PoolBase");
+const SnapshotsBase_1 = require("./helpers/SnapshotsBase");
 const TopicBase_1 = require("./helpers/TopicBase");
 const UserBase_1 = require("./helpers/UserBase");
 //Bases
 exports.topicBase = new TopicBase_1.TopicBase();
 exports.userBase = new UserBase_1.UserBase();
 exports.pollBase = new PollBase_1.PollBase();
+<<<<<<< HEAD
+=======
+exports.poolBase = new PoolBase_1.PoolBase();
+exports.feedLoader = new FeedLoader_1.FeedLoader();
+exports.snapshotBase = new SnapshotsBase_1.SnapshotsBase();
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
 //Routers
 exports.userRouter = require('./routers/UserRouter')();
 exports.questionRouter = require('./routers/PollRouter')();

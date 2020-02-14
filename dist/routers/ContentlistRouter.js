@@ -9,9 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const app_1 = require("../app");
+const { validate } = require("../helpers/Validate");
+const Joi = require('@hapi/joi');
 module.exports = function () {
     const router = app_1.express.Router();
     router.post("/contentlist", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        const schema = Joi.object({
+            type: Joi.string().required(),
+            index: Joi.number().required(),
+            pageSize: Joi.number().required(),
+            direction: Joi.string().valid("asc", "desc").required(),
+            selectedSort: Joi.string().required()
+        });
+        yield validate(schema, req, res);
         const result = yield app_1.contentlistLoader.getContent(req);
         res.status(200).send(result);
     }));

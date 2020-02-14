@@ -5,7 +5,7 @@ const ts_mongoose_1 = require("ts-mongoose");
  * Representing the number of Topics at a specific time for a given topic-> created by a runner -> For statistics
  */
 const TopicSnapshotSchema = ts_mongoose_1.createSchema({
-    topicid: ts_mongoose_1.Type.string({ required: true }),
+    topicID: ts_mongoose_1.Type.string({ required: true }),
     pollCount: ts_mongoose_1.Type.number({ required: true }),
     enabled: ts_mongoose_1.Type.boolean({ default: true })
 }, { _id: false, timestamps: true });
