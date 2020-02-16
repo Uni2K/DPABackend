@@ -14,12 +14,9 @@ const UserBase_1 = require("./helpers/UserBase");
 exports.topicBase = new TopicBase_1.TopicBase();
 exports.userBase = new UserBase_1.UserBase();
 exports.pollBase = new PollBase_1.PollBase();
-<<<<<<< HEAD
-=======
 exports.poolBase = new PoolBase_1.PoolBase();
 exports.feedLoader = new FeedLoader_1.FeedLoader();
 exports.snapshotBase = new SnapshotsBase_1.SnapshotsBase();
->>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
 //Routers
 exports.userRouter = require('./routers/UserRouter')();
 exports.questionRouter = require('./routers/PollRouter')();

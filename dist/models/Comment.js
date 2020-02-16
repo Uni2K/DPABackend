@@ -2,11 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ts_mongoose_1 = require("ts-mongoose");
 /**
-<<<<<<< HEAD
- * Comment is the child of a conversation, displays a message inside a e.g deep poll conversatin
-=======
  * Comment is the child of a conversation, displays a message inside a e.g deep poll conversation
->>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
  */
 const commentSchema = ts_mongoose_1.createSchema({
     user: ts_mongoose_1.Type.string({ required: true }),

@@ -34,15 +34,11 @@ module.exports = function () {
         });
     }));
     router.post("/users/createPoll", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-<<<<<<< HEAD
-        // Create a new Poll
-=======
         const error = yield validatePoll(req.body);
         if (error.error) {
             console.log(error.error);
             return res.status(422).json(error.error.details[0].message);
         }
->>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         yield app_1.pollBase.createPoll(req, res);
     }));
     router.get("/users/feed", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -68,13 +64,10 @@ module.exports = function () {
         }
     }));
     router.post("/data/snapshot", (req, res) => __awaiter(this, void 0, void 0, function* () {
-<<<<<<< HEAD
-=======
         const schema = Joi.object({
             user: Joi.object().required()
         });
         yield validate(schema, req.body, res);
->>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         //User snapshot -> Statistics again
         app_1.userBase.getSnapshots(req).then((result) => {
             res.status(Constants_1.REQUEST_OK).send(result);
@@ -161,11 +154,6 @@ module.exports = function () {
     });
     router.post('/users/changeAvatar', function (req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-<<<<<<< HEAD
-            // let userid=req.user._id
-            let userid = "5dc6e18122304238205eccba"; //Example, for debuggin
-            req.user = {};
-=======
             const schema = Joi.object({
                 user: Joi.object().required(),
             });
@@ -173,7 +161,6 @@ module.exports = function () {
             // let userID=req.body.user._id
             let userID = "5dc6e18122304238205eccba"; //Example, for debuggin
             req.body.user = {};
->>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
             app_1.upload.single("avatarImage")(req, res, function (err) {
                 return __awaiter(this, void 0, void 0, function* () {
                     //TODO TEST!!
