@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 const Topic_1 = require("../models/Topic");
 const TopicSnapshot_1 = require("../models/TopicSnapshot");
+const Constants_1 = require("./Constants");
 class TopicBase {
     /**
      * Special Topics -> Containers for multiple single topics, managed with flags
@@ -158,6 +159,24 @@ class TopicBase {
     getSnapshots(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicID }).lean().exec();
+        });
+    }
+    setScore(topicID, action) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (action) {
+                case "comment": {
+                    this.updateScore(topicID, Constants_1.REPUTATION_COMMENT);
+                    break;
+                }
+                case "vote": {
+                    this.updateScore(topicID, Constants_1.REPUTATION_VOTE);
+                }
+            }
+        });
+    }
+    updateScore(pollID, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Topic_1.topicModel.findOneAndUpdate({ _id: pollID }, { $inc: { scoreOverall: value } }).exec();
         });
     }
     /**

@@ -2,31 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d349c0c8-eae0-46e8-82b6-23ba2057103a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/models/Subscriptions.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/ContentlistLoader.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/ContentlistRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/ContentlistLoader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PoolBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PoolBase.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/UserBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/UserBase.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/ContentlistRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/PollRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/PollRouter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/UserRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/UserRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/postman.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/postman.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +121,7 @@
       <workItem from="1581069235106" duration="16997000" />
       <workItem from="1581623350124" duration="10106000" />
       <workItem from="1581686384187" duration="1714000" />
-      <workItem from="1581688369955" duration="727000" />
+      <workItem from="1581688369955" duration="14020000" />
     </task>
     <task id="LOCAL-00001" summary="finish feed">
       <created>1581087741988</created>
@@ -149,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581625542901</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Input validation other routers">
+      <created>1581689216930</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1581689216930</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,7 +196,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="finish feed" />
     <MESSAGE value="Input validation UserRouter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Input validation UserRouter" />
+    <MESSAGE value="Input validation other routers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Input validation other routers" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#TSLint" timestamp="1577713762598">
@@ -226,10 +229,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578780613487" />
-    <state x="-1720" y="217" key="CommitChangelistDialog2" timestamp="1581625542502">
+    <state x="-1720" y="217" key="CommitChangelistDialog2" timestamp="1581689216630">
       <screen x="-2560" y="23" width="2560" height="1417" />
     </state>
-    <state x="-1720" y="217" key="CommitChangelistDialog2/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581625542502" />
+    <state x="-1720" y="217" key="CommitChangelistDialog2/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581689216630" />
     <state x="-1720" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087741548" />
     <state width="401" height="466" key="DebuggerActiveHint" timestamp="1577963567394">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -344,12 +347,12 @@
     </state>
     <state x="440" y="95" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1578832421455" />
     <state x="832" y="198" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1577714230830" />
-    <state x="-1730" y="451" key="Vcs.Push.Dialog.v2" timestamp="1581689184214">
-      <screen x="-2560" y="23" width="2560" height="1417" />
+    <state x="-1729" y="427" key="Vcs.Push.Dialog.v2" timestamp="1581886893153">
+      <screen x="-2560" y="23" width="2560" height="1337" />
     </state>
-    <state x="-1730" y="451" key="Vcs.Push.Dialog.v2/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581689184214" />
+    <state x="-1730" y="451" key="Vcs.Push.Dialog.v2/0.23.1440.797/-2560.23.2560.1417@-2560.23.2560.1417" timestamp="1581689219624" />
     <state x="467" y="264" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1581158964985" />
-    <state x="-1729" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581087743797" />
+    <state x="-1729" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581886893153" />
     <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578832450244">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -1,5 +1,6 @@
 import {performance} from 'perf_hooks';
 import {topicBase} from "../app";
+import {contentModel} from "../models/Content";
 import {pollModel} from "../models/Poll";
 import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
@@ -10,7 +11,8 @@ import {
     PollDurations,
     PollTypeFlags,
     PollTypes,
-    REQUEST_OK, TRIBUT_CREATE_DEFAULT, TRIBUT_CREATE_DEFAULT_IMAGE,TRIBUT_CREATE_PRIVATESUB,TRIBUT_CREATE_THREAD,TRIBUT_CREATE_PRIVATESTRICT,TRIBUT_CREATE_LOCAL,TRIBUT_CREATE_TOF,TRIBUT_CREATE_DEEP
+    REQUEST_OK, TRIBUT_CREATE_DEFAULT, TRIBUT_CREATE_DEFAULT_IMAGE,TRIBUT_CREATE_PRIVATESUB,TRIBUT_CREATE_THREAD,TRIBUT_CREATE_PRIVATESTRICT,TRIBUT_CREATE_LOCAL,TRIBUT_CREATE_TOF,TRIBUT_CREATE_DEEP,
+    REPUTATION_VOTE, REPUTATION_COMMENT
 } from "./Constants";
 import {PoolBase} from "./PoolBase";
 import {adjustReputation, calculatePollTribute, isReputationEnough} from "./StatisticsBase";
@@ -150,5 +152,21 @@ export class PollBase {
 
         jsonArray["tributes"]=tributes
         return JSON.stringify(jsonArray)
+    }
+
+    async setScore(pollID, action){
+        switch(action){
+            case "comment": {
+                this.updateScore(pollID, REPUTATION_COMMENT); // Constanten benutzen
+                break;
+            }
+            case "vote": {
+                this.updateScore(pollID, REPUTATION_VOTE)
+            }
+        }
+    }
+
+    async updateScore(pollID, value){
+        return await contentModel.findOneAndUpdate({_id: pollID}, {$inc: {scoreOverall: value}}).exec();
     }
 }

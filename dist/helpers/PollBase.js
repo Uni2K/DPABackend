@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
+const Content_1 = require("../models/Content");
 const Poll_1 = require("../models/Poll");
 const Topic_1 = require("../models/Topic");
 const User_1 = require("../models/User");
@@ -139,6 +140,24 @@ class PollBase {
         tributes[varToString({ TRIBUT_CREATE_TOF: Constants_1.TRIBUT_CREATE_TOF })] = Constants_1.TRIBUT_CREATE_TOF;
         jsonArray["tributes"] = tributes;
         return JSON.stringify(jsonArray);
+    }
+    setScore(pollID, action) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (action) {
+                case "comment": {
+                    this.updateScore(pollID, Constants_1.REPUTATION_COMMENT); // Constanten benutzen
+                    break;
+                }
+                case "vote": {
+                    this.updateScore(pollID, Constants_1.REPUTATION_VOTE);
+                }
+            }
+        });
+    }
+    updateScore(pollID, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Content_1.contentModel.findOneAndUpdate({ _id: pollID }, { $inc: { scoreOverall: value } }).exec();
+        });
     }
 }
 exports.PollBase = PollBase;

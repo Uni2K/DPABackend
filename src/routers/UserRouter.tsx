@@ -295,41 +295,31 @@ export = function (): Router {
         }
     });
     router.post("/users/me/subscribe", auth, async (req, res) => {
-        console.log(req.body.user._id)
         const schema = Joi.object({
             user: Joi.object().required(),
-            content: Joi.object().required(),
+            content: Joi.string().required(),
             type: Joi.string().required()
         });
 
         await validate(schema, req.body, res);
 
+        const result = await userBase.subscribe(req);
 
-
-        userBase.subscribe(req).catch((err) => {
-            res.status(err.message).send(err.message);
-        }
-        ).then((result) => {
-            res.status(REQUEST_OK).send(result);
-        });
+        res.status(result.status).json(result.message);
 
     });
     router.post("/users/me/unsubscribe", auth, async (req, res) => {
 
         const schema = Joi.object({
             user: Joi.object().required(),
-            content: Joi.object().required(),
+            content: Joi.string().required(),
             type: Joi.string().required()
         });
 
-        await validate(schema, req, res);
+        await validate(schema, req.body, res);
 
-        userBase.unsubscribe(req).catch((err) => {
-            res.status(err.message).send(err.message);
-        }
-        ).then((result) => {
-            res.status(REQUEST_OK).send(result);
-        });
+        const result = await  userBase.unsubscribe(req);
+        res.status(result.status).json(result.message);
     });
     router.post("/users/byID", async (req, res) => {
 

@@ -18,10 +18,6 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const mongoose_unique_validator_1 = __importDefault(require("mongoose-unique-validator"));
 const Joi = require('@hapi/joi');
-/**
- * REMOVE THIS
- */
-const feedSchema = ts_mongoose_1.createSchema({ content: ts_mongoose_1.Type.string({ required: false }), type: ts_mongoose_1.Type.string() }, { _id: false, timestamps: true });
 exports.userSchema = ts_mongoose_1.createSchema({
     name: ts_mongoose_1.Type.string({ required: true, unique: true, trim: true }),
     email: ts_mongoose_1.Type.string({
@@ -39,7 +35,6 @@ exports.userSchema = ts_mongoose_1.createSchema({
     headerURL: ts_mongoose_1.Type.string({ required: false, default: "" }),
     additionalURL: ts_mongoose_1.Type.string({ required: false, default: "" }),
     reputation: ts_mongoose_1.Type.number({ required: false, default: 0 }),
-    subscriptions: ts_mongoose_1.Type.array().of(feedSchema),
     enabled: ts_mongoose_1.Type.boolean({ default: true }),
     blocked: ts_mongoose_1.Type.boolean({ default: false }),
     flag: ts_mongoose_1.Type.number({ default: 0 }),

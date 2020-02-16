@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 const Poll_1 = require("../models/Poll");
 const User_1 = require("../models/User");
+const Subscriptions_1 = require("../models/Subscriptions");
 const Report_1 = require("../models/Report");
 const Comment_1 = require("../models/Comment");
 const Conversation_1 = require("../models/Conversation");
@@ -118,47 +119,43 @@ class UserBase {
             }).save();
         });
     }
-    /**
-     * OUTDATED
-     */
     subscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const user = yield User_1.userModel.findByIdAndUpdate(req.body.user._id, {
-                    $addToSet: { "subscriptions": { content: req.body.content, type: req.body.type } }
-                }, { new: true }).select("-password -sessionTokens -email");
-                let token = req.token;
-                return { user, token };
+            const unique = yield Subscriptions_1.subscriptionModel.findOne({ user: req.body.user, content: req.body.content, type: req.body.type });
+            if (!unique) {
+                const subscription = new Subscriptions_1.subscriptionModel(req.body);
+                yield subscription.save();
+                return {
+                    "status": 200,
+                    "message": ""
+                };
             }
-            catch (error) {
-                if (error.message.includes("duplicate")) {
-                    throw Error(Constants_1.ERROR_USER_DUPLICATE_SUB);
-                }
-                else {
-                    throw Error(Constants_1.ERROR_USER_UNKNOWN);
-                }
+            else {
+                return {
+                    "status": 409,
+                    "message": "already subscribed"
+                };
             }
         });
     }
-    /**
-     * OUTDATED
-     */
     unsubscribe(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const user = yield User_1.userModel.findByIdAndUpdate(req.body.user._id, {
-                    "$pull": { "subscriptions": { content: req.body.id, type: req.body.type } }
-                }, { new: true }).select("-password -sessionTokens -email");
-                let token = req.token;
-                return { user, token };
+            const result = yield Subscriptions_1.subscriptionModel.findOneAndDelete({
+                user: req.body.user,
+                content: req.body.content,
+                type: req.body.type
+            });
+            if (result) {
+                return {
+                    "status": 200,
+                    "message": ""
+                };
             }
-            catch (error) {
-                if (error.message.includes("duplicate")) {
-                    throw Error(Constants_1.ERROR_USER_DUPLICATE_SUB);
-                }
-                else {
-                    throw Error(Constants_1.ERROR_USER_UNKNOWN);
-                }
+            else {
+                return {
+                    "status": 409,
+                    "message": "already unsubscribed"
+                };
             }
         });
     }
@@ -241,6 +238,24 @@ class UserBase {
     getBlockedUser(req) {
         return __awaiter(this, void 0, void 0, function* () {
             return UserBlocked_1.userBlockedModel.find({ user: req.body.user._id }).exec();
+        });
+    }
+    setScore(userID, action) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (action) {
+                case "comment": {
+                    this.updateScore(userID, Constants_1.REPUTATION_COMMENT); // Constanten benutzen
+                    break;
+                }
+                case "vote": {
+                    this.updateScore(userID, Constants_1.REPUTATION_VOTE);
+                }
+            }
+        });
+    }
+    updateScore(pollID, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield User_1.userModel.findOneAndUpdate({ _id: pollID }, { $inc: { scoreOverall: value } }).exec();
         });
     }
 }

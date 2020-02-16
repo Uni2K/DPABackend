@@ -18,10 +18,6 @@ export class ContentlistLoader {
     //private redis = this.redisClient(6379, 'localhost');
     private redis = this.redisClient(6379, '192.168.64.6');
 
-
-
-
-
     /**
      * Main Entry point for every contentlist, called by the client via the express router
      * @param req Input to extract request Parameters
@@ -144,8 +140,6 @@ export class ContentlistLoader {
             .exec();
 
     }
-
-
 
     /**
      * There have to be multiple lists for every topic, simple name schema
