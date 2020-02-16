@@ -6,14 +6,6 @@ import uniqueValidator from "mongoose-unique-validator";
 
 const Joi = require('@hapi/joi');
 
-/**
- * REMOVE THIS
- */
-const feedSchema = createSchema(
-    {content: Type.string({required: false}), type: Type.string()},
-    {_id: false, timestamps: true}
-);
-
 export const userSchema = createSchema(
     {
         name: Type.string({required: true, unique: true, trim: true}),
@@ -34,7 +26,6 @@ export const userSchema = createSchema(
         additionalURL: Type.string({required: false, default: ""}),
 
         reputation: Type.number({required: false, default: 0}),
-        subscriptions: Type.array().of(feedSchema), //Update this
 
         enabled: Type.boolean({default: true}),
         blocked: Type.boolean({default: false}),

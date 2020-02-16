@@ -1,8 +1,10 @@
 import {performance} from 'perf_hooks';
+import {contentModel} from "../models/Content";
 import {pollModel} from "../models/Poll";
 import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {userModel} from "../models/User";
+import {subscriptionModel} from "../models/Subscriptions";
 import {reportModel} from "../models/Report";
 import {commentModel} from "../models/Comment";
 import {conversationModel} from "../models/Conversation";
@@ -14,7 +16,7 @@ import {
     ERROR_USER_EMAIL,
     ERROR_USER_LOGIN_FAILED,
     ERROR_USER_NAME,
-    ERROR_USER_UNKNOWN, REPUTATION_VOTE
+    ERROR_USER_UNKNOWN, REPUTATION_COMMENT, REPUTATION_VOTE
 } from "./Constants";
 import {adjustReputation} from "./StatisticsBase";
 
@@ -124,51 +126,43 @@ export class UserBase {
 
     }
 
-    /**
-     * OUTDATED
-     */
     async subscribe(req) {
-        try {
-            const user = await userModel.findByIdAndUpdate(req.body.user._id, {
-                    $addToSet: {"subscriptions": {content: req.body.content, type: req.body.type}}
-                },
-                {new: true}).select("-password -sessionTokens -email");
-
-            let token = req.token;
-            return {user, token};
-
-        } catch (error) {
-            if (error.message.includes("duplicate")) {
-                throw Error(ERROR_USER_DUPLICATE_SUB);
-            } else {
-                throw Error(ERROR_USER_UNKNOWN);
+        const unique = await subscriptionModel.findOne({user: req.body.user, content: req.body.content, type: req.body.type});
+        if(!unique){
+            const subscription = new subscriptionModel(req.body);
+            await subscription.save();
+            return {
+                "status": 200,
+                "message": ""
             }
-
+        }
+        else{
+            return {
+                "status": 409,
+                "message": "already subscribed"
+            }
         }
 
     }
-    /**
-     * OUTDATED
-     */
+
 
     async unsubscribe(req) {
-        try {
-            const user = await userModel.findByIdAndUpdate(req.body.user._id, {
-                    "$pull": {"subscriptions": {content: req.body.id, type: req.body.type}}
-                },
-                {new: true}).select("-password -sessionTokens -email");
-            let token = req.token;
-            return {user, token};
-
-        } catch (error) {
-            if (error.message.includes("duplicate")) {
-                throw Error(ERROR_USER_DUPLICATE_SUB);
-            } else {
-                throw Error(ERROR_USER_UNKNOWN);
+        const result = await subscriptionModel.findOneAndDelete({
+            user: req.body.user,
+            content: req.body.content,
+            type: req.body.type
+        });
+        if (result) {
+            return {
+                "status": 200,
+                "message": ""
             }
-
+        } else {
+            return {
+                "status": 409,
+                "message": "already unsubscribed"
+            }
         }
-
     }
 
     async userByID(req) {
@@ -250,4 +244,21 @@ export class UserBase {
     async getBlockedUser(req) {
         return userBlockedModel.find({user:req.body.user._id}).exec()
     }
+
+    async setScore(userID, action){
+        switch(action){
+            case "comment": {
+                this.updateScore(userID, REPUTATION_COMMENT); // Constanten benutzen
+                break;
+            }
+            case "vote": {
+                this.updateScore(userID, REPUTATION_VOTE);
+            }
+        }
+    }
+
+    async updateScore(pollID, value){
+        return await userModel.findOneAndUpdate({_id: pollID}, {$inc: {scoreOverall: value}}).exec();
+    }
+
 }

@@ -264,31 +264,24 @@ module.exports = function () {
         }
     }));
     router.post("/users/me/subscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
-        console.log(req.body.user._id);
         const schema = Joi.object({
             user: Joi.object().required(),
-            content: Joi.object().required(),
+            content: Joi.string().required(),
             type: Joi.string().required()
         });
         yield validate(schema, req.body, res);
-        app_1.userBase.subscribe(req).catch((err) => {
-            res.status(err.message).send(err.message);
-        }).then((result) => {
-            res.status(Constants_1.REQUEST_OK).send(result);
-        });
+        const result = yield app_1.userBase.subscribe(req);
+        res.status(result.status).json(result.message);
     }));
     router.post("/users/me/unsubscribe", auth, (req, res) => __awaiter(this, void 0, void 0, function* () {
         const schema = Joi.object({
             user: Joi.object().required(),
-            content: Joi.object().required(),
+            content: Joi.string().required(),
             type: Joi.string().required()
         });
-        yield validate(schema, req, res);
-        app_1.userBase.unsubscribe(req).catch((err) => {
-            res.status(err.message).send(err.message);
-        }).then((result) => {
-            res.status(Constants_1.REQUEST_OK).send(result);
-        });
+        yield validate(schema, req.body, res);
+        const result = yield app_1.userBase.unsubscribe(req);
+        res.status(result.status).json(result.message);
     }));
     router.post("/users/byID", (req, res) => __awaiter(this, void 0, void 0, function* () {
         const schema = Joi.object({

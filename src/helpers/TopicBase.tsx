@@ -9,6 +9,8 @@ import {performance} from 'perf_hooks';
 import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {topicSnapshotModel} from "../models/TopicSnapshot";
+import {userModel} from "../models/User";
+import {REPUTATION_COMMENT, REPUTATION_VOTE} from "./Constants";
 
 
 
@@ -149,6 +151,22 @@ export class TopicBase {
     //Topic Snapshots
     async getSnapshots(req){
         return topicSnapshotModel.find({enabled:true, topicid:req.body.topicID}).lean().exec()
+    }
+
+    async setScore(topicID, action){
+        switch(action){
+            case "comment": {
+                this.updateScore(topicID, REPUTATION_COMMENT);
+                break;
+            }
+            case "vote": {
+                this.updateScore(topicID, REPUTATION_VOTE);
+            }
+        }
+    }
+
+    async updateScore(pollID, value){
+        return await topicModel.findOneAndUpdate({_id: pollID}, {$inc: {scoreOverall: value}}).exec();
     }
 
 
