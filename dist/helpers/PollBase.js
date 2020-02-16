@@ -17,6 +17,11 @@ const User_1 = require("../models/User");
 const app_1 = require("../app");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
+<<<<<<< HEAD
+const UserSnapshot_1 = require("../models/UserSnapshot");
+const TopicSnapshot_1 = require("../models/TopicSnapshot");
+=======
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
 /**
  * All specific poll based functions
  */
@@ -25,7 +30,11 @@ class PollBase {
         return __awaiter(this, void 0, void 0, function* () {
             const tributeValue = StatisticsBase_1.calculatePollTribute(req);
             //Dont do it, when there is not enough tribute -> give the client a correct response to handle it
+<<<<<<< HEAD
+            if (StatisticsBase_1.isReputationEnough(req.user.reputation, tributeValue)) {
+=======
             if (StatisticsBase_1.isReputationEnough(req.body.user.reputation, tributeValue)) {
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
                 throw Error(Constants_1.ERROR_USER_REPUTATION_NOT_ENOUGH);
             }
             let pollID;
@@ -42,7 +51,11 @@ class PollBase {
                 console.log(error.message);
                 res.status(error.message).send(error); //Not saved -> just tell the client, no reputation adjustment
             }).then((result) => {
+<<<<<<< HEAD
+                StatisticsBase_1.adjustReputation(req.user, tributeValue); //Saved finally -> adjust the reputation now
+=======
                 StatisticsBase_1.adjustReputation(req.body.user, tributeValue); //Saved finally -> adjust the reputation now
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
                 res.status(Constants_1.REQUEST_OK).send(result); //send the created poll to the user
                 if (result) {
                     pollID = result;
@@ -77,7 +90,11 @@ class PollBase {
      * Used for the client to fetch updates for a specific ID Array
      * @param ids List of poll Ids
      */
+<<<<<<< HEAD
+    getPollsByIds(ids) {
+=======
     getPollsByIds(pollIDs) {
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
         return __awaiter(this, void 0, void 0, function* () {
             return Poll_1.pollModel
                 .find({ _id: { $in: pollIDs } })
@@ -118,6 +135,46 @@ class PollBase {
                 .exec();
         });
     }
+<<<<<<< HEAD
+    /**
+     * Creates a poll snapshot for this moment and saves it inside the collection, used for statistics
+     * each snapshot should contain the field, the client is interested in. If i want the change in the of the score,
+     * the snapshot should contain the score. If there is no such statistics planned, then we would not need any score inside t
+     * snapshot
+     */
+    createSnapShots() {
+        return __awaiter(this, void 0, void 0, function* () {
+            Poll_1.pollModel.collection.find({ enabled: true }).forEach((doc) => {
+                new PollSnapshot_1.pollSnapshotModel({
+                    pollid: doc._id,
+                    scoreOverall: doc.scoreOverall,
+                    answers: doc.answers //save answers in the snapshot cause they contain the number of votes
+                }).save();
+            });
+            User_1.userModel.collection.find({ enabled: true }).forEach((doc) => {
+                new UserSnapshot_1.userSnapshotModel({
+                    user: doc._id,
+                    reputationCount: doc.reputation //User snapshot containts ofc the reputation
+                }).save();
+            });
+            const topics = yield app_1.topicBase.getAllTopics();
+            for (const doc of topics) {
+                const numberInTopic = yield Poll_1.pollModel.find({ enabled: true, topic: doc._id }).lean().count().exec();
+                new TopicSnapshot_1.topicSnapshotModel({
+                    topicid: doc._id,
+                    pollCount: numberInTopic //For topics its interesting how many questions there are
+                }).save();
+            }
+        });
+    }
+    //get Snapshots, not right here
+    getSnapshots(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return PollSnapshot_1.pollSnapshotModel.find({ enabled: true, pollid: req.body.pollid }).lean().exec();
+        });
+    }
+=======
+>>>>>>> 2cb424ed4150fb43cac718f5f27d5dc5d97074bc
     /**
      * Sends metadata to the client to make sure, the created poll contains the correct types,
      * used for the poll creator
