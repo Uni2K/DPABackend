@@ -38,6 +38,9 @@ module.exports = function () {
             res.status(Constants_1.ERROR_USER_UNKNOWN).send(err);
         });
     }));
+    router.get("/topics/trending", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        res.status(200).json(yield app_1.trendingTopics.getTrendingTopics());
+    }));
     //createTag()
     return router;
 };

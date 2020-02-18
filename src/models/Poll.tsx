@@ -22,7 +22,7 @@ const pollSchema = createSchema(
             votes: Type.number() //How many votes this specific answer got
         }),
         expirationDate: Type.date({required: true}), //When is the poll not votable anymore
-        topics: Type.array().of({topic: Type.string({required: true})}),
+        topics: Type.array().of({topicID: Type.string({required: true})}),
         scoreOverall: Type.number({default: 0}),
         rankOverall: Type.number({default: 0}),
         rankCategory: Type.number({default: 0}),

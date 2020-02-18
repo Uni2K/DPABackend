@@ -10,7 +10,7 @@ import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
 import {topicSnapshotModel} from "../models/TopicSnapshot";
 import {userModel} from "../models/User";
-import {REPUTATION_COMMENT, REPUTATION_VOTE} from "./Constants";
+import {REPUTATION_COMMENT, REPUTATION_VOTE, SNAPSHOTS_TOPICS} from "./Constants";
 
 
 
@@ -31,7 +31,7 @@ export class TopicBase {
     }
 
     async getAllTopics() {
-        return topicModel.find({enabled: true}).lean().exec();
+        return topicModel.find({enabled: true}).exec();
     }
     async getAllTopicIDs() {
         return topicModel.find({enabled: true}).select("_id").lean().exec();
@@ -149,26 +149,37 @@ export class TopicBase {
     }
 
     //Topic Snapshots
-    async getSnapshots(req){
-        return topicSnapshotModel.find({enabled:true, topicid:req.body.topicID}).lean().exec()
+    async getSnapshot(req){
+        return topicSnapshotModel.find({enabled:true, topicID:req.body.topicID}).lean().exec()
     }
+
+    async getSnapshots(topicID){
+        return topicSnapshotModel
+            .find({enabled:true, topicID:topicID})
+            .sort({"createdAt": -1})
+            .limit(SNAPSHOTS_TOPICS)
+            .lean()
+            .exec()
+    }
+
 
     async setScore(topicID, action){
         switch(action){
-            case "comment": {
-                this.updateScore(topicID, REPUTATION_COMMENT);
+            case "poll": {
+                this.updateScore(topicID, 1);
                 break;
             }
             case "vote": {
                 this.updateScore(topicID, REPUTATION_VOTE);
             }
+
         }
     }
 
-    async updateScore(pollID, value){
-        return await topicModel.findOneAndUpdate({_id: pollID}, {$inc: {scoreOverall: value}}).exec();
-    }
+    async updateScore(topicID, value){
+            return await topicModel.findOneAndUpdate({_id: topicID}, {$inc: {scoreOverall: value}}).exec();
 
+    }
 
     /**
      * Get details about this topic. For example: Number of questions in this topic, flag and description

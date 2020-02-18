@@ -7,22 +7,27 @@ import {PollBase} from "./helpers/PollBase";
 import {PoolBase} from "./helpers/PoolBase";
 import {SnapshotsBase} from "./helpers/SnapshotsBase";
 import {TopicBase} from "./helpers/TopicBase";
+import {TrendingTopicsBase} from "./helpers/TrendingTopicsBase";
 import {UserBase} from "./helpers/UserBase";
 
 
 //Bases
 export const topicBase:TopicBase=  new TopicBase()
+//topicBase.createTopics()
 export const userBase:UserBase=  new UserBase()
 export const pollBase:PollBase=  new PollBase()
 export const poolBase:PoolBase=  new PoolBase()
 export const feedLoader:FeedLoader=  new FeedLoader()
 export const snapshotBase:SnapshotsBase=  new SnapshotsBase()
+export const trendingTopics:TrendingTopicsBase=  new TrendingTopicsBase()
+
 
 //Routers
 export const userRouter = require('./routers/UserRouter')()
 export const questionRouter = require('./routers/PollRouter')()
 export const topicRouter = require('./routers/TopicRouter')()
 export const contentlistcRouter = require('./routers/ContentlistRouter')()
+
 
 //Misc
 export const contentlistLoader = new ContentlistLoader()

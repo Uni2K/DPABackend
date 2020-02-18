@@ -37,7 +37,7 @@ class TopicBase {
     }
     getAllTopics() {
         return __awaiter(this, void 0, void 0, function* () {
-            return Topic_1.topicModel.find({ enabled: true }).lean().exec();
+            return Topic_1.topicModel.find({ enabled: true }).exec();
         });
     }
     getAllTopicIDs() {
@@ -156,16 +156,26 @@ class TopicBase {
         });
     }
     //Topic Snapshots
-    getSnapshots(req) {
+    getSnapshot(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicid: req.body.topicID }).lean().exec();
+            return TopicSnapshot_1.topicSnapshotModel.find({ enabled: true, topicID: req.body.topicID }).lean().exec();
+        });
+    }
+    getSnapshots(topicID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return TopicSnapshot_1.topicSnapshotModel
+                .find({ enabled: true, topicID: topicID })
+                .sort({ "createdAt": -1 })
+                .limit(Constants_1.SNAPSHOTS_TOPICS)
+                .lean()
+                .exec();
         });
     }
     setScore(topicID, action) {
         return __awaiter(this, void 0, void 0, function* () {
             switch (action) {
-                case "comment": {
-                    this.updateScore(topicID, Constants_1.REPUTATION_COMMENT);
+                case "poll": {
+                    this.updateScore(topicID, 1);
                     break;
                 }
                 case "vote": {
@@ -174,9 +184,9 @@ class TopicBase {
             }
         });
     }
-    updateScore(pollID, value) {
+    updateScore(topicID, value) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Topic_1.topicModel.findOneAndUpdate({ _id: pollID }, { $inc: { scoreOverall: value } }).exec();
+            return yield Topic_1.topicModel.findOneAndUpdate({ _id: topicID }, { $inc: { scoreOverall: value } }).exec();
         });
     }
     /**

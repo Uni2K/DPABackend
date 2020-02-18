@@ -1,13 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0e47446d-7e1c-4c94-945b-c16eb93ab698" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/helpers/TrendingTopicsBase.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/TopicSpecial.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/TopicSnapshot.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/TopicSnapshot.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/Constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/SnapshotsBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/SnapshotsBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Topic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/TopicSnapshot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/TopicSnapshot.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1XuEsBZ86Gw1ZTo8GEREoXvzdZb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/models" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0e47446d-7e1c-4c94-945b-c16eb93ab698" name="Default Changelist" comment="" />
+      <created>1581887783549</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581887783549</updated>
+      <workItem from="1581887785130" duration="288000" />
+      <workItem from="1581963926214" duration="11733000" />
+    </task>
+    <task id="LOCAL-00001" summary="Dist stuff">
+      <created>1581887869257</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581887869257</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Dist stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dist stuff" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1666" y="206" key="CommitChangelistDialog2" timestamp="1581887867873">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state x="-1666" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581887867873" />
+    <state width="2359" height="361" key="GridCell.Tab.0.bottom" timestamp="1581963992512">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2359" height="361" key="GridCell.Tab.0.bottom/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581963992512" />
+    <state width="2359" height="361" key="GridCell.Tab.0.center" timestamp="1581963992511">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2359" height="361" key="GridCell.Tab.0.center/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581963992511" />
+    <state width="2359" height="361" key="GridCell.Tab.0.left" timestamp="1581963992510">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2359" height="361" key="GridCell.Tab.0.left/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581963992510" />
+    <state width="2359" height="361" key="GridCell.Tab.0.right" timestamp="1581963992511">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state width="2359" height="361" key="GridCell.Tab.0.right/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581963992511" />
+    <state x="-1675" y="427" key="Vcs.Push.Dialog.v2" timestamp="1581887872577">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state x="-1675" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581887872577" />
+    <state x="-1484" y="472" key="git4idea.merge.GitPullDialog" timestamp="1581964039786">
+      <screen x="-2560" y="23" width="2560" height="1337" />
+    </state>
+    <state x="-1484" y="472" key="git4idea.merge.GitPullDialog/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581964039786" />
   </component>
 </project>

@@ -10,10 +10,11 @@ export class PeriodicRunners{
 
 
     constructor() {
-       // this.init()
+       this.init()
     }
 
     private init() {
+        /*
         let contentListUpdater=true //Dont update, if its not finished yet
         setInterval(() => {
             if(contentListUpdater) {
@@ -22,7 +23,7 @@ export class PeriodicRunners{
                     contentListUpdater=true
                 )
             }
-        }, INTERVAL_CONTENTLIST_REFRESH);
+        }, INTERVAL_CONTENTLIST_REFRESH);*/
 
         let snaphotCreationUpdater=true
         setInterval(() => {

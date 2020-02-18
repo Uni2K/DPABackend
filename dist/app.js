@@ -9,14 +9,17 @@ const PollBase_1 = require("./helpers/PollBase");
 const PoolBase_1 = require("./helpers/PoolBase");
 const SnapshotsBase_1 = require("./helpers/SnapshotsBase");
 const TopicBase_1 = require("./helpers/TopicBase");
+const TrendingTopicsBase_1 = require("./helpers/TrendingTopicsBase");
 const UserBase_1 = require("./helpers/UserBase");
 //Bases
 exports.topicBase = new TopicBase_1.TopicBase();
+//topicBase.createTopics()
 exports.userBase = new UserBase_1.UserBase();
 exports.pollBase = new PollBase_1.PollBase();
 exports.poolBase = new PoolBase_1.PoolBase();
 exports.feedLoader = new FeedLoader_1.FeedLoader();
 exports.snapshotBase = new SnapshotsBase_1.SnapshotsBase();
+exports.trendingTopics = new TrendingTopicsBase_1.TrendingTopicsBase();
 //Routers
 exports.userRouter = require('./routers/UserRouter')();
 exports.questionRouter = require('./routers/PollRouter')();

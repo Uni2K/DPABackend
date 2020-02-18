@@ -15,6 +15,7 @@ export class SnapshotsBase {
      * snapshot
      */
     async createPollSnapshots() {
+        /*
         pollModel.collection.find({enabled:true}).forEach(
             (doc)=>{
                 new pollSnapshotModel(
@@ -35,8 +36,9 @@ export class SnapshotsBase {
                     }
                 ).save()
             }
-        )
-        const topics=await topicBase.getAllTopics()
+        )*/
+        console.log("doing")
+        const topics = await topicBase.getAllTopics()
         for (const doc of topics ) {
 
             const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().count().exec()

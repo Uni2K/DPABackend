@@ -12,7 +12,7 @@ import {
     PollTypeFlags,
     PollTypes,
     REQUEST_OK, TRIBUT_CREATE_DEFAULT, TRIBUT_CREATE_DEFAULT_IMAGE,TRIBUT_CREATE_PRIVATESUB,TRIBUT_CREATE_THREAD,TRIBUT_CREATE_PRIVATESTRICT,TRIBUT_CREATE_LOCAL,TRIBUT_CREATE_TOF,TRIBUT_CREATE_DEEP,
-    REPUTATION_VOTE, REPUTATION_COMMENT
+    REPUTATION_VOTE, REPUTATION_COMMENT,
 } from "./Constants";
 import {PoolBase} from "./PoolBase";
 import {adjustReputation, calculatePollTribute, isReputationEnough} from "./StatisticsBase";
@@ -53,6 +53,12 @@ export class PollBase {
             if(result){
                 pollID = result;
                 poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
+                const topics =  result.topics;
+
+                for(let i = 0; i < topics.length; i++){
+                    topicBase.setScore(topics[i].topicID, "poll")
+                }
+
             }
         });
 
