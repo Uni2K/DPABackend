@@ -44,6 +44,10 @@ export const REPUTATION_DUPLICATE = -10;
 //Path for the avatar uploads in the user profil
 export const avatarPath= process.cwd()+"/uploads/avatars/"
 
+//amount of trendingTopics
+export const TRENDING_TOPICS_AMOUNT = 10;
+//Snapshot amount
+export const SNAPSHOTS_TOPICS = 4;
 
 //Purpose of uploaded Images, they get stored in a separate collection with one of these identifiers
 export enum ImagePurposes {
@@ -126,7 +130,7 @@ export enum ContentLists {
 }
 
 /**
- * Used to mark content, especially polls as trending, recommended etc. 
+ * Used to mark content, especially polls as trending, recommended etc.
  *Example: A poll is trending, cause the score gets high, where ever this poll is now displayed (different points in the app)
  the poll should be marked as trending. This could be done by just asking the server if this specific poll is inside the trending list,
  or alternatively, the poll gets flagged as trending, as long as it is in the trending list.

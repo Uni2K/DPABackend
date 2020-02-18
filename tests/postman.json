@@ -292,6 +292,55 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Topic",
+			"item": [
+				{
+					"name": "Trending",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTNjODZjNGJjMWYwMzQwODhjOTE3MjYiLCJpYXQiOjE1ODEwMjQ5NjV9.SbrNUVuEPWK3PJToH_IQJKTK0QW6N-zPqoX3mvmhcDk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/topics/trending",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"topics",
+								"trending"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}

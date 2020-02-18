@@ -8,6 +8,6 @@ const TopicSnapshotSchema = ts_mongoose_1.createSchema({
     topicID: ts_mongoose_1.Type.string({ required: true }),
     pollCount: ts_mongoose_1.Type.number({ required: true }),
     enabled: ts_mongoose_1.Type.boolean({ default: true })
-}, { _id: false, timestamps: true });
+}, { _id: true, timestamps: true });
 exports.topicSnapshotModel = ts_mongoose_1.typedModel('TopicSnapshots', TopicSnapshotSchema);
 //# sourceMappingURL=TopicSnapshot.js.map

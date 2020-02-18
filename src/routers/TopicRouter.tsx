@@ -1,5 +1,6 @@
-import {express, pollBase, topicBase} from "../app";
+import {express, pollBase, topicBase, trendingTopics} from "../app";
 import {ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
+import {TrendingTopicsBase} from "../helpers/TrendingTopicsBase";
 const {validate} = require("../helpers/Validate")
 const Joi = require('@hapi/joi');
 
@@ -37,6 +38,9 @@ export = function() {
             res.status(ERROR_USER_UNKNOWN).send(err)
         })
 
+    });
+    router.get("/topics/trending", async (req, res) => {
+        res.status(200).json(await trendingTopics.getTrendingTopics())
     });
 
 

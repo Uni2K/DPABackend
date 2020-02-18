@@ -10,11 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
+const app_1 = require("../app");
 const Content_1 = require("../models/Content");
 const Poll_1 = require("../models/Poll");
 const Topic_1 = require("../models/Topic");
 const User_1 = require("../models/User");
-const app_1 = require("../app");
+const app_2 = require("../app");
 const Constants_1 = require("./Constants");
 const StatisticsBase_1 = require("./StatisticsBase");
 /**
@@ -46,7 +47,11 @@ class PollBase {
                 res.status(Constants_1.REQUEST_OK).send(result); //send the created poll to the user
                 if (result) {
                     pollID = result;
-                    app_1.poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
+                    app_2.poolBase.pollToPool(req.body.user._id, pollID, req.body.topics).then();
+                    const topics = result.topics;
+                    for (let i = 0; i < topics.length; i++) {
+                        app_1.topicBase.setScore(topics[i].topicID, "poll");
+                    }
                 }
             });
             yield promise;

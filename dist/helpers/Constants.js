@@ -37,6 +37,10 @@ exports.REPUTATION_GETFLAGGED = -10;
 exports.REPUTATION_DUPLICATE = -10;
 //Path for the avatar uploads in the user profil
 exports.avatarPath = process.cwd() + "/uploads/avatars/";
+//amount of trendingTopics
+exports.TRENDING_TOPICS_AMOUNT = 10;
+//Snapshot amount
+exports.SNAPSHOTS_TOPICS = 4;
 //Purpose of uploaded Images, they get stored in a separate collection with one of these identifiers
 var ImagePurposes;
 (function (ImagePurposes) {
