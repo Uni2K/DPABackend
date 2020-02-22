@@ -9,6 +9,7 @@ import {SnapshotsBase} from "./helpers/SnapshotsBase";
 import {TopicBase} from "./helpers/TopicBase";
 import {TrendingTopicsBase} from "./helpers/TrendingTopicsBase";
 import {UserBase} from "./helpers/UserBase";
+import {SpecialTopic} from "./helpers/SpecialTopicBase";
 
 
 //Bases
@@ -20,7 +21,7 @@ export const poolBase:PoolBase=  new PoolBase()
 export const feedLoader:FeedLoader=  new FeedLoader()
 export const snapshotBase:SnapshotsBase=  new SnapshotsBase()
 export const trendingTopics:TrendingTopicsBase=  new TrendingTopicsBase()
-
+export const specialTopics:SpecialTopic =  new SpecialTopic()
 
 //Routers
 export const userRouter = require('./routers/UserRouter')()
