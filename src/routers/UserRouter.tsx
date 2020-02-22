@@ -40,6 +40,21 @@ export = function (): Router {
         });
 
     });
+    router.post("/users/changePassword", auth, async (req, res) => {
+        const schema = Joi.object({
+            user: Joi.object().required(),
+            password: Joi.string().required()
+        });
+        const input = {
+            user: req.body.user,
+            password: req.body.password
+        }
+        await validate(schema, input, res);
+        let user = req.body.user
+        user.password = req.body.password;
+        await user.save();
+        res.status(200);
+    });
     router.post("/users/createPoll", auth, async (req, res) => {
         const error = await validatePoll(req.body);
         if (error.error) {
