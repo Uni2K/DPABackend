@@ -28,6 +28,7 @@ export const userSchema = createSchema(
         reputation: Type.number({required: false, default: 0}),
 
         enabled: Type.boolean({default: true}),
+        public: Type.boolean({default: true}),
         blocked: Type.boolean({default: false}),
         flag: Type.number({default: 0}),
         creationTimestamp: Type.date({default: Date.now})
