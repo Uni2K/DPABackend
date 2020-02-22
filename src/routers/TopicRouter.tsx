@@ -1,4 +1,4 @@
-import {express, pollBase, topicBase, trendingTopics} from "../app";
+import {express, pollBase, specialTopics, topicBase, trendingTopics} from "../app";
 import {ERROR_USER_UNKNOWN, REQUEST_OK} from "../helpers/Constants";
 import {TrendingTopicsBase} from "../helpers/TrendingTopicsBase";
 const {validate} = require("../helpers/Validate")
@@ -42,8 +42,9 @@ export = function() {
     router.get("/topics/trending", async (req, res) => {
         res.status(200).json(await trendingTopics.getTrendingTopics())
     });
-
-
+    router.post("/topics/special/all", async (req, res) => {
+        res.status(200).json( await specialTopics.getAllTopics());
+    });
     //createTag()
     return router;
 };

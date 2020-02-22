@@ -1,6 +1,6 @@
 import {topicSpecialItemModel, topicSpecialModel} from "../models/TopicSpecial";
 
-export class TopicBase {
+export class SpecialTopic {
 
     async getAllTopics() {
         return topicSpecialModel.find({}).exec();
