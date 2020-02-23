@@ -11,15 +11,16 @@ export class SpecialTopic {
     }
 
     async createSpecialTopic(req){
-        return new topicSpecialModel(req).save();
+        return new topicSpecialModel(req.body).save();
     }
 
     async getAllItems(specialTopicID){
+        console.log(specialTopicID)
         return topicSpecialItemModel.find({specialTopicID: specialTopicID}).select("topicID").exec();
     }
 
     async createItem(req) {
-        return new topicSpecialItemModel(req).save();
+        return new topicSpecialItemModel(req.body).save();
     }
 
 }
