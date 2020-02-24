@@ -166,7 +166,12 @@ export class UserBase {
     }
 
     async userByID(req) {
-        return userModel.findOne({_id: req.body.userID}).select("-email -password -sessionTokens").lean().exec();
+
+        const result = await userModel.findOne({_id: req.body.userID, public: "true"}).select("-email -password -sessionTokens").lean().exec();
+        if(result){
+            return result;
+        }
+        return null;
     }
 
     /**
