@@ -10,8 +10,8 @@ const TopicSpecialSchema = createSchema(
 
 const TopicSpecialItemSchema = createSchema(
     {
-        topicID: Type.objectId({required: true}),
-        specialTopicID: Type.objectId({required: true}),
+        topicID: Type.string({required: true}),
+        specialTopicID: Type.string({required: true}),
     },
     {_id: true, timestamps: true}
 );
