@@ -342,13 +342,18 @@ export = function (): Router {
             userID: Joi.string().required()
         });
 
-        await validate(schema, req, res);
+        await validate(schema, req.body, res);
 
         userBase.userByID(req).catch((error) => {
-            console.log(error.message);
+            //console.log(error.message);
             res.status(error.message).send(error);
         }).then((result) => {
-            res.status(REQUEST_OK).send(result);
+
+            if(result){
+                res.status(REQUEST_OK).send(result);
+            }
+            console.log(result)
+            res.status(403).send()
         });
 
     });
