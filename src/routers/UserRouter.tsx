@@ -11,6 +11,8 @@ import {
     REQUEST_OK
 } from "../helpers/Constants";
 import { adjustReputation } from "../helpers/StatisticsBase";
+import {UserBase} from "../helpers/UserBase";
+import {feedModel} from "../models/FeedPool";
 import { imageModel } from "../models/Image";
 const auth = require("../middleware/auth");
 const {validatePoll} = require("../models/Poll");
@@ -89,6 +91,33 @@ export = function (): Router {
         }
 
     });
+
+    router.get("/users/recentPosts", auth, async (req, res) => {
+
+        const schema = Joi.object({
+            user: Joi.string().required(),
+            index: Joi.number().required(),
+            pageSize: Joi.number().required(),
+            direction: Joi.string().valid("asc", "desc")
+        });
+        const input = {
+            user: req.query.user,
+            index: parseInt(req.query.index),
+            pageSize: parseInt(req.query.pageSize),
+            direction: req.query.direction
+        }
+        await validate(schema, input, res);
+
+        const data = await userBase.recentPosts(req.query.user, parseInt(req.query.index), parseInt(req.query.pageSize), req.query.direction);
+        if (data.length > 0) {
+            res.status(200).json(data)
+        }
+        else {
+            res.status(204).json();
+        }
+
+    });
+
     router.post("/data/snapshot", async (req, res) => {
         const schema = Joi.object({
             user: Joi.object().required()
@@ -342,13 +371,18 @@ export = function (): Router {
             userID: Joi.string().required()
         });
 
-        await validate(schema, req, res);
+        await validate(schema, req.body, res);
 
         userBase.userByID(req).catch((error) => {
-            console.log(error.message);
+            //console.log(error.message);
             res.status(error.message).send(error);
         }).then((result) => {
-            res.status(REQUEST_OK).send(result);
+
+            if(result){
+                res.status(REQUEST_OK).send(result);
+            }
+            console.log(result)
+            res.status(403).send()
         });
 
     });

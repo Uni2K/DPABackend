@@ -41,7 +41,7 @@ export class SnapshotsBase {
         const topics = await topicBase.getAllTopics()
         for (const doc of topics ) {
 
-            const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().count().exec()
+            const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().countDocuments().exec()
             new topicSnapshotModel(
                 {
                     topicID:doc._id,

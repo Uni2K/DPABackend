@@ -1,5 +1,6 @@
 import {performance} from 'perf_hooks';
 import {contentModel} from "../models/Content";
+import {feedModel} from "../models/FeedPool";
 import {pollModel} from "../models/Poll";
 import {pollSnapshotModel} from "../models/PollSnapshot";
 import {topicModel} from "../models/Topic";
@@ -166,7 +167,12 @@ export class UserBase {
     }
 
     async userByID(req) {
-        return userModel.findOne({_id: req.body.userID}).select("-email -password -sessionTokens").lean().exec();
+
+        const result = await userModel.findOne({_id: req.body.userID, public: "true"}).select("-email -password -sessionTokens").lean().exec();
+        if(result){
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -259,6 +265,30 @@ export class UserBase {
 
     async updateScore(pollID, value){
         return await userModel.findOneAndUpdate({_id: pollID}, {$inc: {scoreOverall: value}}).exec();
+    }
+
+    async recentPosts(userID, index, pageSize, direction){
+        let border;
+
+        if(direction=="asc"){
+            border = index + pageSize;
+        }
+        else{
+            border = index - pageSize;
+            if(border < 0){
+                border = 0
+            }
+        }
+
+        if(direction=="asc"){
+            let data = await pollModel.find({user: userID}).sort({createdAt: 1}).limit(border);
+            return data.slice(index, border);
+        }
+        else{
+            let data = await pollModel.find({user: userID}).sort({createdAt: -1}).limit(border);
+            return data.slice(border, index)
+        }
+
     }
 
 }

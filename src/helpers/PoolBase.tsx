@@ -1,5 +1,6 @@
 import {contentModel} from "../models/Content";
 import {feedModel} from "../models/FeedPool";
+import {topicSpecialItemModel} from "../models/TopicSpecial";
 import {userModel} from "../models/User";
 
 export class PoolBase{
@@ -38,7 +39,6 @@ export class PoolBase{
      * @param topics -> SINGLE Topic of the poll
      */
     async pollToPool(userID, pollID, topics){
-        console.log(topics)
         let users = [];
 
         let user = await userModel
@@ -46,8 +46,6 @@ export class PoolBase{
         if(user) {
             users = [...user];
         }
-
-
 
         for(let i = 0; i < topics.length; i++){
             let topic = topics[i].topic;
@@ -58,6 +56,24 @@ export class PoolBase{
                 users = [...users, ...user];
             }
         }
+
+        for(let i = 0; i < topics.length; i++){
+            let specialTopics = await topicSpecialItemModel
+                .find({topicID: topics[i].topicID})
+                .select("specialTopicID -_id");
+            console.log(specialTopics)
+            for(let i = 0; i < specialTopics.length; i++) {
+                //console.log(specialTopics[i].specialTopicID.topicID);
+                let user = await userModel
+                    .find({subscriptions: {$elemMatch: {content: specialTopics[i].specialTopicID}}}) //Same for topics
+                    .select("_id");
+                if (user) {
+                    users = [...users, ...user];
+                    console.log(users)
+                }
+            }
+        }
+
         let result = [];
         //Iterate through subscribed users and topics
         for(let i = 0; i < users.length; i++){
@@ -74,8 +90,7 @@ export class PoolBase{
                 this.incrementPoolItemPriority(pollID, 2, user) //Item already in pool, so increment priority
             }
         }
-        console.log(topics)
-
+        
     }
 
     /**
