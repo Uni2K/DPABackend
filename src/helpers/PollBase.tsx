@@ -106,6 +106,11 @@ export class PollBase {
      * @param req Request
      */
     async searchPolls(req) {
+        //Sortmode Auf, AB, AZ, ZA
+        // Tags
+        // amount votes
+        // polltype
+
         const searchQuery = req.body.query;
         const index = req.body.index;
         const pageSize = req.body.pageSize;
