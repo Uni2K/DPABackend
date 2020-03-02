@@ -106,36 +106,57 @@ export class PollBase {
      * @param req Request
      */
     async searchPolls(req) {
+
         //Sortmode Auf, AB, AZ, ZA
         // Tags
         // amount votes
         // polltype
+        //const searchText = req.query.searchText;
+        const tags = ["testContent", "testContent121212"] //req.query.tags;
+        //const voteMinimum = req.query.votesMin;
+        //const polltype = req.query.pollType;
+        //query = query + ', {score: { $meta: "textScore"}'
 
-        const searchQuery = req.body.query;
-        const index = req.body.index;
-        const pageSize = req.body.pageSize;
-        const direction = req.body.direction;
-        const filterTopics = req.body.filterTopics;
-        const sort = req.body.sort;
-        const minimumVotes = req.body.minimumVotes;
+        let result = await pollModel.find({$text: { $search: "test", $language: "en" },
+            topics: {$elemMatch: {topicID: {$in: tags} }},
+            $expr: {
+                $gt: [
+                    {
+                        $sum: "$answers.votes"
+                    },
+                    111
+                ]
+            } }, {score: { $meta: "textScore"}});
 
-        const query = {};
-        query["header"] = {$regex: searchQuery};
-        query["enabled"] = true;
-        let entryPoint = index;
-        if (direction < 0) {
-            entryPoint = index - pageSize;
-        }
-        if (filterTopics !== undefined) {
-            query["topic"] = {$in: filterTopics};
-        }
-        return pollModel
-            .find(query)
-            .sort({"createdAt": -1})
-            .skip(entryPoint)
-            .lean()
-            .limit(pageSize)
-            .exec();
+        /*
+       const searchQuery = req.body.query;
+       const index = req.body.index;
+       const pageSize = req.body.pageSize;
+       const direction = req.body.direction;
+       const filterTopics = req.body.filterTopics;
+       const sort = req.body.sort;
+       const minimumVotes = req.body.minimumVotes;
+
+       const query = {};
+       query["header"] = {$regex: searchQuery};
+       query["enabled"] = true;
+       let entryPoint = index;
+       if (direction < 0) {
+           entryPoint = index - pageSize;
+       }
+       if (filterTopics !== undefined) {
+           query["topic"] = {$in: filterTopics};
+       }
+       return pollModel
+           .find(query)
+           .sort({"createdAt": -1})
+           .skip(entryPoint)
+           .lean()
+           .limit(pageSize)
+           .exec();*/
+
+
+
 
     }
 

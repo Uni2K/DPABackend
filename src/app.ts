@@ -18,6 +18,7 @@ export const topicBase:TopicBase=  new TopicBase()
 export const userBase:UserBase=  new UserBase()
 export const pollBase:PollBase=  new PollBase()
 export const poolBase:PoolBase=  new PoolBase()
+pollBase.searchPolls("test");
 export const feedLoader:FeedLoader=  new FeedLoader()
 export const snapshotBase:SnapshotsBase=  new SnapshotsBase()
 export const trendingTopics:TrendingTopicsBase=  new TrendingTopicsBase()
