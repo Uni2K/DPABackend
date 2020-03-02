@@ -106,6 +106,7 @@ export class PollBase {
      * @param req Request
      */
     async searchPolls(req) {
+
         //Sortmode Auf, AB, AZ, ZA
         // Tags
         // amount votes
@@ -114,24 +115,19 @@ export class PollBase {
         const tags = ["testContent", "testContent121212"] //req.query.tags;
         //const voteMinimum = req.query.votesMin;
         //const polltype = req.query.pollType;
-
         //query = query + ', {score: { $meta: "textScore"}'
 
-        const query = {};
+        let result = await pollModel.find({$text: { $search: "test", $language: "en" },
+            topics: {$elemMatch: {topicID: {$in: tags} }},
+            $expr: {
+                $gt: [
+                    {
+                        $sum: "$answers.votes"
+                    },
+                    111
+                ]
+            } }, {score: { $meta: "textScore"}});
 
-        let result = await pollModel.find({$text: { $search: "dogs", $language: "en" }, topics: {$elemMatch: {topicID: {$in: tags} }}}, {score: { $meta: "textScore"}})
-
-        const test = await pollModel.aggregate([
-            {
-                $unwind: "$answers"},
-            {
-                $group: {
-                    "_id": "tempId",
-                    "totalValue": { $sum: "$answers.value" }
-                }
-            }
-        ])
-        console.log(test)
         /*
        const searchQuery = req.body.query;
        const index = req.body.index;
