@@ -111,52 +111,39 @@ export class PollBase {
         // Tags
         // amount votes
         // polltype
-        //const searchText = req.query.searchText;
-        const tags = ["testContent", "testContent121212"] //req.query.tags;
-        //const voteMinimum = req.query.votesMin;
-        //const polltype = req.query.pollType;
-        //query = query + ', {score: { $meta: "textScore"}'
+        const searchText = req.query.searchText;
+        const topics = req.query.tags;
+        const voteMinimum = req.query.votesMin;
+        const pageSize = req.query.pageSize;
+        const index = req.query.index;
 
-        let result = await pollModel.find({$text: { $search: "test", $language: "en" },
-            topics: {$elemMatch: {topicID: {$in: tags} }},
-            $expr: {
-                $gt: [
-                    {
-                        $sum: "$answers.votes"
-                    },
-                    111
-                ]
-            } }, {score: { $meta: "textScore"}});
+        let query = {};
 
-        /*
-       const searchQuery = req.body.query;
-       const index = req.body.index;
-       const pageSize = req.body.pageSize;
-       const direction = req.body.direction;
-       const filterTopics = req.body.filterTopics;
-       const sort = req.body.sort;
-       const minimumVotes = req.body.minimumVotes;
+        if(searchText){
+            query["$text"] = { $search: searchText, $language: "en" };
+        }
 
-       const query = {};
-       query["header"] = {$regex: searchQuery};
-       query["enabled"] = true;
-       let entryPoint = index;
-       if (direction < 0) {
-           entryPoint = index - pageSize;
-       }
-       if (filterTopics !== undefined) {
-           query["topic"] = {$in: filterTopics};
-       }
-       return pollModel
-           .find(query)
-           .sort({"createdAt": -1})
-           .skip(entryPoint)
-           .lean()
-           .limit(pageSize)
-           .exec();*/
+        if(topics){
+            query["topics"] =  {$elemMatch: {topicID: {$in: topics} }};
+        }
 
+        if(voteMinimum){
+            query["$expr"] =  { $gt:[{$sum: "$answers.votes"}, voteMinimum]};
+        }
 
+        const response = await pollModel.find(query, {score: { $meta: "textScore"}}).sort({score: { "$meta": "textScore" }});
 
+        let result = [];
+
+        for(let i = 0; i < pageSize; i++){
+            if(response.length > index + i){
+                result.push(response[index + i])
+            }
+        }
+
+        console.log(result);
+
+        return result;
 
     }
 
