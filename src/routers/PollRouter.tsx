@@ -26,13 +26,11 @@ export = function() {
     router.post("/polls/search", async (req, res) => {
 
         const schema = Joi.object({
-            searchQuery: Joi.string().required(),
             index: Joi.number().required(),
             pageSize: Joi.number().required(),
-            direction: Joi.string().valid("asc", "desc").required(),
-            filterTopics: Joi.array().required(),
-            sort: Joi.string().required(),
-            minimumVotes: Joi.number().required()
+            topics: Joi.array(),
+            voteMinimum: Joi.number(),
+            searchText: Joi.string().required(),
         });
 
         await validate(schema, req, res);

@@ -33,7 +33,7 @@ const pollSchema = createSchema(
     {_id: true, timestamps: true}
 );
 
-pollSchema.index({'header': 'text', 'description': 'text', 'topics': 'text'})
+pollSchema.index({'header': 'text', 'description': 'text'})
 
 const schema = Joi.object({
     user: Joi.object().required(),

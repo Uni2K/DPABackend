@@ -15,7 +15,7 @@ export class SnapshotsBase {
      * snapshot
      */
     async createPollSnapshots() {
-        /*
+        console.log("creating Snapshots")
         pollModel.collection.find({enabled:true}).forEach(
             (doc)=>{
                 new pollSnapshotModel(
@@ -27,6 +27,7 @@ export class SnapshotsBase {
                 ).save()
             }
         )
+        /*
         userModel.collection.find({enabled:true}).forEach(
             (doc)=>{
                 new userSnapshotModel(
@@ -37,7 +38,6 @@ export class SnapshotsBase {
                 ).save()
             }
         )*/
-        console.log("doing")
         const topics = await topicBase.getAllTopics()
         for (const doc of topics ) {
 

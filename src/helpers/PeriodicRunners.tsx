@@ -25,13 +25,24 @@ export class PeriodicRunners{
             }
         }, INTERVAL_CONTENTLIST_REFRESH);*/
 
-        let snaphotCreationUpdater=true
+        let snaphotCreationUpdater = true
         setInterval(() => {
             if(snaphotCreationUpdater) {
                 snaphotCreationUpdater=false
                 snapshotBase.createPollSnapshots().then(()=>
                     snaphotCreationUpdater=true
                 )
+            }
+
+        }, INTERVAL_SNAPSHOT_CREATION);
+
+        let feedPriorityUpdater = true
+        setInterval(() => {
+            if(feedPriorityUpdater) {
+                feedPriorityUpdater=false
+                //snapshotBase.createPollSnapshots().then(()=>
+                    feedPriorityUpdater=true
+                //)
             }
 
         }, INTERVAL_SNAPSHOT_CREATION);
