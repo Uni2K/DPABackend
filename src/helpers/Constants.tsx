@@ -3,7 +3,7 @@ export const CONTENTLIST_SIZE: number = 1000;
 
 //See Periodic Runners, the intervals for the jobs that get called periodically
 export const INTERVAL_CONTENTLIST_REFRESH: number = 15000;
-export const INTERVAL_SNAPSHOT_CREATION: number = 100000;
+export const INTERVAL_SNAPSHOT_CREATION: number = 25000;
 
 //Response Codes
 export const REQUEST_OK = 200;
@@ -48,6 +48,12 @@ export const avatarPath= process.cwd()+"/uploads/avatars/"
 export const TRENDING_TOPICS_AMOUNT = 10;
 //Snapshot amount
 export const SNAPSHOTS_TOPICS = 4;
+
+//ContentPool weight
+
+export const PRIORITY_MULTIPLE_SUBED_CONTENT = 50;
+export const NUMBER_OF_SNAPSHOTS = 5;
+
 
 //Purpose of uploaded Images, they get stored in a separate collection with one of these identifiers
 export enum ImagePurposes {
