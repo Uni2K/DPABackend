@@ -4,7 +4,7 @@ import {pollModel} from "../models/Poll";
 import {topicSpecialItemModel} from "../models/TopicSpecial";
 import {userModel} from "../models/User";
 import {pollSnapshotModel} from "../models/PollSnapshot";
-import {NUMBER_OF_SNAPSHOTS, PRIORITY_MULTIPLE_SUBED_CONTENT} from "./Constants";
+import {NUMBER_OF_SNAPSHOTS, PRIORITY_MULTIPLE_SUBED_CONTENT, PRIORITY_SINGLE_SUBED_CONTENT} from "./Constants";
 
 export class PoolBase{
 
@@ -29,8 +29,7 @@ export class PoolBase{
             priority: poolItem.priority,
             index: index
         });
-        let data = []
-        await content.save().then((result) => {data.push(result)});
+        let data = await content.save();
         await poolItem.remove();
         return data;
     }
@@ -43,7 +42,6 @@ export class PoolBase{
      */
     async pollToPool(userID, pollID, topics){
         let users = [];
-
 
         let user = await userModel
             .find({subscriptions: {$elemMatch: {content: userID.toString()}}})
@@ -86,11 +84,11 @@ export class PoolBase{
             if(index < 0){ //Item not yet in the result
                 result.push(value);
                 let user = await userModel.findOne({_id: value});
-                this.createPoolItem(user, pollID, "poll", 0);
+                this.createPoolItem(user, pollID, "poll", PRIORITY_SINGLE_SUBED_CONTENT);
             }
             else{
-                console.log(PRIORITY_MULTIPLE_SUBED_CONTENT)
-                this.incrementPoolItemPriority(pollID, PRIORITY_MULTIPLE_SUBED_CONTENT.valueOf(), user) //Item already in pool, so increment priority
+
+                this.incrementSinglePoolItemPriority(pollID, PRIORITY_MULTIPLE_SUBED_CONTENT, user) //Item already in pool, so increment priority
             }
         }
 
@@ -101,30 +99,30 @@ export class PoolBase{
      */
     async incrementSinglePoolItemPriority(contentID, priority:number, userID?){
         if(userID){
-            contentModel.findOneAndUpdate({content: contentID, user: userID}, {priority: priority}).exec();
+            await contentModel.findOneAndUpdate({content: contentID, user: userID}, {$inc:{priority: priority}}).exec();
+            //console.log(PRIORITY_MULTIPLE_SUBED_CONTENT)
         }
         else{
-            contentModel.updateMany({content: contentID}, {priority: priority}).exec();
+            await contentModel.updateMany({content: contentID}, {$inc:{priority: priority}}).exec();
         }
     }
 
     /**
      * Only icrementing the priotity
      */
-    async incrementPoolItemPriority(contentID, increment:number, userID?){
-        if(userID){
-            contentModel.findOneAndUpdate({content: contentID, user: userID}, {$inc: {priority: increment}}).exec();
-        }
-        else{
-            contentModel.updateMany({content: contentID}, {$inc: {priority: increment}}).exec();
-        }
+    async incrementPoolItemPriority(PoolBaseID, increment:number){
+            await contentModel.findOneAndUpdate({_id: PoolBaseID}, {$inc: {priority: increment}}).exec();
     }
 
     async poolRating(){
+        console.log("updating Priority")
         const content = await contentModel.find();
         for(let i = 0; i < content.length; i++){
-            console.log(content[i]._id)
-            console.log(await this.getPriority(await content[i]._id));
+            let value = await this.getPriority(await content[i]._id ) - content[i].priority
+            if(value < 0){
+                value = 0;
+            }
+            this.incrementPoolItemPriority(content[i]._id, value)
         }
     }
 
@@ -151,11 +149,17 @@ export class PoolBase{
                 $match: {pollID: poolItem.content.toString() }
             }
         ] ).sort({"createdAt": -1}).limit(NUMBER_OF_SNAPSHOTS);
+        try{
+            const oldNumberOfVotes = snapshots[snapshots.length - 1].totalVotes
+            const numberOfVotes = totalNumberOfVotes[0].totalVotes;
 
-        const oldNumberOfVotes = snapshots[snapshots.length -1 ].totalVotes
-        const numberOfVotes = totalNumberOfVotes[0].totalVotes;
+            return numberOfVotes * 0.5 + numberOfVotes - oldNumberOfVotes;
+        }
+        catch{
+            console.log("No Snapshot found.")
+            return 0;
+        }
 
-        return numberOfVotes * 0.5 + numberOfVotes - oldNumberOfVotes;
 
 
     }

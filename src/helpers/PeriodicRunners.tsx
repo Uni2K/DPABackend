@@ -1,6 +1,6 @@
-import {contentlistLoader, pollBase} from "../app";
+import {contentlistLoader, pollBase, poolBase} from "../app";
 import {ContentlistLoader} from "../content/ContentlistLoader";
-import {INTERVAL_CONTENTLIST_REFRESH, INTERVAL_SNAPSHOT_CREATION} from "./Constants";
+import {INTERVAL_CONTENTLIST_REFRESH, INTERVAL_PRIORITY_UPDATE, INTERVAL_SNAPSHOT_CREATION} from "./Constants";
 import {snapshotBase} from "../app";
 
 /**
@@ -40,12 +40,12 @@ export class PeriodicRunners{
         setInterval(() => {
             if(feedPriorityUpdater) {
                 feedPriorityUpdater=false
-                //snapshotBase.createPollSnapshots().then(()=>
+                poolBase.poolRating().then(()=>
                     feedPriorityUpdater=true
-                //)
+                )
             }
 
-        }, INTERVAL_SNAPSHOT_CREATION);
+        }, INTERVAL_PRIORITY_UPDATE);
 
     }
 
