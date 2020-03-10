@@ -4,6 +4,7 @@ export const CONTENTLIST_SIZE: number = 1000;
 //See Periodic Runners, the intervals for the jobs that get called periodically
 export const INTERVAL_CONTENTLIST_REFRESH: number = 15000;
 export const INTERVAL_SNAPSHOT_CREATION: number = 25000;
+export const INTERVAL_PRIORITY_UPDATE: number = 15000;
 
 //Response Codes
 export const REQUEST_OK = 200;
@@ -50,7 +51,7 @@ export const TRENDING_TOPICS_AMOUNT = 10;
 export const SNAPSHOTS_TOPICS = 4;
 
 //ContentPool weight
-
+export const PRIORITY_SINGLE_SUBED_CONTENT = 0;
 export const PRIORITY_MULTIPLE_SUBED_CONTENT = 50;
 export const NUMBER_OF_SNAPSHOTS = 5;
 
