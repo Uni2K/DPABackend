@@ -2,37 +2,70 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e47446d-7e1c-4c94-945b-c16eb93ab698" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/helpers/TrendingTopicsBase.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/TopicSpecial.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middleware/error.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/content/feedloader.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/content/feedloader.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/Constants.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/Constants.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PeriodicRunners.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/PollBase.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/TopicBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/helpers/UserBase.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/auth.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/auth.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/Poll.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Poll.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/Topic.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/Topic.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/TopicSnapshot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/TopicSnapshot.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/TopicSnapshot.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/PollSnapshot.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/PollSnapshot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/PollSnapshot.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/PollSnapshot.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/User.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/User.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/PollRouter.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/TopicRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routers/UserRouter.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/mkdirp" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/mkdirp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/example/parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/example/parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/readme.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/readme.markdown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/test/dash.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/test/dash.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/test/default_bool.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/test/default_bool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/test/dotted.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/test/dotted.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/test/parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/test/parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/minimist/test/parse_modified.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/minimist/test/parse_modified.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/bin/cmd.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mkdirp/bin/cmd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/examples/pow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mkdirp/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/mkdirp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/chmod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/clobber.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/mkdirp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/opts_fs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/opts_fs_sync.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/perm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/perm_sync.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/race.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/rel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/return.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/return_sync.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/root.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/sync.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/umask.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/mkdirp/test/umask_sync.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/Constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Constants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PeriodicRunners.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/PollBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/PollBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/SnapshotsBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/SnapshotsBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TopicBase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Poll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Poll.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Topic.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/TopicSnapshot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/TopicSnapshot.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/TopicRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +100,18 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -79,6 +124,10 @@
       <updated>1581887783549</updated>
       <workItem from="1581887785130" duration="288000" />
       <workItem from="1581963926214" duration="11733000" />
+      <workItem from="1583497683854" duration="171000" />
+      <workItem from="1583498268905" duration="11945000" />
+      <workItem from="1583865644796" duration="4589000" />
+      <workItem from="1585929133433" duration="5156000" />
     </task>
     <task id="LOCAL-00001" summary="Dist stuff">
       <created>1581887869257</created>
@@ -87,7 +136,91 @@
       <option name="project" value="LOCAL" />
       <updated>1581887869257</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="poll search">
+      <created>1583183699370</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583183699370</updated>
+    </task>
+    <task id="LOCAL-00003" summary="poll search">
+      <created>1583334588226</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583334588226</updated>
+    </task>
+    <task id="LOCAL-00004" summary="poll search">
+      <created>1583334602149</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1583334602149</updated>
+    </task>
+    <task id="LOCAL-00005" summary="poll search">
+      <created>1583334630063</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1583334630063</updated>
+    </task>
+    <task id="LOCAL-00006" summary="poll search">
+      <created>1583334640173</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1583334640173</updated>
+    </task>
+    <task id="LOCAL-00007" summary="periodic Algorithmus">
+      <created>1583679753032</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1583679753032</updated>
+    </task>
+    <task id="LOCAL-00008" summary="periodic Algorithmus">
+      <created>1583679759830</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1583679759830</updated>
+    </task>
+    <task id="LOCAL-00009" summary="periodic Algorithmus">
+      <created>1583679764016</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1583679764016</updated>
+    </task>
+    <task id="LOCAL-00010" summary="periodic Algorithmus">
+      <created>1583679777089</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1583679777089</updated>
+    </task>
+    <task id="LOCAL-00011" summary="periodic Algorithmus">
+      <created>1583869869024</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1583869869024</updated>
+    </task>
+    <task id="LOCAL-00012" summary="periodic Algorithmus">
+      <created>1583869875296</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1583869875296</updated>
+    </task>
+    <task id="LOCAL-00013" summary="periodic Algorithmus">
+      <created>1583869885820</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1583869885820</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,13 +228,20 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Dist stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dist stuff" />
+    <MESSAGE value="poll search" />
+    <MESSAGE value="periodic Algorithmus" />
+    <option name="LAST_COMMIT_MESSAGE" value="periodic Algorithmus" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1666" y="206" key="CommitChangelistDialog2" timestamp="1581887867873">
-      <screen x="-2560" y="23" width="2560" height="1337" />
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583868804805">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="-1666" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581887867873" />
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1583868804805" />
+    <state x="503" y="23" key="CommitChangelistDialog2" timestamp="1583869885655">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="503" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1583869885655" />
+    <state x="-1666" y="206" key="CommitChangelistDialog2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1583679776869" />
     <state width="2359" height="361" key="GridCell.Tab.0.bottom" timestamp="1581963992512">
       <screen x="-2560" y="23" width="2560" height="1337" />
     </state>
@@ -118,13 +258,29 @@
       <screen x="-2560" y="23" width="2560" height="1337" />
     </state>
     <state width="2359" height="361" key="GridCell.Tab.0.right/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581963992511" />
-    <state x="-1675" y="427" key="Vcs.Push.Dialog.v2" timestamp="1581887872577">
+    <state x="498" y="263" key="Vcs.Push.Dialog.v2" timestamp="1583870040792">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="498" y="263" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1583870040792" />
+    <state x="-1675" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1583679791481" />
+    <state x="-1625" y="313" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583677046112">
       <screen x="-2560" y="23" width="2560" height="1337" />
     </state>
-    <state x="-1675" y="427" key="Vcs.Push.Dialog.v2/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581887872577" />
+    <state x="-1625" y="313" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1583677046112" />
     <state x="-1484" y="472" key="git4idea.merge.GitPullDialog" timestamp="1581964039786">
       <screen x="-2560" y="23" width="2560" height="1337" />
     </state>
     <state x="-1484" y="472" key="git4idea.merge.GitPullDialog/0.23.1440.877/-2560.23.2560.1337@-2560.23.2560.1337" timestamp="1581964039786" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/models/Content.tsx</url>
+          <line>7</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -1,4 +1,7 @@
 export const express = require('express')
+const winston = require('winston');
+const error = require("./middleware/error")
+require('express-async-errors');
 import {ContentlistLoader} from "./content/ContentlistLoader";
 import {FeedLoader} from "./content/FeedLoader";
 import {avatarPath} from "./helpers/Constants";
@@ -48,12 +51,24 @@ export const upload = multer({ storage: storage ,limits:{
         fileSize:10000000 //10MB
 },})
 
-
+export const logger = winston.createLogger({
+    level: 'error',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        //
+        // - Write to all logs with level `info` and below to `combined.log`
+        // - Write all logs error (and below) to `error.log`.
+        //
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    ]
+});
 
 const port = 3000
 
 //init DB
 require('./db/Database')
+
 
 //Express
 const app = express()
@@ -62,6 +77,7 @@ app.use(userRouter)
 app.use(questionRouter)
 app.use(topicRouter)
 app.use(contentlistcRouter)
+app.use(error);
 
 
 //Run

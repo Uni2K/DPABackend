@@ -24,6 +24,23 @@ export const ERROR_IMAGE_UPLOAD_PARTS = "359";
 export const ERROR_IMAGE_ACCESS = "360";
 export const ERROR_IMAGE_UPLOAD_UNKNOWN = "361";
 
+/*export const ERROR_USER_UNKNOWN = "404";
+export const ERROR_USER_NAME = "404";
+export const ERROR_USER_EMAIL = "404";
+export const ERROR_USER_PW = "404";
+
+export const ERROR_USER_DUPLICATE_SUB = "409";
+export const ERROR_USER_LOGIN_FAILED = "404";
+export const ERROR_USER_AUTH = "400";
+export const ERROR_USER_REPUTATION_NOT_ENOUGH = "200";
+
+export const ERROR_IMAGE_UPLOAD_SIZE = "413";
+export const ERROR_IMAGE_UPLOAD_PARTS = "400";
+export const ERROR_IMAGE_ACCESS = "404";
+export const ERROR_IMAGE_UPLOAD_UNKNOWN = "500";
+*/
+
+
 //Tributes -> How much reputation on of the action will cost the user
 export const TRIBUT_CREATE_DEFAULT = 5;
 export const TRIBUT_CREATE_DEFAULT_IMAGE = 10;

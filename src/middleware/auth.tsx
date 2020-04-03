@@ -10,8 +10,8 @@ export = async(req, res, next) => {
         res.status(401).json('Access denied. No token provided.')
 
     }else{
-        const data = jwt.verify(token, "DPAJWTKEY")
         try {
+            const data = jwt.verify(token, "DPAJWTKEY")
             const user = await userModel.findOne({ _id: data._id/*, 'tokens.token': token*/ }).exec()
             if (!user) {
                 throw new Error()
