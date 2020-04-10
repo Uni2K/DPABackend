@@ -17,7 +17,6 @@ import {SpecialTopic} from "./helpers/SpecialTopicBase";
 
 //Bases
 export const topicBase:TopicBase=  new TopicBase()
-//topicBase.createTopics()
 export const userBase:UserBase=  new UserBase()
 export const pollBase:PollBase=  new PollBase()
 export const poolBase:PoolBase=  new PoolBase()

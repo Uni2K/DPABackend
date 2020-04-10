@@ -9,7 +9,7 @@ const PollSnapshotSchema = createSchema(
         answers: Type.array({required: true}).of({text: Type.string(), type: Type.number(), votes: Type.number()}),
         enabled: Type.boolean({default: true})
     },
-    {_id: true, timestamps: true}
+    {_id: true, timestamps: false}
 );
 
 export const pollSnapshotModel = typedModel('PollSnapshots', PollSnapshotSchema);

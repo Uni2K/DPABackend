@@ -27,7 +27,6 @@ export class SnapshotsBase {
                 ).save()
             }
         )
-        /*
         userModel.collection.find({enabled:true}).forEach(
             (doc)=>{
                 new userSnapshotModel(
@@ -37,15 +36,17 @@ export class SnapshotsBase {
                     }
                 ).save()
             }
-        )*/
+        )
         const topics = await topicBase.getAllTopics()
         for (const doc of topics ) {
-
-            const numberInTopic=await pollModel.find({enabled:true, topic:doc._id}).lean().countDocuments().exec()
+            console.log("test")
+            const numberInTopic=await pollModel.find({enabled:true, "topics.topicID":{ "$in" : [doc._id] },}).lean().countDocuments().exec()
+            console.log(numberInTopic)
             new topicSnapshotModel(
                 {
                     topicID:doc._id,
-                    pollCount:numberInTopic //For topics its interesting how many questions there are
+                    pollCount:numberInTopic, //For topics its interesting how many questions there are
+                    score: doc.scoreOverall
                 }
             ).save()
         }

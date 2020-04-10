@@ -7,9 +7,10 @@ const TopicSnapshotSchema = createSchema(
     {
         topicID: Type.string({required: true}),
         pollCount: Type.number({required: true}),
+        score: Type.number({required: true}),
         enabled: Type.boolean({default: true})
     },
-    {_id: true, timestamps: true}
+    {_id: true, timestamps: false}
 );
 
 export const topicSnapshotModel = typedModel('TopicSnapshots', TopicSnapshotSchema);
